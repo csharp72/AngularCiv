@@ -1,0 +1,29 @@
+//Primary Palette
+$blueColor: #1681c9;
+$orangeColor: #e85223;
+$greenColor: #00b798;
+$yellowColor: #f1b718;
+
+
+body{
+	font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial;
+	font-size: 10px;
+}
+
+// .btn{
+// 	padding: 5px;
+// 	margin: 2px;
+// 	border: 1px solid rgba(0,0,0,.3);
+// 	background-color: $blueColor;
+// 	display: inline-block;
+// 	color: white;
+// }
+
+.resources{
+	.resource{
+		display: inline-block;
+		padding: 10px;
+		margin: 10px 3px;
+		background: #CCC;
+	}
+}
