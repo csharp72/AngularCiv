@@ -43,16 +43,16 @@
 			}
 
 			var resources = new Resources({
-				food: new Resource('Food', {total:40, max:200, specialChance: 0.1}),
-				wood: new Resource('Wood', {total:40, max:200, specialChance: 0.1}),
+				food: new Resource('Food', {total:0, max:200, specialChance: 0.1}),
+				wood: new Resource('Wood', {total:0, max:200, specialChance: 0.1}),
 				stone: new Resource('Stone', {max:200, specialChance: 0.1}),
 
-				skins: new Resource('Skins',{total:40,}),
+				skins: new Resource('Skins',{total:0,}),
 				herbs: new Resource('Herbs'),
 				ore: new Resource('Ore'),
 
 				leather: new Resource('Leather'),
-				piety: new Resource('Piety'),
+				medicine: new Resource('Medicine'),
 				metal: new Resource('Metal'),
 			});
 
@@ -61,6 +61,7 @@
 			resources.stone.specialResource = resources.ore;
 
 			Resources.prototype.basic = [resources.food, resources.wood, resources.stone];
+			Resources.prototype.special = [resources.skins, resources.herbs, resources.ore, resources.leather, resources.medicine, resources.metal];
 
 			Resources.prototype.enough = function( enoughResources, multiplier ){
 				var enough = true;

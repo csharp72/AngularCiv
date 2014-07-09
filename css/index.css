@@ -1,3 +1,5 @@
 body { font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial; font-size: 10px; }
 
-.resources .resource { display: inline-block; padding: 10px; margin: 10px 3px; background: #CCC; }
+.resources .resource { display: inline-block; padding: 10px; margin: 10px 3px; background: #EEE; }
+.resources .resource .production-rate.pos { color: #00b798; }
+.resources .resource .production-rate.neg { color: #e85223; }

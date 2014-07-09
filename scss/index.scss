@@ -24,6 +24,15 @@ body{
 		display: inline-block;
 		padding: 10px;
 		margin: 10px 3px;
-		background: #CCC;
+		background: #EEE;
+
+		.production-rate{
+			&.pos{
+				color: $greenColor;
+			}
+			&.neg{
+				color: $orangeColor;
+			}
+		}
 	}
 }

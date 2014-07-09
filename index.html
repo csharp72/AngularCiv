@@ -13,17 +13,26 @@
 <body ng-controller="GameCtrl">
 
 	<h3>Resources</h3>
-	<div class="resources">
-		<div class="resource" ng-repeat="(name, r) in resources">
-			<h4>{{name}}</h4>
-			<div>{{r.total | int}}{{r.max !== false ? ' / ' + r.max : ''}}</div>
-			<div>{{r.productionRate | float1}}/sec</div>
-		</div>
-	</div>
-
-	<div class="basic-resources">
+	<!-- <div class="basic-resources">
 		<div class="basic-resource" ng-repeat="br in resources.basic">
 			<button ng-click="br.collect()">Gather {{br.name}}</button>
+		</div>
+	</div> -->
+	<div class="resources">
+		<div>
+			<div class="resource" ng-repeat="r in resources.basic">
+				<h4>{{r.name}}</h4>
+				<div>{{r.total | int}}{{r.max !== false ? ' / ' + r.max : ''}}</div>
+				<div class="production-rate" ng-class="{neg:r.productionRate < 0, pos:r.productionRate > 0}">{{r.productionRate | float1}}/sec</div>
+				<button ng-click="r.collect()">Gather {{br.name}}</button>
+			</div>
+		</div>
+		<div>
+			<div class="resource" ng-repeat="r in resources.special">
+				<h4>{{r.name}}</h4>
+				<div>{{r.total | int}}{{r.max !== false ? ' / ' + r.max : ''}}</div>
+				<div>{{r.productionRate | float1}}/sec</div>
+			</div>
 		</div>
 	</div>
 
