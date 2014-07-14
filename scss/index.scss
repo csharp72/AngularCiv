@@ -4,20 +4,30 @@ $orangeColor: #e85223;
 $greenColor: #00b798;
 $yellowColor: #f1b718;
 
+*{
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
 
 body{
 	font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial;
 	font-size: 10px;
 }
 
-// .btn{
-// 	padding: 5px;
-// 	margin: 2px;
-// 	border: 1px solid rgba(0,0,0,.3);
-// 	background-color: $blueColor;
-// 	display: inline-block;
-// 	color: white;
-// }
+.btn, button{
+	padding: 5px;
+	margin: 2px;
+	border: none;
+	border-radius: 3px;
+	background-color: $blueColor;
+	display: inline-block;
+	color: white;
+
+	&:disabled{
+		background-color: #ccc;
+	}
+}
 
 .resources{
 	.resource{
@@ -25,6 +35,14 @@ body{
 		padding: 10px;
 		margin: 10px 3px;
 		background: #EEE;
+		width: 100px;
+
+		img{
+			height: 30px;
+			width: 30px;
+			vertical-align: middle;
+			margin-right: 4px;
+		}
 
 		.production-rate{
 			&.pos{
@@ -34,5 +52,29 @@ body{
 				color: $orangeColor;
 			}
 		}
+
+		button{
+			display: block;
+		}
 	}
+}
+
+.cost-display {
+	border: 1px solid #DDD;
+	border-radius: 4px;
+    .cost-resource {
+        color: #333;
+        padding: 2px 5px;
+        line-height: 20px;
+
+        img{
+        	height: 20px;
+        	vertical-align: middle;
+        }
+
+        .cost-amount{
+			vertical-align: middle;
+			margin-left: 3px;
+        }
+    }
 }

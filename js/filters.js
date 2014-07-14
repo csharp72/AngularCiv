@@ -1,4 +1,4 @@
-angular.module('app')
+angular.module('filters', [])
 	.filter('int', function(){
 		return function(num){
 			return Math.floor(num);
@@ -10,12 +10,18 @@ angular.module('app')
 		}
 	})
 
-	.filter('displayCost', ['resources', function(resources){
+	.filter('displayCost', ['resources','$sce', function(resources, $sce){
 		return function(cost){
 			var str = "";
-			angular.forEach(cost, function(amount, name){
-				str += resources[name].name + ": " + amount + " ";
-			})
-			return str;
+			if( !$.isEmptyObject(cost) ){
+				str += "<span class='cost-display'>";
+				angular.forEach(cost, function(amount, name){
+					var res = resources[name];
+					str += "<span ng-class='{ready:resources.enough({"+name+":"+amount+"})}' class='cost-resource " + name +"'><img src='"+res.image+"' alt='"+res.name+"' /><span class='cost-amount'>" + amount + "</span></span>";
+				})
+				str += "</span>"
+			}
+			return $sce.trustAsHtml(str);
 		}
 	}])
+

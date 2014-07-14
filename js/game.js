@@ -1,37 +1,18 @@
 
-angular.module('app', ['resources','population','buildings']);
+angular.module('app', ['resources','population','buildings','filters']);
 
 angular.module('app').controller('GameCtrl', 
 	
 	['$scope','buildings','resources','$interval','jobs','population',
 	function($scope, buildings, resources, $interval, jobs, population){
 
-		window.scope = $scope;
-
-		//console.log( 'buildings', buildings.makeNew() )
+		window.scope = window.$scope = $scope;
 
 		$scope.resources = resources;
 		$scope.buildings = buildings;
 		$scope.workers = population.workers;
 		$scope.jobs = jobs;
 		$scope.population = population;
-
-
-
-		function setProductionRates(){
-			angular.forEach(resources, function(resource){
-				resource.productionRate = 0;
-			})
-			angular.forEach(population.workers, function(worker){
-				if( !worker.sick ){
-					angular.forEach( worker.job.production, function(amount, product){
-						resources[product].productionRate += amount;
-					})
-				}
-			})
-
-			resources.food.productionRate -= population.total;
-		}
 
 		$scope.canMakeWorker = function( amount ){
 			var amount = amount || 1;
@@ -45,6 +26,13 @@ angular.module('app').controller('GameCtrl',
 			return cnd1 && cnd2;
 		}
 
+		$scope.collect = function( resource ){
+			if( resource.collect() ){
+				// var snd = new Audio("./sound/collect.mp3")
+				// snd.play(0);
+			}
+		}
+
 		$scope.workingJobs = [
 			jobs.gatherer,
 			jobs.hunter,
@@ -54,12 +42,18 @@ angular.module('app').controller('GameCtrl',
 			jobs.miner,
 		]
 
-		console.log( $scope.workingJobs )
-
 		var gameLoop = $interval(function(){
-			console.log('tick');
-			setProductionRates();
+			//console.log('tick');
+			//population.setProductionRates();
 			resources.produce();
 		}, 1000);
+
+		$(document).ready(function(){
+			$('button').on('click', function(){
+				var snd = new Audio("./sound/collect.mp3")
+				snd.play(0);
+			})
+		})
+		
 	}
 ])

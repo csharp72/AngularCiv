@@ -10,6 +10,7 @@
 				this.max = false;
 				this.increment = 1
 				this.productionRate = 0
+				this.image = "./images/resources/"+name.toLowerCase()+".svg";
 
 				this.collect = function(){
 					if( this.max === false || this.total < this.max ){
@@ -19,7 +20,9 @@
 								this.specialResource.total += this.increment;
 							}
 						}
+						return true;
 					}
+					return false;
 				}
 
 				this.produce = function(){

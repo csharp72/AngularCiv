@@ -1,5 +1,17 @@
+* { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
+
 body { font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial; font-size: 10px; }
 
-.resources .resource { display: inline-block; padding: 10px; margin: 10px 3px; background: #EEE; }
+.btn, button { padding: 5px; margin: 2px; border: none; border-radius: 3px; background-color: #1681c9; display: inline-block; color: white; }
+.btn:disabled, button:disabled { background-color: #ccc; }
+
+.resources .resource { display: inline-block; padding: 10px; margin: 10px 3px; background: #EEE; width: 100px; }
+.resources .resource img { height: 30px; width: 30px; vertical-align: middle; margin-right: 4px; }
 .resources .resource .production-rate.pos { color: #00b798; }
 .resources .resource .production-rate.neg { color: #e85223; }
+.resources .resource button { display: block; }
+
+.cost-display { border: 1px solid #DDD; border-radius: 4px; }
+.cost-display .cost-resource { color: #333; padding: 2px 5px; line-height: 20px; }
+.cost-display .cost-resource img { height: 20px; vertical-align: middle; }
+.cost-display .cost-resource .cost-amount { vertical-align: middle; margin-left: 3px; }

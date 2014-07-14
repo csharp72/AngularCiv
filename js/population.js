@@ -60,6 +60,7 @@ angular.module('population', [])
 					this.total = this.workers.length;
 				}
 			}
+			this.setProductionRates();
 		}
 
 		Population.prototype.getJobWorkers = function( job, amount ){
@@ -89,6 +90,7 @@ angular.module('population', [])
 					worker.job = job;
 				})
 			}
+			this.setProductionRates();
 		}
 
 		Population.prototype.relieve = function(job, amount){
@@ -100,11 +102,27 @@ angular.module('population', [])
 					worker.job = jobs.unemployed;
 				})
 			}
+			this.setProductionRates();
 		}
 
 		Population.prototype.canAssign = function( job, amount ){
 			var amount = amount || 1;
 			return resources.enough( job.cost, amount );
+		}
+
+		Population.prototype.setProductionRates = function(){
+			angular.forEach(resources, function(resource){
+				resource.productionRate = 0;
+			})
+			angular.forEach(population.workers, function(worker){
+				if( !worker.sick ){
+					angular.forEach( worker.job.production, function(amount, product){
+						resources[product].productionRate += amount;
+					})
+				}
+			})
+
+			resources.food.productionRate -= population.total;
 		}
 
 		return population;
