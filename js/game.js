@@ -48,12 +48,12 @@ angular.module('app').controller('GameCtrl',
 			resources.produce();
 		}, 1000);
 
-		$(document).ready(function(){
-			$('button').on('click', function(){
-				var snd = new Audio("./sound/collect.mp3")
-				snd.play(0);
-			})
-		})
+		// $(document).ready(function(){
+		// 	$('button').on('click', function(){
+		// 		var snd = new Audio("./sound/collect.mp3")
+		// 		snd.play(0);
+		// 	})
+		// })
 		
 	}
 ])
