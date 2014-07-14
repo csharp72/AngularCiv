@@ -1,21 +1,45 @@
+@keyframes flyUp { 0% { opacity: 0; }
+  10% { opacity: .75; }
+  60% { transform: translateY(-35px) rotate(-120deg); opacity: .75; }
+  100% { transform: translateY(-30px) rotate(-200deg); opacity: 0; } }
+
 * { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
 
-body { font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial; font-size: 10px; margin: 0; padding: 0; }
+body { font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial; font-size: 10px; margin: 0; padding: 0; background-color: #DDD; width: 320px; }
 
-.btn, button { padding: 5px 9px; margin: 2px; border: none; border-radius: 3px; background-color: #00b798; display: inline-block; color: white; line-height: 14px; text-shadow: 0 1px rgba(0, 0, 0, 0.2); }
-.btn:disabled, button:disabled { background-color: #ccc; }
+.btn, button { padding: 5px 9px; margin: 2px; border: none; border-radius: 3px; background-color: #00b798; display: inline-block; color: white; line-height: 14px; text-shadow: 0 1px rgba(0, 0, 0, 0.2); vertical-align: middle; }
+.btn:disabled, button:disabled { background-color: #DDD; color: #999; text-shadow: none; }
 
-.cost-display { border: 1px solid #DDD; border-radius: 4px; }
-.cost-display .cost-resource { color: #333; padding: 2px 5px; line-height: 20px; }
+.cost-display { background-color: rgba(255, 255, 255, 0.2); border-radius: 4px; display: inline-block; }
+.cost-display .cost-resource { color: #333; padding: 2px 5px; line-height: 20px; display: inline-block; }
 .cost-display .cost-resource img { height: 20px; vertical-align: middle; }
 .cost-display .cost-resource .cost-amount { vertical-align: middle; margin-left: 3px; }
 
-.resources, .population, .buildings { vertical-align: top; margin: 8px; width: 304px; }
+.resources, .population, .buildings { vertical-align: top; }
 
-.resources .resource { display: inline-block; padding: 10px; margin: 7px 3px; background: #EEE; width: 95px; }
+.resource-dash { background-color: #1681c9; color: white; padding: 0 3px; }
+.resource-dash .resource { border: 1px solid rgba(0, 0, 0, 0.15); border-radius: 4px; display: inline-block; margin: 1px; padding: 1px 7px 1px 3px; box-shadow: 0 1px rgba(255, 255, 255, 0.15) inset; text-align: center; }
+.resource-dash .resource .resource-image { height: 17px; width: 17px; vertical-align: middle; margin-right: 3px; }
+.resource-dash .resource .production-rate.pos { color: #00b798; }
+.resource-dash .resource .production-rate.neg { color: #e85223; }
+.resource-dash .resource .production-rate .time-frame { font-size: 8px; margin-left: 1px; }
+.resource-dash .resource .limit { font-size: 8px; }
+
+.resources { background-color: #014b7c; color: white; }
+.resources .resource { display: inline-block; padding: 10px; width: 106.66667px; text-align: center; position: relative; }
 .resources .resource img { height: 30px; width: 30px; vertical-align: middle; margin-right: 4px; }
+.resources .resource .gathered-resource { left: 50%; margin-left: -15px; position: absolute; animation: .5s flyUp ease-out 1; opacity: 0; }
 .resources .resource .production-rate.pos { color: #00b798; }
 .resources .resource .production-rate.neg { color: #e85223; }
 .resources .resource button { display: block; width: 100%; margin: 8px 0 4px; background-color: #1681c9; }
+
+.building-dash { background-color: #00b798; color: white; }
+.building-dash .building { border: 1px solid rgba(0, 0, 0, 0.15); border-radius: 4px; display: inline-block; margin: 1px; padding: 1px 7px 1px 3px; box-shadow: 0 1px rgba(255, 255, 255, 0.15) inset; }
+.building-dash .building .name { margin-right: 4px; }
+
+.buildings { background-color: #005b4c; padding: 2px 0; }
+.buildings .building .cost { vertical-align: middle; }
+.buildings .building button { width: 130px; margin-right: 7px; }
+.buildings .building button:enabled { background-color: #00b798; }
 
 .population .jobs button:enabled { background-color: #1681c9; }

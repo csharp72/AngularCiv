@@ -1,0 +1,16 @@
+@keyframes flyUp {
+	0%{
+		opacity: 0;
+	}
+	10%{
+		opacity: .75;
+	}
+	60%{
+		transform: translateY(-35px) rotate(-120deg);
+		opacity: .75;
+	}
+	100%{
+		transform: translateY(-30px) rotate(-200deg);
+		opacity: 0;
+	}
+}

@@ -1,8 +1,20 @@
+@import 'animations';
+
 //Primary Palette
 $blueColor: #1681c9;
 $orangeColor: #e85223;
 $greenColor: #00b798;
 $yellowColor: #f1b718;
+
+$purpleColor: #3d37b6;
+$darkBlueColor: #014b7c;
+
+$buildingColor: $greenColor;
+$buildingComp: $greenColor;
+
+$appW: 320px;
+
+
 
 *{
 	-webkit-box-sizing: border-box;
@@ -15,6 +27,8 @@ body{
 	font-size: 10px;
 	margin: 0;
 	padding: 0;
+	background-color: #DDD;
+	width: $appW;
 }
 
 .btn, button{
@@ -27,19 +41,25 @@ body{
 	color: white;
 	line-height: 14px;
 	text-shadow: 0 1px rgba(0, 0, 0, 0.2);
+	vertical-align: middle;
 
 	&:disabled{
-		background-color: #ccc;
+		background-color: #DDD;
+		color: #999;
+		text-shadow: none;
 	}
 }
 
 .cost-display {
-	border: 1px solid #DDD;
-	border-radius: 4px;
+	background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    display: inline-block;
+
     .cost-resource {
         color: #333;
         padding: 2px 5px;
         line-height: 20px;
+        display: inline-block;
 
         img{
         	height: 20px;
@@ -56,24 +76,75 @@ body{
 .resources, .population, .buildings{
 	//display: inline-block;
 	vertical-align: top;
-	margin: 8px;
-	width: 304px;
+	// width: 304px;
+}
+
+.resource-dash {
+	background-color: $blueColor;
+    color: white;
+    padding: 0 3px;
+
+    .resource{
+    	border: 1px solid rgba(0, 0, 0, 0.15);
+		border-radius: 4px;
+		display: inline-block;
+		margin: 1px;
+		padding: 1px 7px 1px 3px;
+		//width: 63px;
+		box-shadow: 0 1px rgba(255, 255, 255, 0.15) inset;
+		text-align: center;
+
+    	.resource-image{
+    		height: 17px;
+    		width: 17px;
+    		vertical-align: middle;
+			margin-right: 3px;
+    	}
+
+    	.production-rate{
+			&.pos{
+				color: $greenColor;
+			}
+			&.neg{
+				color: $orangeColor;
+			}
+
+			.time-frame{
+				font-size: 8px;
+				margin-left: 1px;
+			}
+		}
+
+    	.limit{
+    		font-size: 8px;
+    	}
+    }
 }
 
 .resources{
+	background-color: $darkBlueColor;
+	color: white;
 
 	.resource{
 		display: inline-block;
 		padding: 10px;
-		margin: 7px 3px;
-		background: #EEE;
-		width: 95px;
+		width: $appW/3;
+		text-align: center;
+		position: relative;
 
 		img{
 			height: 30px;
 			width: 30px;
 			vertical-align: middle;
 			margin-right: 4px;
+		}
+
+		.gathered-resource {
+		    left: 50%;
+		    margin-left: -15px;
+		    position: absolute;
+		    animation: .5s flyUp ease-out 1;
+		    opacity: 0;
 		}
 
 		.production-rate{
@@ -90,6 +161,46 @@ body{
 			width: 100%;
 			margin: 8px 0 4px;
 			background-color: $blueColor;
+		}
+	}
+}
+
+.building-dash{
+	background-color: $buildingColor;
+	color: white;
+
+	.building{
+		border: 1px solid rgba(0, 0, 0, 0.15);
+		border-radius: 4px;
+		display: inline-block;
+		margin: 1px;
+		padding: 1px 7px 1px 3px;
+		//width: 63px;
+		box-shadow: 0 1px rgba(255, 255, 255, 0.15) inset;
+
+		.name{
+			margin-right: 4px;
+		}
+	}
+}
+
+.buildings{
+	background-color: darken($buildingColor, 18%);
+	padding: 2px 0;
+
+	.building{
+
+		.cost{
+			vertical-align: middle;
+		}
+
+		button{
+			width: 130px;
+			margin-right: 7px;
+			
+			&:enabled{
+				background-color: $buildingComp;
+			}
 		}
 	}
 }
