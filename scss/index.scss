@@ -132,6 +132,11 @@ body{
 		text-align: center;
 		position: relative;
 
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+
 		img{
 			height: 30px;
 			width: 30px;

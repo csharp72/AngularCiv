@@ -26,7 +26,7 @@ body { font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial; font-size: 
 .resource-dash .resource .limit { font-size: 8px; }
 
 .resources { background-color: #014b7c; color: white; }
-.resources .resource { display: inline-block; padding: 10px; width: 106.66667px; text-align: center; position: relative; }
+.resources .resource { display: inline-block; padding: 10px; width: 106.66667px; text-align: center; position: relative; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; }
 .resources .resource img { height: 30px; width: 30px; vertical-align: middle; margin-right: 4px; }
 .resources .resource .gathered-resource { left: 50%; margin-left: -15px; position: absolute; animation: .5s flyUp ease-out 1; opacity: 0; }
 .resources .resource .production-rate.pos { color: #00b798; }
