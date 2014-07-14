@@ -18,13 +18,13 @@
 	<div class="resources">
 		<h3>Resources</h3>
 		<div>
-			<div class="resource" ng-repeat="r in resources.basic">
+			<div class="resource" ng-repeat="r in resources.basic" ng-click="collect(r)">
 				<div class="title">{{r.name}}</div>
 				<h4><img ng-src="{{r.image}}" alt="" />{{r.total | int}}</h4>
 				<div class="production-rate" ng-class="{neg:r.productionRate < 0, pos:r.productionRate > 0}">{{r.productionRate | float1}}/sec</div>
 				<div ng-if="r.max">Limit: {{r.max}}</div>
 				
-				<button ng-click="collect(r)">Gather</button>
+				<button>Gather</button>
 			</div>
 		</div>
 		<div>
