@@ -12,7 +12,7 @@ body { font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial; font-size: 
 
 .resources, .population, .buildings { vertical-align: top; margin: 8px; width: 304px; }
 
-.resources .resource { display: inline-block; padding: 10px; margin: 7px 3px; background: #EEE; width: 105px; }
+.resources .resource { display: inline-block; padding: 10px; margin: 7px 3px; background: #EEE; width: 95px; }
 .resources .resource img { height: 30px; width: 30px; vertical-align: middle; margin-right: 4px; }
 .resources .resource .production-rate.pos { color: #00b798; }
 .resources .resource .production-rate.neg { color: #e85223; }
