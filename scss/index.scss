@@ -13,49 +13,23 @@ $yellowColor: #f1b718;
 body{
 	font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial;
 	font-size: 10px;
+	margin: 0;
+	padding: 0;
 }
 
 .btn, button{
-	padding: 5px;
+	padding: 5px 9px;
 	margin: 2px;
 	border: none;
 	border-radius: 3px;
-	background-color: $blueColor;
+	background-color: $greenColor;
 	display: inline-block;
 	color: white;
+	line-height: 14px;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.2);
 
 	&:disabled{
 		background-color: #ccc;
-	}
-}
-
-.resources{
-	.resource{
-		display: inline-block;
-		padding: 10px;
-		margin: 10px 3px;
-		background: #EEE;
-		width: 100px;
-
-		img{
-			height: 30px;
-			width: 30px;
-			vertical-align: middle;
-			margin-right: 4px;
-		}
-
-		.production-rate{
-			&.pos{
-				color: $greenColor;
-			}
-			&.neg{
-				color: $orangeColor;
-			}
-		}
-
-		button{
-			display: block;
-		}
 	}
 }
 
@@ -77,4 +51,53 @@ body{
 			margin-left: 3px;
         }
     }
+}
+
+.resources, .population, .buildings{
+	//display: inline-block;
+	vertical-align: top;
+	margin: 8px;
+}
+
+.resources{
+	width: 318px;
+
+	.resource{
+		display: inline-block;
+		padding: 10px;
+		margin: 7px 3px;
+		background: #EEE;
+		width: 100px;
+
+		img{
+			height: 30px;
+			width: 30px;
+			vertical-align: middle;
+			margin-right: 4px;
+		}
+
+		.production-rate{
+			&.pos{
+				color: $greenColor;
+			}
+			&.neg{
+				color: $orangeColor;
+			}
+		}
+
+		button{
+			display: block;
+			width: 100%;
+			margin: 8px 0 4px;
+			background-color: $blueColor;
+		}
+	}
+}
+
+.population{
+	.jobs{
+		button:enabled{
+			background-color: $blueColor;
+		}
+	}
 }

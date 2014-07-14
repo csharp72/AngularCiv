@@ -10,58 +10,55 @@
 	<script type="text/javascript" src="./js/resources.js"></script>
 	<script type="text/javascript" src="./js/filters.js"></script>
 	<link rel="stylesheet" type="text/css" href="css/index.css">
+
+	<meta name="viewport" content="width=device-width, user-scalable=no">
 </head>
 <body ng-controller="GameCtrl">
-	<h3>Resources</h3>
-	<!-- <div class="basic-resources">
-		<div class="basic-resource" ng-repeat="br in resources.basic">
-			<button ng-click="br.collect()">Gather {{br.name}}</button>
-		</div>
-	</div> -->
+	
 	<div class="resources">
+		<h3>Resources</h3>
 		<div>
 			<div class="resource" ng-repeat="r in resources.basic">
 				<div class="title">{{r.name}}</div>
 				<h4><img ng-src="{{r.image}}" alt="" />{{r.total | int}}</h4>
-				<div ng-if="r.max">Limit: {{r.max}}</div>
 				<div class="production-rate" ng-class="{neg:r.productionRate < 0, pos:r.productionRate > 0}">{{r.productionRate | float1}}/sec</div>
-				<button ng-click="collect(r)">Gather {{br.name}}</button>
+				<div ng-if="r.max">Limit: {{r.max}}</div>
+				
+				<button ng-click="collect(r)">Gather</button>
 			</div>
 		</div>
 		<div>
 			<div class="resource" ng-repeat="r in resources.special">
 				<div class="title">{{r.name}}</div>
 				<h4><img ng-src="{{r.image}}" alt="" />{{r.total | int}}</h4>
+				<div class="production-rate" ng-class="{neg:r.productionRate < 0, pos:r.productionRate > 0}">{{r.productionRate | float1}}/sec</div>
 				<div ng-if="r.max">Limit: {{r.max}}</div>
-				<div>{{r.productionRate | float1}}/sec</div>
 			</div>
 		</div>
 	</div>
 
-	<h3>People</h3>
+	
 	<div class="population">
+		<h3>People</h3>
 		<div>Max Population: {{ population.max }}</div>
 		<div>Population: {{ population.total }}</div>
 		<div>Unemployed: {{ population.getJobTotal( jobs.unemployed ) }}</div>
 		<button class="btn" ng-disabled="!canMakeWorker()" ng-click="population.makeWorker()">Create Worker</button><span ng-bind-html="jobs.unemployed.cost | displayCost"></span>
-		<div ng-repeat="job in workingJobs">
-			<button class="btn" ng-disabled="!population.getJobTotal(job)" ng-click="population.relieve(job)">-</button>
+		<div class="jobs" ng-repeat="job in workingJobs">
+			<button class="btn job-assignment" ng-disabled="!population.getJobTotal(job)" ng-click="population.relieve(job)">-</button>
 			<span>{{job.name}}: {{population.getJobTotal(job)}}</span>
-			<button class="btn" ng-disabled="!canAssignWorker(job)" ng-click="population.assign(job)">+</button>
+			<button class="btn job-assignment" ng-disabled="!canAssignWorker(job)" ng-click="population.assign(job)">+</button>
 			<span ng-bind-html="job.cost | displayCost"></span>
 		</div>
 	</div>
 
-	<h3>Buildings</h3>
+	
 	<div class="buildings">
+		<h3>Buildings</h3>
 		<div class="building" ng-repeat="b in buildings">
 			<button ng-disabled="!resources.enough(b.cost)" ng-click="buildings.build(b)">Build {{b.name}}</button>{{b.name}}s: {{b.total}} <span ng-bind-html="b.cost | displayCost"></span>
 		</div>
-	</div>
-
-	
-
-	
+	</div>	
 
 </body>
 </html>
