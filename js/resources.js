@@ -1,26 +1,31 @@
 (function(){
 
 	angular.module('resources', [])
-		.factory('resources', function(){
+		.factory('resources', [function(){
 
 			function Resource(name, opts){
-				this.name = name
-				this.total = 0
-				this.specialChance = 0
+				this.name = name;
+				this.total = 0;
+				this.specialChance = 0.1;
+				this.collectSpecialChance = 0.1;
+				this.produceSpecialChance = 0;
 				this.max = false;
-				this.increment = 1
-				this.productionRate = 0
+				this.baseMax = false;
+				this.collectRate = 1;
+				this.productionRate = 0;
 				this.image = "./images/resources/"+name.toLowerCase()+".svg";
 
 				this.collect = function(){
+					var diceRoll = false;
 					if( this.max === false || this.total < this.max ){
-						this.total = this.max ? Math.min( this.total + this.increment, this.max ) : this.total + this.increment;
+						this.total = this.max ? Math.min( this.total + this.collectRate, this.max ) : this.total + this.collectRate;
 						if( this.specialResource ){
-							if( Math.random() < this.specialChance ){
-								this.specialResource.total += this.increment;
+							diceRoll = Math.random() < this.collectSpecialChance;
+							if( diceRoll ){
+								this.specialResource.total += this.collectRate;
 							}
 						}
-						return true;
+						return [this, diceRoll];
 					}
 					return false;
 				}
@@ -31,7 +36,7 @@
 					}else{
 						this.total = Math.max( Math.min( this.total + this.productionRate, this.max ), 0 );
 						if( this.specialResource && this.productionRate > 0 ){
-							if( Math.random() < this.specialChance ){
+							if( Math.random() < this.produceSpecialChance ){
 								this.specialResource.total += Math.round(this.productionRate);
 							}
 						}
@@ -39,6 +44,7 @@
 				}
 
 				angular.extend(this, opts);
+				this.baseMax = this.max;
 			}
 
 			function Resources(res){
@@ -46,9 +52,9 @@
 			}
 
 			var resources = new Resources({
-				food: new Resource('Food', {total:0, max:200, specialChance: 0.1}),
-				wood: new Resource('Wood', {total:0, max:200, specialChance: 0.1}),
-				stone: new Resource('Stone', {max:200, specialChance: 0.1}),
+				food: new Resource('Food', 		{total:0, max:200}),
+				wood: new Resource('Wood', 		{total:0, max:200}),
+				stone: new Resource('Stone', 	{total:0, max:200}),
 
 				skins: new Resource('Skins',{total:0,}),
 				herbs: new Resource('Herbs'),
@@ -106,8 +112,6 @@
 			}
 
 			return resources;
-		})
-
-		
+		}])
 
 })();

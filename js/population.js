@@ -40,7 +40,7 @@ angular.module('population', [])
 		return Worker;
 	}])
 
-	.factory('population', ['Worker', 'jobs', 'resources', function(Worker, jobs, resources){
+	.factory('population', ['Worker', 'jobs', 'resources', 'buildings', '$rootScope', function(Worker, jobs, resources, buildings, $rootScope){
 		function Population(){
 			this.total = 0;
 			this.max = 0;
@@ -52,15 +52,13 @@ angular.module('population', [])
 
 		Population.prototype.makeWorker = function(amount){
 			var amount = amount || 1;
-			if( this.total * amount <= this.max ){
-				if( resources.use( this.jobs.unemployed.cost ) ){
+			if( population.total * amount <= population.max ){
+				if( resources.use( population.jobs.unemployed.cost ) ){
 					for( var i=0; i<amount; i++ ){
-						this.workers.push( new Worker( this.jobs.unemployed ) );
+						population.workers.push( new Worker( this.jobs.unemployed ) );
 					}
-					this.total = this.workers.length;
 				}
 			}
-			this.setProductionRates();
 		}
 
 		Population.prototype.getJobWorkers = function( job, amount ){
@@ -74,7 +72,6 @@ angular.module('population', [])
 					}
 				}
 			});
-			if( amount ) console.log( job.name, workers )
 			return workers;
 		}
 
@@ -90,39 +87,21 @@ angular.module('population', [])
 					worker.job = job;
 				})
 			}
-			this.setProductionRates();
 		}
 
 		Population.prototype.relieve = function(job, amount){
 			var amount = amount || 1;
 			var workers = this.getJobWorkers( job, amount );
-			console.log('relieve', amount, workers)
 			if( workers ){
 				angular.forEach(workers, function(worker){
 					worker.job = jobs.unemployed;
 				})
 			}
-			this.setProductionRates();
 		}
 
 		Population.prototype.canAssign = function( job, amount ){
 			var amount = amount || 1;
 			return resources.enough( job.cost, amount );
-		}
-
-		Population.prototype.setProductionRates = function(){
-			angular.forEach(resources, function(resource){
-				resource.productionRate = 0;
-			})
-			angular.forEach(population.workers, function(worker){
-				if( !worker.sick ){
-					angular.forEach( worker.job.production, function(amount, product){
-						resources[product].productionRate += amount;
-					})
-				}
-			})
-
-			resources.food.productionRate -= population.total;
 		}
 
 		return population;

@@ -6,13 +6,21 @@ $orangeColor: #e85223;
 $greenColor: #00b798;
 $yellowColor: #f1b718;
 
-$purpleColor: #3d37b6;
+$purpleColor: #523dd1;
+$darkPurpleColor: #3d37b6;
 $darkBlueColor: #014b7c;
+
+$resourceColor: $blueColor;
 
 $buildingColor: $greenColor;
 $buildingComp: $greenColor;
 
-$appW: 320px;
+$populationColor: $purpleColor;
+
+$costColor: $yellowColor;
+$boonColor: $greenColor;
+
+$appW: 100%;
 
 
 
@@ -20,6 +28,11 @@ $appW: 320px;
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
+
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
 
 body{
@@ -31,46 +44,79 @@ body{
 	width: $appW;
 }
 
+.cf:before,
+.cf:after {
+    content: " "; /* 1 */
+    display: table; /* 2 */
+}
+
+.cf:after {
+    clear: both;
+}
+
 .btn, button{
 	padding: 5px 9px;
 	margin: 2px;
 	border: none;
 	border-radius: 3px;
 	background-color: $greenColor;
+	border: 1px solid rgba(0,0,0,0);
 	display: inline-block;
 	color: white;
-	line-height: 14px;
+	line-height: 24px;
 	text-shadow: 0 1px rgba(0, 0, 0, 0.2);
 	vertical-align: middle;
 
 	&:disabled{
-		background-color: #DDD;
+		background-color: transparent;
+		border: 1px solid rgba($greenColor, .3);
 		color: #999;
 		text-shadow: none;
 	}
 }
 
-.cost-display {
-	background-color: rgba(255, 255, 255, 0.2);
-    border-radius: 4px;
-    display: inline-block;
+.cost{
+	display: inline-block;
+	vertical-align: middle;
+	width: 100px;
 
-    .cost-resource {
-        color: #333;
-        padding: 2px 5px;
-        line-height: 20px;
-        display: inline-block;
+	.cost-display {
+		background-color: $costColor;
+		color: #000;
+	    border-radius: 4px;
+	    display: inline-block;
+	    margin-left: 7px;
 
-        img{
-        	height: 20px;
-        	vertical-align: middle;
-        }
+	    .cost-resource {
+	        padding: 2px 5px;
+	        line-height: 20px;
+	        display: inline-block;
 
-        .cost-amount{
-			vertical-align: middle;
-			margin-left: 3px;
-        }
-    }
+	        img{
+	        	height: 20px;
+	        	vertical-align: middle;
+	        }
+
+	        .cost-amount{
+				vertical-align: middle;
+				margin-left: 3px;
+	        }
+	    }
+	}
+}
+
+.production-rate{
+	&.pos{
+		color: #00eb89;
+	}
+	&.neg{
+		color: $orangeColor;
+		font-weight: bold;
+	}
+	.time-frame{
+		font-size: 8px;
+		margin-left: 1px;
+	}
 }
 
 .resources, .population, .buildings{
@@ -83,6 +129,7 @@ body{
 	background-color: $blueColor;
     color: white;
     padding: 0 3px;
+    text-align: center;
 
     .resource{
     	border: 1px solid rgba(0, 0, 0, 0.15);
@@ -93,6 +140,8 @@ body{
 		//width: 63px;
 		box-shadow: 0 1px rgba(255, 255, 255, 0.15) inset;
 		text-align: center;
+		vertical-align: top;
+		height: 45px;
 
     	.resource-image{
     		height: 17px;
@@ -100,20 +149,6 @@ body{
     		vertical-align: middle;
 			margin-right: 3px;
     	}
-
-    	.production-rate{
-			&.pos{
-				color: $greenColor;
-			}
-			&.neg{
-				color: $orangeColor;
-			}
-
-			.time-frame{
-				font-size: 8px;
-				margin-left: 1px;
-			}
-		}
 
     	.limit{
     		font-size: 8px;
@@ -124,40 +159,52 @@ body{
 .resources{
 	background-color: $darkBlueColor;
 	color: white;
+	padding: 10px;
 
 	.resource{
 		display: inline-block;
-		padding: 10px;
+		padding: 11px;
 		width: $appW/3;
 		text-align: center;
 		position: relative;
+		vertical-align: top;
 
-		-webkit-user-select: none;
-		-moz-user-select: none;
-		-ms-user-select: none;
-		user-select: none;
+		.resource-content{
+			background-color: $blueColor;
+			border-radius: 8px;
+			min-height: 166px;
+			padding: 10px;
+		}
 
-		img{
-			height: 30px;
-			width: 30px;
+		.resource-image{
+			height: 60px;
+			width: 60px;
 			vertical-align: middle;
-			margin-right: 4px;
+			margin: 33px 0 20px;
 		}
 
-		.gathered-resource {
-		    left: 50%;
-		    margin-left: -15px;
-		    position: absolute;
-		    animation: .5s flyUp ease-out 1;
-		    opacity: 0;
-		}
-
-		.production-rate{
-			&.pos{
-				color: $greenColor;
+		.special-resource{
+			color: lighten($blueColor, 30%);
+			.special-resource-image{
+				height: 15px;
+				width: 15px;
+				margin-left: 2px;
+				vertical-align: middle;
 			}
-			&.neg{
-				color: $orangeColor;
+		}
+
+		.gathered-resources{
+			position: relative;
+			.gathered-resource {
+			    left: 0;
+			    right: 0;
+			    position: absolute;
+
+			    img{
+			    	@extend .resource-image;
+			    	opacity: 0;
+			    	position: relative;
+			    }
 			}
 		}
 
@@ -173,6 +220,7 @@ body{
 .building-dash{
 	background-color: $buildingColor;
 	color: white;
+	text-align: center;
 
 	.building{
 		border: 1px solid rgba(0, 0, 0, 0.15);
@@ -191,29 +239,85 @@ body{
 
 .buildings{
 	background-color: darken($buildingColor, 18%);
-	padding: 2px 0;
+	padding: 10px;
 
 	.building{
-
-		.cost{
-			vertical-align: middle;
-		}
+		@extend .cf;
 
 		button{
-			width: 130px;
-			margin-right: 7px;
+			width: 172px;
+			float: left;
 			
 			&:enabled{
 				background-color: $buildingComp;
 			}
 		}
+
+		.building-details{
+			float: left;
+			margin-top: 2px;
+			vertical-align: top;
+
+			.boons{
+				background-color: $boonColor;
+			    border-radius: 3px;
+			    display: inline-block;
+			    font-size: 12px;
+			    margin-left: 7px;
+			    padding: 5px;
+			}
+		}
+		
 	}
 }
 
+.population-dash{
+	background-color: $populationColor;
+	color: white;
+	text-align: center;
+}
+
 .population{
-	.jobs{
-		button:enabled{
-			background-color: $blueColor;
+	background-color: darken($populationColor, 18%);
+	color: white;
+	padding: 10px;
+
+	button:enabled{
+		background-color: $blueColor;
+	}
+
+	.make-worker{
+		width: 172px;
+	}
+
+	.job{
+		.job-name{
+			display: inline-block;
+			width: 95px;
+			text-align: center;
 		}
+		.job-assignment{
+			width: 33px;
+		}
+	}
+
+	.production{
+		font-size: 12px;
+		background-color: $boonColor;
+	    border-radius: 3px;
+	    display: inline-block;
+	    margin-left: 7px;
+	    padding: 5px;
+	    color: #000;
+	}
+
+	.drain{
+		font-size: 12px;
+		background-color: $orangeColor;
+	    border-radius: 3px;
+	    display: inline-block;
+	    margin-left: 7px;
+	    padding: 5px;
+	    color: #000;
 	}
 }

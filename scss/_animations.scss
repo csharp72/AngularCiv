@@ -1,4 +1,37 @@
-@keyframes flyUp {
+@mixin animation($animate...) {
+    $max: length($animate);
+    $animations: '';
+
+    @for $i from 1 through $max {
+        $animations: #{$animations + nth($animate, $i)};
+
+        @if $i < $max {
+            $animations: #{$animations + ", "};
+        }
+    }
+    -webkit-animation: $animations;
+    animation:         $animations;
+}
+
+@mixin keyframes($animationName) {
+    @-webkit-keyframes #{$animationName} {
+        @content;
+    }
+    @keyframes #{$animationName} {
+        @content;
+    }
+}
+
+
+.flyUp1{
+	@include animation('.5s flyUp1 ease-out 1');
+}
+
+.flyUp2{
+	@include animation('.5s flyUp2 ease-out 1');
+}
+
+@include keyframes(flyUp1) {
 	0%{
 		opacity: 0;
 	}
@@ -6,11 +39,32 @@
 		opacity: .75;
 	}
 	60%{
-		transform: translateY(-35px) rotate(-120deg);
-		opacity: .75;
+		-webkit-transform: translateY(-65px) translateX(30px) rotate(120deg);
+				transform: translateY(-65px) translateX(30px) rotate(120deg);
+		opacity: .5;
 	}
 	100%{
-		transform: translateY(-30px) rotate(-200deg);
+		-webkit-transform: translateY(-50px) translateX(50px) rotate(200deg);
+				transform: translateY(-50px) translateX(50px) rotate(200deg);
+		opacity: 0;
+	}
+}
+
+@include keyframes(flyUp2) {
+	0%{
+		opacity: 0;
+	}
+	10%{
+		opacity: .75;
+	}
+	60%{
+		-webkit-transform: translateY(-65px) translateX(-30px) rotate(-120deg);
+				transform: translateY(-65px) translateX(-30px) rotate(-120deg);
+		opacity: .5;
+	}
+	100%{
+		-webkit-transform: translateY(-50px) translateX(-50px) rotate(-200deg);
+				transform: translateY(-50px) translateX(-50px) rotate(-200deg);
 		opacity: 0;
 	}
 }
