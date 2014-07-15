@@ -35,10 +35,11 @@
 						this.total = Math.max( this.total + this.productionRate, 0 );
 					}else{
 						this.total = Math.max( Math.min( this.total + this.productionRate, this.max ), 0 );
-						if( this.specialResource && this.productionRate > 0 ){
-							if( Math.random() < this.produceSpecialChance ){
-								this.specialResource.total += Math.round(this.productionRate);
-							}
+					}
+
+					if( this.specialResource && this.productionRate > 0 ){
+						if( Math.random() < this.produceSpecialChance ){
+							this.specialResource.total += Math.round(this.productionRate);
 						}
 					}
 				}

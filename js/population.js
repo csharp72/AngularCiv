@@ -1,6 +1,17 @@
 angular.module('population', [])
 
-	.factory('jobs', ['resources', function(resources){
+	.factory('population', [function(){
+		function Population(){
+			this.total = 0;
+			this.max = 0;
+		}
+
+		var population = new Population();
+
+		return population;
+	}])
+
+	.factory('jobs', ['resources','population', function(resources, population){
 		function Job( name, opts ){
 			this.name = name;
 			this.total = 0;
@@ -26,84 +37,31 @@ angular.module('population', [])
 			miner: 			new Job('Miner', 		{ production:{stone:1} }),
 		})
 
-		return jobs;
-	}])
-
-	.factory('Worker', ['jobs', function(jobs){
-
-		function Worker( job ){
-			this.job = job || jobs.unemployed;
-			this.sick = false;
-			this.dead = false;
-		}
-
-		return Worker;
-	}])
-
-	.factory('population', ['Worker', 'jobs', 'resources', 'buildings', '$rootScope', function(Worker, jobs, resources, buildings, $rootScope){
-		function Population(){
-			this.total = 0;
-			this.max = 0;
-			this.workers = [];
-			this.jobs = jobs;
-		}
-
-		var population = new Population();
-
-		Population.prototype.makeWorker = function(amount){
+		Jobs.prototype.makeWorker = function(amount){
 			var amount = amount || 1;
 			if( population.total * amount <= population.max ){
-				if( resources.use( population.jobs.unemployed.cost ) ){
-					for( var i=0; i<amount; i++ ){
-						population.workers.push( new Worker( this.jobs.unemployed ) );
-					}
+				if( resources.use( jobs.unemployed.cost ) ){
+					jobs.unemployed.total += amount;
 				}
 			}
 		}
 
-		Population.prototype.getJobWorkers = function( job, amount ){
-			var amount = amount || 0;
-			var cnt = 0;
-			var workers = this.workers.filter(function(worker){
-				if( !amount || cnt != amount ){
-					if( worker.job == job ){
-						cnt++;
-						return true;
-					}
-				}
-			});
-			return workers;
-		}
-
-		Population.prototype.getJobTotal = function( job ){
-			return this.getJobWorkers(job).length;
-		}
-
-		Population.prototype.assign = function(job, amount){
+		Jobs.prototype.assign = function(job, amount){
 			var amount = amount || 1;
-			var workers = this.getJobWorkers( jobs.unemployed, amount );
-			if( workers ){
-				angular.forEach(workers, function(worker){
-					worker.job = job;
-				})
+			if( jobs.unemployed.total >= amount ){
+				job.total += amount;
+				jobs.unemployed.total -= amount;
 			}
 		}
 
-		Population.prototype.relieve = function(job, amount){
+		Jobs.prototype.relieve = function(job, amount){
 			var amount = amount || 1;
-			var workers = this.getJobWorkers( job, amount );
-			if( workers ){
-				angular.forEach(workers, function(worker){
-					worker.job = jobs.unemployed;
-				})
+			if( job.total >= amount ){
+				job.total -= amount;
+				jobs.unemployed.total += amount;
 			}
 		}
 
-		Population.prototype.canAssign = function( job, amount ){
-			var amount = amount || 1;
-			return resources.enough( job.cost, amount );
-		}
-
-		return population;
+		return jobs;
 	}])
 	

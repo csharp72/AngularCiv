@@ -72,6 +72,8 @@ body { font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial; font-size: 
 .buildings .building .building-details .boons { background-color: #00b798; border-radius: 3px; display: inline-block; font-size: 12px; margin-left: 7px; padding: 5px; }
 
 .population-dash { background-color: #523dd1; color: white; text-align: center; }
+.population-dash .job { border: 1px solid rgba(0, 0, 0, 0.15); border-radius: 4px; display: inline-block; margin: 1px; padding: 1px 7px 1px 3px; box-shadow: 0 1px rgba(255, 255, 255, 0.15) inset; }
+.population-dash .job .name { margin-right: 4px; }
 
 .population { background-color: #322290; color: white; padding: 10px; }
 .population button:enabled { background-color: #1681c9; }

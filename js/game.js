@@ -13,7 +13,7 @@ angular.module('game', [])
 
 		game.canAssignWorker = function( job, amount ){
 			var amount = amount || 1;
-			var cnd1 = population.getJobTotal(jobs.unemployed) >= amount;
+			var cnd1 = jobs.unemployed.total >= amount;
 			var cnd2 = resources.enough( job.cost, amount );
 			return cnd1 && cnd2;
 		}
@@ -33,7 +33,7 @@ angular.module('game', [])
 		}, true);
 
 		$rootScope.$watch(function(){ 
-			return population.workers 
+			return jobs;
 		}, function(){ 
 			calcPopTotal(); 
 			calcProdRates();
@@ -65,19 +65,20 @@ angular.module('game', [])
 		}
 
 		function calcPopTotal(){
-			population.total = population.workers.length;
+			population.total = 0;
+			angular.forEach( jobs, function(job){
+				population.total += job.total;
+			})
 		}
 
 		function calcProdRates(){
 			angular.forEach(resources, function(resource){
 				resource.productionRate = 0;
 			})
-			angular.forEach(population.workers, function(worker){
-				if( !worker.sick && !worker.dead ){
-					angular.forEach( worker.job.production, function(amount, product){
-						resources[product].productionRate += amount;
-					})
-				}
+			angular.forEach(jobs, function(job){
+				angular.forEach( job.production, function(amount, product){
+					resources[product].productionRate += amount * (job.total - job.sick);
+				})
 			})
 			resources.food.productionRate -= population.total;
 		}

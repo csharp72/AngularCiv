@@ -64,33 +64,42 @@
 				<span class="cost" ng-bind-html="b.cost | displayCost"></span>
 				<!-- <span class="boon" ng-if="b.boons.maxPopulation">Increases Max Population by {{b.boons.maxPopulation}}</span> -->
 				<div class="boons">
-					<span class="boon" ng-repeat="(name, boon) in b.boons">{{name}}: <span ng-repeat="(a,b) in boon">{{a}} +{{b}}</span>{{!$last ? ', ' : ''}}</span>
+					<span class="boon" ng-repeat="(name, boon) in b.boons">{{name}} <span ng-repeat="(a,b) in boon">{{a}} +{{b}}</span>{{!$last ? ', ' : ''}}</span>
 				</div>
 			</div>
 		</div>
 	</div>
 
-	<div class="population-dash" ng-click="selectScreen( screens.buildings )">
-		<div>Population: {{ population.total }}</div>
-		<div>Max Population: {{ population.max }}</div>
+	<div class="population-dash">
+		<div class="job" ng-repeat="job in workingJobs">
+			<span class="job-name">{{job.name}}: {{job.total}}</span>
+		</div>
 	</div>
 
 	<div class="population">
-		<!-- <div>Max Population: {{ population.max }}</div>
-		<div>Population: {{ population.total }}</div> -->
-		<div>Unemployed: {{ population.getJobTotal( jobs.unemployed ) }}</div>
-		<button class="btn make-worker" ng-disabled="!canMakeWorker()" ng-click="population.makeWorker()">Create Worker</button>
+		<div>Current Population: {{ population.total }}</div>
+		<div>Maximum Population: {{ population.max }}</div>
+		
+		<button class="btn make-worker" ng-disabled="!canMakeWorker()" ng-click="jobs.makeWorker()">Create Worker</button>
 		<span class="cost" ng-bind-html="jobs.unemployed.cost | displayCost"></span><span class="drain">-1 food / sec</span>
+
+		<div class="unemployed">Unemployed: {{ jobs.unemployed.total }}</div>
 		<div class="job" ng-repeat="job in workingJobs">
-			<button class="btn job-assignment relieve" ng-disabled="!population.getJobTotal(job)" ng-click="population.relieve(job)">-</button>
-			<span class="job-name">{{job.name}}: {{population.getJobTotal(job)}}</span>
-			<button class="btn job-assignment assign" ng-disabled="!canAssignWorker(job)" ng-click="population.assign(job)">+</button>
+			<button class="btn job-assignment relieve" ng-disabled="!job.total" ng-click="jobs.relieve(job)">-</button>
+			<span class="job-name">{{job.name}}: {{job.total}}</span>
+			<button class="btn job-assignment assign" ng-disabled="!canAssignWorker(job)" ng-click="jobs.assign(job)">+</button>
 			<span class="cost" ng-bind-html="job.cost | displayCost"></span>
 			<span class="production" ng-repeat="(name, prod) in job.production">+{{prod}} {{name}} / sec</span>
 		</div>
 	</div>
 
-	
+	<div class="upgrade-dash">
+		
+	</div>
+
+	<div class="upgrades">
+
+	</div>
 	
 
 </body>
