@@ -13,6 +13,8 @@
 				this.baseMax = false;
 				this.collectRate = 1;
 				this.productionRate = 0;
+				this.consumptionRate = 0;
+				this.grossRate = 0;
 				this.image = "./images/resources/"+name.toLowerCase()+".svg";
 
 				this.collect = function(){
@@ -32,14 +34,15 @@
 
 				this.produce = function(){
 					if( this.max === false ){
-						this.total = Math.max( this.total + this.productionRate, 0 );
+						this.total = Math.max( this.total + this.productionRate - this.consumptionRate, 0 );
 					}else{
-						this.total = Math.max( Math.min( this.total + this.productionRate, this.max ), 0 );
+						this.total = Math.max( Math.min( this.total + this.productionRate - this.consumptionRate, this.max ), 0 );
 					}
 
+					
 					if( this.specialResource && this.productionRate > 0 ){
 						if( Math.random() < this.produceSpecialChance ){
-							this.specialResource.total += Math.round(this.productionRate);
+							this.specialResource.total += 1;
 						}
 					}
 				}
@@ -57,7 +60,7 @@
 				wood: new Resource('Wood', 		{total:0, max:200}),
 				stone: new Resource('Stone', 	{total:0, max:200}),
 
-				skins: new Resource('Skins',{total:0,}),
+				skins: new Resource('Skins',	{total:0,}),
 				herbs: new Resource('Herbs'),
 				ore: new Resource('Ore'),
 

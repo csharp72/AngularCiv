@@ -14,12 +14,10 @@ angular.module('filters', [])
 		return function(cost){
 			var str = "";
 			if( !$.isEmptyObject(cost) ){
-				str += "<span class='cost-display'>";
 				angular.forEach(cost, function(amount, name){
 					var res = resources[name];
 					str += "<span ng-class='{ready:resources.enough({"+name+":"+amount+"})}' class='cost-resource " + name +"'><img src='"+res.image+"' alt='"+res.name+"' /><span class='cost-amount'>" + amount + "</span></span>";
 				})
-				str += "</span>"
 			}
 			return $sce.trustAsHtml(str);
 		}

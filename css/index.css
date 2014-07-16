@@ -1,3 +1,4 @@
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,700);
 .flyUp1 { -webkit-animation: .5s flyUp1 ease-out 1; animation: .5s flyUp1 ease-out 1; }
 
 .flyUp2 { -webkit-animation: .5s flyUp2 ease-out 1; animation: .5s flyUp2 ease-out 1; }
@@ -22,38 +23,68 @@
   60% { -webkit-transform: translateY(-65px) translateX(-30px) rotate(-120deg); transform: translateY(-65px) translateX(-30px) rotate(-120deg); opacity: .5; }
   100% { -webkit-transform: translateY(-50px) translateX(-50px) rotate(-200deg); transform: translateY(-50px) translateX(-50px) rotate(-200deg); opacity: 0; } }
 
+.animate-slide-up { position: relative; top: 0; opacity: 1; -webkit-transition: all linear 0.25s; transition: all linear 0.25s; }
+
+.animate-slide-up.ng-hide { top: 480px; opacity: 0; }
+
+.animate-fade-in { opacity: 1; transition: opacity .5s; }
+
+.animate-fade-in.ng-hide-remove.ng-hide-remove-active { transition: opacity .5s; }
+
+.animate-fade-in.ng-hide-add.ng-hide-add-active { display: none !important; }
+
+.animate-fade-in.ng-hide { opacity: 0; }
+
 * { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; }
 
-body { font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial; font-size: 10px; margin: 0; padding: 0; background-color: #DDD; width: 100%; }
+html { height: 100%; }
 
-.cf:before, .buildings .building:before, .cf:after, .buildings .building:after { content: " "; /* 1 */ display: table; /* 2 */ }
+body, .app { height: 100%; }
 
-.cf:after, .buildings .building:after { clear: both; }
+body { font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial; font-size: 11px; margin: 0; padding: 0; background-color: #014b7c; }
 
-.btn, button { padding: 5px 9px; margin: 2px; border: none; border-radius: 3px; background-color: #00b798; border: 1px solid rgba(0, 0, 0, 0); display: inline-block; color: white; line-height: 24px; text-shadow: 0 1px rgba(0, 0, 0, 0.2); vertical-align: middle; }
-.btn:disabled, button:disabled { background-color: transparent; border: 1px solid rgba(0, 183, 152, 0.3); color: #999; text-shadow: none; }
+.app { width: 100%; margin: 0 auto; background-color: #014b7c; color: white; position: relative; padding-top: 91px; padding-bottom: 30px; overflow-y: auto; overflow-x: hidden; }
 
-.cost { display: inline-block; vertical-align: middle; width: 100px; }
-.cost .cost-display { background-color: #f1b718; color: #000; border-radius: 4px; display: inline-block; margin-left: 7px; }
-.cost .cost-display .cost-resource { padding: 2px 5px; line-height: 20px; display: inline-block; }
-.cost .cost-display .cost-resource img { height: 20px; vertical-align: middle; }
-.cost .cost-display .cost-resource .cost-amount { vertical-align: middle; margin-left: 3px; }
+.bottom-bar { position: fixed; bottom: 0; width: 100%; }
+.bottom-bar .nav-item { background-color: #e85223; display: inline-block; color: #333; cursor: pointer; width: 25%; text-align: center; line-height: 25px; border-right: 1px solid rgba(0, 0, 0, 0.3); text-transform: uppercase; font-weight: bold; vertical-align: bottom; box-shadow: 0 -3px 2px rgba(0, 0, 0, 0.1); -webkit-transition: all .3s, color .15s; -moz-transition: all .3s, color .15s; transition: all .3s, color .15s; }
+.bottom-bar .nav-item.selected { color: white; line-height: 30px; border-radius: 4px 4px 0 0; }
 
-.production-rate.pos { color: #00eb89; }
+.cf:before, .cf:after { content: " "; /* 1 */ display: table; /* 2 */ }
+
+.cf:after { clear: both; }
+
+.btn, button { padding: 5px 9px; margin: 2px; border: none; border-radius: 3px; background-color: #1681c9; border: 1px solid rgba(0, 0, 0, 0); display: inline-block; color: white; line-height: 24px; text-shadow: 0 1px rgba(0, 0, 0, 0.2); vertical-align: middle; cursor: pointer; }
+.btn:disabled, button:disabled { background-color: transparent; border: 1px solid rgba(22, 129, 201, 0.3); color: #999; text-shadow: none; cursor: initial; }
+
+.resource-image, .resources .resource .gathered-resources .gathered-resource img { height: 20px; width: 20px; vertical-align: middle; }
+
+.cost { display: inline-block; vertical-align: middle; height: 26px; margin-left: 7px; }
+.cost .cost-display { display: inline-block; background-color: #f1b718; border-radius: 0 4px 4px 0; position: relative; color: #000; height: 26px; }
+.cost .cost-display:after { border: 13px solid transparent; border-right-color: #f1b718; content: " "; display: block; left: -26px; position: absolute; top: 0; }
+.cost .cost-resource { padding: 2px 5px; line-height: 20px; display: inline-block; }
+.cost .cost-resource img { height: 20px; vertical-align: middle; }
+.cost .cost-resource .cost-amount { vertical-align: middle; margin-left: 3px; }
+
+.boon, .population .production { height: 25px; font-size: 12px; background-color: #00b798; border-radius: 3px; display: inline-block; margin-left: 7px; padding: 5px; color: #000; line-height: normal; }
+
+.production-rate.pos { color: #00b798; }
 .production-rate.neg { color: #e85223; font-weight: bold; }
 .production-rate .time-frame { font-size: 8px; margin-left: 1px; }
 
 .resources, .population, .buildings { vertical-align: top; }
 
-.resource-dash { background-color: #1681c9; color: white; padding: 0 3px; text-align: center; }
-.resource-dash .resource { border: 1px solid rgba(0, 0, 0, 0.15); border-radius: 4px; display: inline-block; margin: 1px; padding: 1px 7px 1px 3px; box-shadow: 0 1px rgba(255, 255, 255, 0.15) inset; text-align: center; vertical-align: top; height: 45px; }
+.resource-dash { background-color: #e5e5e5; color: #333; padding: 0; text-align: center; position: fixed; width: 100%; height: 91px; z-index: 2; top: 0; box-shadow: 0 3px 2px rgba(0, 0, 0, 0.1); }
+.resource-dash .resource { border: 1px solid rgba(0, 0, 0, 0.15); display: inline-block; padding: 2px 7px 1px; text-align: left; vertical-align: top; width: 33.3333%; }
+.resource-dash .resource .total-display { float: left; }
+.resource-dash .resource .production-rate { float: right; }
+.resource-dash .resource .total { font-weight: bold; font-size: 14px; vertical-align: middle; }
 .resource-dash .resource .resource-image, .resource-dash .resources .resource .gathered-resources .gathered-resource img, .resources .resource-dash .resource .gathered-resources .gathered-resource img { height: 17px; width: 17px; vertical-align: middle; margin-right: 3px; }
-.resource-dash .resource .limit { font-size: 8px; }
+.resource-dash .resource .limit { clear: both; }
 
-.resources { background-color: #014b7c; color: white; padding: 10px; }
-.resources .resource { display: inline-block; padding: 11px; width: 33.33333%; text-align: center; position: relative; vertical-align: top; }
+.resources { background-color: #014b7c; color: white; padding: 10px 0; }
+.resources .resource { display: inline-block; padding: 4px; width: 33.33333%; text-align: center; position: relative; vertical-align: top; margin: 0; line-height: normal; background: none; }
 .resources .resource .resource-content { background-color: #1681c9; border-radius: 8px; min-height: 166px; padding: 10px; }
-.resources .resource .resource-image, .resources .resource .gathered-resources .gathered-resource img { height: 60px; width: 60px; vertical-align: middle; margin: 33px 0 20px; }
+.resources .resource .resource-image, .resources .resource .gathered-resources .gathered-resource img { height: 60px; width: 60px; vertical-align: middle; margin: 20px 0; }
 .resources .resource .special-resource { color: #86c7f2; }
 .resources .resource .special-resource .special-resource-image { height: 15px; width: 15px; margin-left: 2px; vertical-align: middle; }
 .resources .resource .gathered-resources { position: relative; }
@@ -61,24 +92,17 @@ body { font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial; font-size: 
 .resources .resource .gathered-resources .gathered-resource img { opacity: 0; position: relative; }
 .resources .resource button { display: block; width: 100%; margin: 8px 0 4px; background-color: #1681c9; }
 
-.building-dash { background-color: #00b798; color: white; text-align: center; }
-.building-dash .building { border: 1px solid rgba(0, 0, 0, 0.15); border-radius: 4px; display: inline-block; margin: 1px; padding: 1px 7px 1px 3px; box-shadow: 0 1px rgba(255, 255, 255, 0.15) inset; }
-.building-dash .building .name { margin-right: 4px; }
+.buildings { background-color: #0d4c76; padding: 10px; }
+.buildings .building { background-color: rgba(0, 0, 0, 0.3); border-radius: 4px; margin: 0 0 10px; }
+.buildings .building .title { height: 31px; line-height: 32px; font-size: 12px; background-color: #1681c9; padding: 0 10px; }
+.buildings .building .boon, .buildings .building .population .production, .population .buildings .building .production { float: right; margin-top: 3px; background: none; color: #b4dcf7; }
+.buildings .building .building-details { padding: 10px; }
+.buildings .building button { text-align: left; min-width: 140px; }
+.buildings .building .cost { color: white; }
 
-.buildings { background-color: #005b4c; padding: 10px; }
-.buildings .building button { width: 172px; float: left; }
-.buildings .building button:enabled { background-color: #00b798; }
-.buildings .building .building-details { float: left; margin-top: 2px; vertical-align: top; }
-.buildings .building .building-details .boons { background-color: #00b798; border-radius: 3px; display: inline-block; font-size: 12px; margin-left: 7px; padding: 5px; }
-
-.population-dash { background-color: #523dd1; color: white; text-align: center; }
-.population-dash .job { border: 1px solid rgba(0, 0, 0, 0.15); border-radius: 4px; display: inline-block; margin: 1px; padding: 1px 7px 1px 3px; box-shadow: 0 1px rgba(255, 255, 255, 0.15) inset; }
-.population-dash .job .name { margin-right: 4px; }
-
-.population { background-color: #322290; color: white; padding: 10px; }
+.population { background-color: #0d4c76; color: white; padding: 10px; }
 .population button:enabled { background-color: #1681c9; }
 .population .make-worker { width: 172px; }
 .population .job .job-name { display: inline-block; width: 95px; text-align: center; }
 .population .job .job-assignment { width: 33px; }
-.population .production { font-size: 12px; background-color: #00b798; border-radius: 3px; display: inline-block; margin-left: 7px; padding: 5px; color: #000; }
-.population .drain { font-size: 12px; background-color: #e85223; border-radius: 3px; display: inline-block; margin-left: 7px; padding: 5px; color: #000; }
+.population .drain { font-size: 12px; background-color: white; border-radius: 3px; display: inline-block; margin-left: 7px; padding: 0 5px; color: #e85223; height: 25px; line-height: 24px; }

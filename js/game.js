@@ -1,8 +1,8 @@
 angular.module('game', [])
 	
 	.factory('game', 
-	['$rootScope','buildings','resources','jobs','population',
-	function($rootScope, buildings, resources,  jobs, population){
+	['$rootScope','buildings','resources','jobs','population','upgrades',
+	function($rootScope, buildings, resources,  jobs, population, upgrades){
 
 		var game = {};
 
@@ -25,6 +25,14 @@ angular.module('game', [])
 			}
 		}
 
+		game.buyUpgrade = function( upgrade, amount ){
+			var amount = amount || 1;
+			console.log( upgrade.cost )
+			if( resources.use(upgrade.cost, amount) ){
+				upgrade.aquire(amount);
+			}
+		}
+
 		$rootScope.$watch( function(){
 			return buildings;
 		}, function(){
@@ -36,7 +44,13 @@ angular.module('game', [])
 			return jobs;
 		}, function(){ 
 			calcPopTotal(); 
-			calcProdRates();
+			calcResourceRates();
+		}, true);
+
+		$rootScope.$watch(function(){ 
+			return upgrades;
+		}, function(){ 
+			calcUpgrades();
 		}, true);
 
 		function calcResourceMax(){
@@ -55,6 +69,37 @@ angular.module('game', [])
 			})
 		}
 
+		function calcResourceRates(){
+			angular.forEach(resources, function(resource){
+				resource.productionRate = 0;
+				resource.consumptionRate = 0;
+				resource.grossRate = 0;
+			})
+
+			angular.forEach(jobs, function(job){
+				angular.forEach( job.production, function(amount, product){
+					resources[product].productionRate += amount * (job.total - job.sick);
+					resources[product].grossRate += amount * (job.total - job.sick);
+				})
+			})
+
+			resources.food.consumptionRate += population.total;
+			resources.food.grossRate = resources.food.productionRate - resources.food.consumptionRate;
+		}
+
+		function calcUpgrades(){
+			angular.forEach(upgrades, function(upgrade){
+				angular.forEach( upgrade.benefits, function(benefit, benefitName){
+					var res = resources[benefitName];
+					if( res ){
+						if( benefit.produceSpecialChance ){
+							res.produceSpecialChance += benefit.produceSpecialChance * upgrade.total;
+						}
+					}
+				})
+			})
+		}
+
 		function calcPopMax(){
 			population.max = 0;
 			angular.forEach( buildings, function(building){
@@ -69,18 +114,6 @@ angular.module('game', [])
 			angular.forEach( jobs, function(job){
 				population.total += job.total;
 			})
-		}
-
-		function calcProdRates(){
-			angular.forEach(resources, function(resource){
-				resource.productionRate = 0;
-			})
-			angular.forEach(jobs, function(job){
-				angular.forEach( job.production, function(amount, product){
-					resources[product].productionRate += amount * (job.total - job.sick);
-				})
-			})
-			resources.food.productionRate -= population.total;
 		}
 
 		return game;

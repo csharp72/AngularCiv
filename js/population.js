@@ -29,9 +29,8 @@ angular.module('population', [])
 
 		var jobs = new Jobs({
 			unemployed: 	new Job('Unemployed', 	{ cost:{food:20} }),
-			gatherer: 		new Job('Gatherer', 	{ production:{food:1.2} }),
+			farmer: 		new Job('Farmer', 		{ production:{food:1.2} }),
 			hunter: 		new Job('Hunter', 		{ cost:{wood:1,stone:1}, production:{food:3} }),
-			farmer: 		new Job('Farmer', 		{ cost:{wood:20,stone:10}, production:{food:5} }),
 			rancher: 		new Job('Rancher', 		{ cost:{wood:100,metal:100,food:300}, production:{food:8} }),
 			woodcutter: 	new Job('Wood Cutter', 	{ production:{wood:1} }),
 			miner: 			new Job('Miner', 		{ production:{stone:1} }),

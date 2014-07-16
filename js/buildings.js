@@ -9,9 +9,10 @@
 				return currId++;
 			}
 
-			function Building(name, cost, boons, requirements){
+			function Building(name, type, cost, boons, requirements){
 				this.id = nextId();
 				this.name = name;
+				this.type = type;
 				this.cost = cost || {};
 				this.boons = boons || {};
 				this.requirements = requirements || {};
@@ -29,11 +30,12 @@
 			}
 
 			var buildings = new Buildings({
-				tent: 			new Building("Tent", 			{wood:2,skins:2}, 		{population:{max:1}}		),
-				hut:			new Building("Hut", 			{wood:20,skins:1}, 		{population:{max:3}}		),
-				foodStorage: 	new Building("Food Storage", 	{wood: 100}, 			{food: {max:200}}			),
-				woodStorage: 	new Building("Wood Storage", 	{wood: 100}, 			{wood: {max:200}}			),
-				stoneStorage: 	new Building("Stone Storage", 	{wood: 100}, 			{stone: {max:200}}			),
+				tent: 			new Building("Tent", 			"housing",	{wood:2,skins:2}, 		{population:{max:1}}		),
+				hut:			new Building("Hut", 			"housing",	{wood:20,skins:1}, 		{population:{max:3}}		),
+				
+				foodStorage: 	new Building("Food Storage", 	"storage",	{wood: 100}, 			{food: {max:200}}			),
+				woodStorage: 	new Building("Wood Storage", 	"storage",	{wood: 100}, 			{wood: {max:200}}			),
+				stoneStorage: 	new Building("Stone Storage", 	"storage",	{wood: 100}, 			{stone: {max:200}}			),
 			});
 
 			Buildings.prototype.build = function( building, amount ){

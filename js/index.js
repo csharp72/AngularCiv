@@ -1,10 +1,10 @@
 
-angular.module('app', ['ngTouch','ngCookies','game','resources','population','buildings','filters']);
+angular.module('app', ['ngTouch','ngCookies','ngAnimate','game','resources','population','buildings','upgrades','filters']);
 
 angular.module('app').controller('GameCtrl', 
 	
-	['$scope','$interval','$timeout','$cookieStore','game','buildings','resources','jobs','population',
-	function($scope, $interval, $timeout, $cookieStore, game, buildings, resources,  jobs, population){
+	['$scope','$interval','$timeout','$cookieStore','game','buildings','resources','jobs','population','upgrades',
+	function($scope, $interval, $timeout, $cookieStore, game, buildings, resources,  jobs, population, upgrades){
 
 		window.scope = window.$scope = $scope;
 
@@ -12,12 +12,13 @@ angular.module('app').controller('GameCtrl',
 		$scope.buildings = buildings;
 		$scope.jobs = jobs;
 		$scope.population = population;
-		
+		$scope.upgrades = upgrades;
 
 		$scope.screens = {
-			resources: 0,
-			buildings: 1,
-			population: 2,
+			resources: "Gather",
+			buildings: "Build",
+			population: "Recruit",
+			upgrades: "Upgrade",
 		}
 		$scope.selectedScreen = $scope.screens.resources;
 		$scope.selectScreen = function( screen ){
@@ -27,6 +28,7 @@ angular.module('app').controller('GameCtrl',
 		$scope.canMakeWorker = game.canMakeWorker;
 		$scope.canAssignWorker = game.canAssignWorker;
 		$scope.buildBuilding = game.buildBuilding;
+		$scope.buyUpgrade = game.buyUpgrade;
 
 		var flyUpAnim = 1;
 		$scope.collect = function( resource, $event ){
@@ -59,7 +61,7 @@ angular.module('app').controller('GameCtrl',
 		}
 
 		$scope.workingJobs = [
-			jobs.gatherer,
+			jobs.farmer,
 			jobs.woodcutter,
 			jobs.miner,
 		]
