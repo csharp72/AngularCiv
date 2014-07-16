@@ -46,8 +46,8 @@ body { font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial; font-size: 
 .app { width: 100%; margin: 0 auto; background-color: #014b7c; color: white; position: relative; padding-top: 91px; padding-bottom: 30px; overflow-y: auto; overflow-x: hidden; }
 
 .bottom-bar { position: fixed; bottom: 0; width: 100%; }
-.bottom-bar .nav-item { background-color: #e85223; display: inline-block; color: #333; cursor: pointer; width: 25%; text-align: center; line-height: 25px; border-right: 1px solid rgba(0, 0, 0, 0.3); text-transform: uppercase; font-weight: bold; vertical-align: bottom; box-shadow: 0 -3px 2px rgba(0, 0, 0, 0.1); -webkit-transition: all .3s, color .15s; -moz-transition: all .3s, color .15s; transition: all .3s, color .15s; }
-.bottom-bar .nav-item.selected { color: white; line-height: 30px; border-radius: 4px 4px 0 0; }
+.bottom-bar .nav-item { background-color: #e85223; display: inline-block; color: #333; cursor: pointer; width: 25%; text-align: center; line-height: 35px; border-right: 1px solid rgba(0, 0, 0, 0.3); text-transform: uppercase; font-weight: bold; vertical-align: bottom; box-shadow: 0 -3px 2px rgba(0, 0, 0, 0.1); -webkit-transition: all .3s, color .15s; -moz-transition: all .3s, color .15s; transition: all .3s, color .15s; }
+.bottom-bar .nav-item.selected { color: white; line-height: 30px; }
 
 .cf:before, .cf:after { content: " "; /* 1 */ display: table; /* 2 */ }
 
