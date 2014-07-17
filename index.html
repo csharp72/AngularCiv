@@ -95,7 +95,7 @@
 
 				<div class="title">
 					<span>{{u.name}}</span>
-					<span class="boon" ng-repeat="benefit in u.benefits">{{benefit.description}}{{!$last ? ', ' : ''}}</span>
+					<span class="boon" ng-repeat="benefit in u.benefits">{{benefit[0]}}{{!$last ? ', ' : ''}}</span>
 				</div>
 				
 				<div class="details" ng-show="!u.aquired">
