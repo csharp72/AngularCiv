@@ -6,17 +6,18 @@ angular.module('alertPromptConfirm', [])
 	// NOTE: This promise will never be "rejected" since there is no divergent
 	// behavior available to the user with the alert() method.
 	.factory("alert",
-		['$window', '$q', 
-		function( $window, $q ) {
+		['$window', '$q', '$timeout',
+		function( $window, $q, $timeout ) {
 	 
 			// Define promise-based alert() method.
 			function alert( message ) {
 				
 				var defer = $q.defer();
 				
-				$window.alert( message );
-				
-				defer.resolve();
+				$timeout(function(){
+					$window.alert( message );
+					defer.resolve();
+				})
 				
 				return( defer.promise );
 
@@ -65,8 +66,8 @@ angular.module('alertPromptConfirm', [])
 	// promise that will be "resolved" if the user agrees to the confirmation; or
 	// will be "rejected" if the user cancels the confirmation.
 	.factory("confirm",
-		['$window', '$q',
-		function( $window, $q ) {
+		['$window', '$q', '$timeout',
+		function( $window, $q, $timeout ) {
 		 
 			// Define promise-based confirm() method.
 			function confirm( message ) {
@@ -74,15 +75,13 @@ angular.module('alertPromptConfirm', [])
 				var defer = $q.defer();
 				 
 				// The native confirm will return a boolean.
-				if ( $window.confirm( message ) ) {
-				 
-					defer.resolve( true );
-				 
-				} else {
-				 
-					defer.reject( false );
-				 
-				}
+				$timeout(function(){
+					if ( $window.confirm( message ) ) {
+						defer.resolve( true );
+					} else {
+						defer.reject( false );
+					}
+				})
 				 
 				return( defer.promise );
 			 

@@ -250,6 +250,10 @@ body{
 		&.selected{
 			background-color: $blueColor;
 		}
+
+		.delete-game{
+			float: right;
+		}
     }
 }
 

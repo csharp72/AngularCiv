@@ -41,7 +41,8 @@
 
 		<div class="saved-games" ng-show="GameCtrl.chooseGame">
 			<h2>Saved Games</h2>
-			<div class="saved-game" ng-class="{selected: sg == game.currentGame}" ng-repeat="sg in game.savedGames" ng-click="GameCtrl.chooseGame = false; game.switch( sg )">{{sg}}</div>
+			<div class="saved-game" ng-class="{selected: sg == game.currentGame}" ng-repeat="sg in game.savedGames" ng-click="GameCtrl.chooseGame = false; game.switch( sg )">{{sg}}<div class="delete-game" ng-click="game.deleteSave( sg )">X</div></div>
+			<div class="saved-game" ng-click="GameCtrl.chooseGame = false; game.switch()">+ New Game</div>
 		</div>
 		
 		<div class="resources animate-fade-in" ng-show="selectedScreen == screens.resources">
