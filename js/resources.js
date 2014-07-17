@@ -35,10 +35,11 @@
 				this.produce = function(){
 					if( this.max === false ){
 						this.total = Math.max( this.total + this.productionRate - this.consumptionRate, 0 );
-						rollForSpecial();
+						rollForSpecial.call( this );
 					}else{
+						console.log( this.total, this.max, this.total < this.max )
 						if( this.total < this.max ){
-							rollForSpecial();
+							rollForSpecial.call( this );
 						}
 						this.total = Math.max( Math.min( this.total + this.productionRate - this.consumptionRate, this.max ), 0 );
 					}
@@ -46,7 +47,7 @@
 					function rollForSpecial(){
 						if( this.specialResource && this.productionRate > 0 ){
 							if( Math.random() < this.produceSpecialChance ){
-								this.specialResource.total += 1;
+								this.specialResource.total += Math.max( this.productionRate - this.consumptionRate, 0 );
 							}
 						}
 					}
