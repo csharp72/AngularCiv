@@ -47,7 +47,7 @@
 		<div class="resources animate-fade-in" ng-show="selectedScreen == screens.resources">
 			<h2>{{game.currentGame}} <button ng-disabled="false" ng-click="GameCtrl.chooseGame = true">Load Game</button></h2>
 			<div class="resource" ng-repeat="r in resources.basic" ng-disable="true" ng-click="collect(r, $event)">
-				<button class="resource-content">
+				<button class="resource-content" ng-disabled="false">
 					<div>Gather {{r.name}}</div>
 					<div ng-if="r.collectRate > 0">x{{r.collectRate}}</div>
 					<div class="gathered-resources">
