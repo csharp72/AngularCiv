@@ -37,6 +37,7 @@ angular.module('alertPromptConfirm', [])
 	 
 			// Define promise-based prompt() method.
 			function prompt( message, defaultValue ) {
+				var defaultValue = defaultValue || "";
 		 
 				var defer = $q.defer();
 		 
