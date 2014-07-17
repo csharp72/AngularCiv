@@ -1,5 +1,5 @@
 
-angular.module('app', ['ngTouch','ngCookies','ngAnimate','game','resources','population','buildings','upgrades','filters']);
+angular.module('app', ['ngTouch','ngCookies','ngAnimate','game','resources','population','buildings','upgrades','filters','alertPromptConfirm']);
 
 angular.module('app').controller('GameCtrl', 
 	
@@ -8,6 +8,7 @@ angular.module('app').controller('GameCtrl',
 
 		window.scope = window.$scope = $scope;
 
+		$scope.game = game;
 		$scope.resources = resources;
 		$scope.buildings = buildings;
 		$scope.jobs = jobs;
@@ -24,6 +25,8 @@ angular.module('app').controller('GameCtrl',
 		$scope.selectScreen = function( screen ){
 			$scope.selectedScreen = screen;
 		}
+
+		$scope.chooseGame = false;
 
 		$scope.canMakeWorker = game.canMakeWorker;
 		$scope.canAssignWorker = game.canAssignWorker;
@@ -73,6 +76,7 @@ angular.module('app').controller('GameCtrl',
 
 		var gameLoop = $interval(function(){
 			resources.produce();
+			game.save();
 		}, 1000);
 
 		$(document).ready(function(){
@@ -85,18 +89,6 @@ angular.module('app').controller('GameCtrl',
 				$(this).data('gatheredResource', $(this).find('.gathered-resource').detach() );
 			})
 		})
-
-		function simplify( obj ){
-			var newObj = {};
-			angular.forEach(obj, function(att, key){
-				if( typeof att == 'object' ){
-					newObj[key] = simplify(att);
-				}else if( typeof att != 'function'){
-					newObj[key] = att;
-				}
-			})
-			return newObj;
-		}
 		
 	}
 ])

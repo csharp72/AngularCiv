@@ -35,7 +35,7 @@
 
 .animate-fade-in.ng-hide { opacity: 0; }
 
-* { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; }
+* { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; outline: none; }
 
 html { height: 100%; }
 
@@ -45,7 +45,7 @@ body { font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial; font-size: 
 
 .app { width: 100%; margin: 0 auto; background-color: #014b7c; color: white; position: relative; padding-top: 91px; padding-bottom: 45px; overflow-y: auto; overflow-x: hidden; }
 
-.bottom-bar { position: fixed; bottom: 0; width: 100%; }
+.bottom-bar { position: fixed; bottom: 0; width: 100%; z-index: 2; }
 .bottom-bar .nav-item { background-color: #ac3712; display: inline-block; color: #d9d9d9; cursor: pointer; width: 25%; text-align: center; line-height: 32px; border-right: 1px solid rgba(0, 0, 0, 0.3); border-top: 1px solid rgba(0, 0, 0, 0.3); text-transform: uppercase; font-weight: bold; vertical-align: bottom; box-shadow: 0 -3px 2px rgba(0, 0, 0, 0.1); -webkit-transition: all .3s, color .15s; -moz-transition: all .3s, color .15s; transition: all .3s, color .15s; }
 .bottom-bar .nav-item.selected { background-color: #e85223; color: white; line-height: 36px; border-radius: 4px 4px 0 0; }
 
@@ -73,9 +73,12 @@ body { font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial; font-size: 
 .production-rate.neg { color: #e85223; font-weight: bold; }
 .production-rate .time-frame { font-size: 8px; margin-left: 1px; }
 
-.resources, .population, .buildings { vertical-align: top; }
+.saved-games { background-color: #9f3211; bottom: 0; left: 0; position: fixed; right: 0; top: 0; z-index: 1; padding: 91px 10px 32px; overflow: auto; }
+.saved-games .saved-game { background-color: #e85223; border-radius: 10px; cursor: pointer; font-size: 14px; font-weight: bold; line-height: 35px; margin: 10px 0; padding: 0 10px; }
+.saved-games .saved-game:hover { background-color: #ec734d; }
+.saved-games .saved-game.selected { background-color: #1681c9; }
 
-.resource-dash { background-color: #e5e5e5; color: #333; padding: 0; text-align: center; position: fixed; width: 100%; height: 91px; z-index: 2; top: 0; box-shadow: 0 3px 2px rgba(0, 0, 0, 0.1); }
+.resource-dash { background-color: #e5e5e5; color: #333; padding: 0; text-align: center; position: fixed; width: 100%; z-index: 3; top: 0; box-shadow: 0 3px 2px rgba(0, 0, 0, 0.1); }
 .resource-dash .resource { border: 1px solid rgba(0, 0, 0, 0.15); display: inline-block; padding: 2px 7px 1px; text-align: left; vertical-align: top; width: 33.3333%; }
 .resource-dash .resource .total-display { float: left; }
 .resource-dash .resource .production-rate { float: right; }

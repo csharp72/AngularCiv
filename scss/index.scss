@@ -39,6 +39,8 @@ $topBarH: 91px;
 	-moz-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
+
+	outline: none;
 }
 
 html{
@@ -73,6 +75,7 @@ body{
 	position: fixed;
 	bottom: 0;
 	width: $appW;
+	z-index: 2;
 
 	.nav-item{
 		background-color: darken($orangeColor, 15%);
@@ -219,11 +222,42 @@ body{
 	}
 }
 
-.resources, .population, .buildings{
-	//display: inline-block;
-	vertical-align: top;
-	// width: 304px;
+.saved-games {
+    background-color: darken($orangeColor, 18%);
+    bottom: 0;
+    left: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
+    z-index: 1;
+    padding: 91px 10px 32px;
+    overflow: auto;
+
+    .saved-game{
+    	background-color: $orangeColor;
+		border-radius: 10px;
+		cursor: pointer;
+		font-size: 14px;
+		font-weight: bold;
+		line-height: 35px;
+		margin: 10px 0;
+		padding: 0 10px;
+
+		&:hover{
+			background-color: lighten($orangeColor, 9%);
+		}
+
+		&.selected{
+			background-color: $blueColor;
+		}
+    }
 }
+
+// .resources, .population, .buildings{
+// 	//display: inline-block;
+// 	vertical-align: top;
+// 	// width: 304px;
+// }
 
 .resource-dash {
 	background-color: $greyColor;
@@ -232,8 +266,7 @@ body{
     text-align: center;
     position: fixed;
 	width: $appW;
-	height: $topBarH;
-	z-index: 2;
+	z-index: 3;
 	top: 0;
 	box-shadow: 0 3px 2px rgba(0, 0, 0, 0.1);
 

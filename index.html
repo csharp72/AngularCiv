@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html ng-app="app">
+<html ng-app="app" ng-controller="GameCtrl">
 <head>
-	<title>Angular Civ Clicker</title>
+	<title>{{game.currentGame}}</title>
 
 	<script type="text/javascript" src="./js/libs/angular.min.js"></script>
 	<script type="text/javascript" src="./js/libs/angular-touch.min.js"></script>
@@ -16,6 +16,7 @@
 	<script type="text/javascript" src="./js/population.js"></script>
 	<script type="text/javascript" src="./js/upgrades.js"></script>
 	<script type="text/javascript" src="./js/filters.js"></script>
+	<script type="text/javascript" src="./js/alert_prompt_confirm.js"></script>
 	<link rel="stylesheet" type="text/css" href="css/index.css">
 
 	<meta name="viewport" content="width=device-width, user-scalable=no">
@@ -24,7 +25,7 @@
 	<meta name="apple-mobile-web-app-status-bar-style" content="black">
 
 </head>
-<body ng-controller="GameCtrl">
+<body>
 	
 	<div class="app">
 
@@ -37,8 +38,14 @@
 				<div class="limit" ng-if="r.max"><small>Limit</small> {{r.max}}</div>
 			</div>
 		</div>
+
+		<div class="saved-games" ng-show="GameCtrl.chooseGame">
+			<h2>Saved Games</h2>
+			<div class="saved-game" ng-class="{selected: sg == game.currentGame}" ng-repeat="sg in game.savedGames" ng-click="GameCtrl.chooseGame = false; game.switch( sg )">{{sg}}</div>
+		</div>
 		
 		<div class="resources animate-fade-in" ng-show="selectedScreen == screens.resources">
+			<h2>{{game.currentGame}} <button ng-disabled="false" ng-click="GameCtrl.chooseGame = true">Load Game</button></h2>
 			<div class="resource" ng-repeat="r in resources.basic" ng-disable="true" ng-click="collect(r, $event)">
 				<button class="resource-content">
 					<div>Gather {{r.name}}</div>
@@ -53,6 +60,8 @@
 					<div class="special-resource">{{r.specialChance * 100}}% chance to produce <img class="special-resource-image"ng-src="{{r.specialResource.image}}" alt="{{r.specialResource.name}}"/></div>
 				</button>
 			</div>
+
+			
 		</div>
 
 		<div class="buildings animate-fade-in" ng-show="selectedScreen == screens.buildings">

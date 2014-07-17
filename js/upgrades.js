@@ -30,9 +30,10 @@
 			}
 
 			function Upgrades(upgrades){
-				this.list = list;
 				angular.extend(this, upgrades);
 			}
+
+			Upgrades.prototype.list = list;
 
 			var upgrades = new Upgrades({
 				skinning: 		new Upgrade("Skinning", 	{skins:10},					[["Gatherers can produce skins", 	{food:{produceSpecialChance:.1}}]]  		),
