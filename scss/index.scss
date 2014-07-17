@@ -64,7 +64,7 @@ body{
 	color: white;
 	position: relative;
 	padding-top: $topBarH;
-	padding-bottom: 30px;
+	padding-bottom: 45px;
 	overflow-y: auto;
 	overflow-x: hidden;
 }
@@ -75,14 +75,15 @@ body{
 	width: $appW;
 
 	.nav-item{
-		background-color: $orangeColor;
+		background-color: darken($orangeColor, 15%);
 		display: inline-block;
-		color: #333;
+		color: darken(#FFF, 15%);
 		cursor: pointer;
 		width: 25%;
 		text-align: center;
-		line-height: 35px;
+		line-height: 32px;
 		border-right: 1px solid rgba(0,0,0,.3);
+		border-top: 1px solid rgba(0,0,0,.3);
 		text-transform: uppercase;
 		font-weight: bold;
 		vertical-align: bottom;
@@ -93,10 +94,10 @@ body{
 				transition: all .3s, color .15s;
 
 		&.selected{
-			//background-color: $orangeColor;
+			background-color: $orangeColor;
 			color: white;
-			line-height: 30px;
-			// border-radius: 4px 4px 0 0;
+			line-height: 36px;
+			border-radius: 4px 4px 0 0;
 		}
 	}
 }
@@ -114,23 +115,32 @@ body{
 .btn, button{
 	padding: 5px 9px;
 	margin: 2px;
-	border: none;
 	border-radius: 3px;
 	background-color: $blueColor;
-	border: 1px solid rgba(0,0,0,0);
+	border: none;
 	display: inline-block;
 	color: white;
 	line-height: 24px;
 	text-shadow: 0 1px rgba(0, 0, 0, 0.2);
 	vertical-align: middle;
 	cursor: pointer;
+	box-shadow: 0 2px 0 rgba(0, 0, 0, 0.3), 0 -1px rgba(255, 255, 255, 0.3) inset;
+
+	&:hover{
+		background-color: lighten($blueColor, 5%);
+	}
+
+	&:active{
+		box-shadow: 0 170px 110px -110px rgba(0, 0, 0, 0.1) inset, 0 2px 1px rgba(0, 0, 0, 0.5) inset;
+	}
 
 	&:disabled{
-		background-color: transparent;
-		border: 1px solid rgba($blueColor, .3);
+		background-color: $darkBlueColor;
+		//border: 1px solid rgba($blueColor, .3);
 		color: #999;
 		text-shadow: none;
 		cursor: initial;
+		box-shadow: none;
 	}
 }
 
@@ -269,7 +279,7 @@ body{
 .resources{
 	background-color: $darkBlueColor;
 	color: white;
-	padding: 10px 0;
+	padding: 10px 5px;
 
 	.resource{
 		display: inline-block;
@@ -279,14 +289,14 @@ body{
 		position: relative;
 		vertical-align: top;
 		margin: 0;
-		line-height: normal;
 		background: none;
 
 		.resource-content{
-			background-color: $blueColor;
 			border-radius: 8px;
 			min-height: 166px;
 			padding: 10px;
+			margin: 8px 0 4px;
+			line-height: normal;
 		}
 
 		.resource-image{
@@ -320,13 +330,6 @@ body{
 			    }
 			}
 		}
-
-		button{
-			display: block;
-			width: 100%;
-			margin: 8px 0 4px;
-			background-color: $blueColor;
-		}
 	}
 }
 
@@ -356,7 +359,7 @@ body{
 	    	color: lighten($blueColor, 40%);
 	    }
 
-		.building-details{
+		.details{
 			padding: $bPad;
 		}
 
@@ -411,5 +414,63 @@ body{
 	    color: $orangeColor;
 	    height: 25px;
 	    line-height: 24px;
+	}
+}
+
+.upgrades{
+	padding: 10px;
+
+	$pad: 10px;
+
+	.upgrade{
+		background-color: rgba(0, 0, 0, 0.3);
+	    border-radius: 4px;
+	    margin: 10px 0;
+	    overflow: hidden;
+
+	    -webkit-transition: .5s;
+	    	transition: .5s;
+
+	    .title{
+	    	height: 31px;
+	    	line-height: 32px;
+	    	font-size: 12px;
+	    	background-color: $blueColor;
+	    	padding: 0 $pad;
+
+	    	-webkit-transition: .5s;
+	    	transition: .5s;
+	    }
+
+	    .boon{
+	    	float: right;
+	    	margin-top: 3px;
+	    	background: none;
+	    	color: rgba(255,255,255,.7);
+	    }
+
+		.details{
+			padding: $pad;
+		}
+
+		button{
+			text-align: left;
+			min-width: 140px;
+		}
+
+		.cost{
+			// float:right;
+			color: white;
+		}
+
+		&.aquired{
+			border-radius: 50px;
+			margin: 3px 0;
+
+			.title{
+				background-color: $greenColor;
+			}
+		}
+		
 	}
 }

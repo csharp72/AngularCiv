@@ -90,12 +90,17 @@ angular.module('game', [])
 		function calcUpgrades(){
 			angular.forEach(upgrades, function(upgrade){
 				angular.forEach( upgrade.benefits, function(benefit, benefitName){
-					var res = resources[benefitName];
-					if( res ){
-						if( benefit.produceSpecialChance ){
-							res.produceSpecialChance += benefit.produceSpecialChance * upgrade.total;
+					var benefitEffect = benefit[1]
+					angular.forEach( benefitEffect, function(ben, key){
+						
+						var res = resources[key];
+						if( res ){
+							angular.forEach(ben, function(att, key){
+								res[key] += att * upgrade.total;
+							})
 						}
-					}
+						
+					})
 				})
 			})
 		}

@@ -43,18 +43,20 @@ body, .app { height: 100%; }
 
 body { font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial; font-size: 11px; margin: 0; padding: 0; background-color: #014b7c; }
 
-.app { width: 100%; margin: 0 auto; background-color: #014b7c; color: white; position: relative; padding-top: 91px; padding-bottom: 30px; overflow-y: auto; overflow-x: hidden; }
+.app { width: 100%; margin: 0 auto; background-color: #014b7c; color: white; position: relative; padding-top: 91px; padding-bottom: 45px; overflow-y: auto; overflow-x: hidden; }
 
 .bottom-bar { position: fixed; bottom: 0; width: 100%; }
-.bottom-bar .nav-item { background-color: #e85223; display: inline-block; color: #333; cursor: pointer; width: 25%; text-align: center; line-height: 35px; border-right: 1px solid rgba(0, 0, 0, 0.3); text-transform: uppercase; font-weight: bold; vertical-align: bottom; box-shadow: 0 -3px 2px rgba(0, 0, 0, 0.1); -webkit-transition: all .3s, color .15s; -moz-transition: all .3s, color .15s; transition: all .3s, color .15s; }
-.bottom-bar .nav-item.selected { color: white; line-height: 30px; }
+.bottom-bar .nav-item { background-color: #ac3712; display: inline-block; color: #d9d9d9; cursor: pointer; width: 25%; text-align: center; line-height: 32px; border-right: 1px solid rgba(0, 0, 0, 0.3); border-top: 1px solid rgba(0, 0, 0, 0.3); text-transform: uppercase; font-weight: bold; vertical-align: bottom; box-shadow: 0 -3px 2px rgba(0, 0, 0, 0.1); -webkit-transition: all .3s, color .15s; -moz-transition: all .3s, color .15s; transition: all .3s, color .15s; }
+.bottom-bar .nav-item.selected { background-color: #e85223; color: white; line-height: 36px; border-radius: 4px 4px 0 0; }
 
 .cf:before, .cf:after { content: " "; /* 1 */ display: table; /* 2 */ }
 
 .cf:after { clear: both; }
 
-.btn, button { padding: 5px 9px; margin: 2px; border: none; border-radius: 3px; background-color: #1681c9; border: 1px solid rgba(0, 0, 0, 0); display: inline-block; color: white; line-height: 24px; text-shadow: 0 1px rgba(0, 0, 0, 0.2); vertical-align: middle; cursor: pointer; }
-.btn:disabled, button:disabled { background-color: transparent; border: 1px solid rgba(22, 129, 201, 0.3); color: #999; text-shadow: none; cursor: initial; }
+.btn, button { padding: 5px 9px; margin: 2px; border-radius: 3px; background-color: #1681c9; border: none; display: inline-block; color: white; line-height: 24px; text-shadow: 0 1px rgba(0, 0, 0, 0.2); vertical-align: middle; cursor: pointer; box-shadow: 0 2px 0 rgba(0, 0, 0, 0.3), 0 -1px rgba(255, 255, 255, 0.3) inset; }
+.btn:hover, button:hover { background-color: #1990e0; }
+.btn:active, button:active { box-shadow: 0 170px 110px -110px rgba(0, 0, 0, 0.1) inset, 0 2px 1px rgba(0, 0, 0, 0.5) inset; }
+.btn:disabled, button:disabled { background-color: #014b7c; color: #999; text-shadow: none; cursor: initial; box-shadow: none; }
 
 .resource-image, .resources .resource .gathered-resources .gathered-resource img { height: 20px; width: 20px; vertical-align: middle; }
 
@@ -81,22 +83,21 @@ body { font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial; font-size: 
 .resource-dash .resource .resource-image, .resource-dash .resources .resource .gathered-resources .gathered-resource img, .resources .resource-dash .resource .gathered-resources .gathered-resource img { height: 17px; width: 17px; vertical-align: middle; margin-right: 3px; }
 .resource-dash .resource .limit { clear: both; }
 
-.resources { background-color: #014b7c; color: white; padding: 10px 0; }
-.resources .resource { display: inline-block; padding: 4px; width: 33.33333%; text-align: center; position: relative; vertical-align: top; margin: 0; line-height: normal; background: none; }
-.resources .resource .resource-content { background-color: #1681c9; border-radius: 8px; min-height: 166px; padding: 10px; }
+.resources { background-color: #014b7c; color: white; padding: 10px 5px; }
+.resources .resource { display: inline-block; padding: 4px; width: 33.33333%; text-align: center; position: relative; vertical-align: top; margin: 0; background: none; }
+.resources .resource .resource-content { border-radius: 8px; min-height: 166px; padding: 10px; margin: 8px 0 4px; line-height: normal; }
 .resources .resource .resource-image, .resources .resource .gathered-resources .gathered-resource img { height: 60px; width: 60px; vertical-align: middle; margin: 20px 0; }
 .resources .resource .special-resource { color: #86c7f2; }
 .resources .resource .special-resource .special-resource-image { height: 15px; width: 15px; margin-left: 2px; vertical-align: middle; }
 .resources .resource .gathered-resources { position: relative; }
 .resources .resource .gathered-resources .gathered-resource { left: 0; right: 0; position: absolute; }
 .resources .resource .gathered-resources .gathered-resource img { opacity: 0; position: relative; }
-.resources .resource button { display: block; width: 100%; margin: 8px 0 4px; background-color: #1681c9; }
 
 .buildings { background-color: #0d4c76; padding: 10px; }
 .buildings .building { background-color: rgba(0, 0, 0, 0.3); border-radius: 4px; margin: 0 0 10px; }
 .buildings .building .title { height: 31px; line-height: 32px; font-size: 12px; background-color: #1681c9; padding: 0 10px; }
 .buildings .building .boon, .buildings .building .population .production, .population .buildings .building .production { float: right; margin-top: 3px; background: none; color: #b4dcf7; }
-.buildings .building .building-details { padding: 10px; }
+.buildings .building .details { padding: 10px; }
 .buildings .building button { text-align: left; min-width: 140px; }
 .buildings .building .cost { color: white; }
 
@@ -106,3 +107,13 @@ body { font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial; font-size: 
 .population .job .job-name { display: inline-block; width: 95px; text-align: center; }
 .population .job .job-assignment { width: 33px; }
 .population .drain { font-size: 12px; background-color: white; border-radius: 3px; display: inline-block; margin-left: 7px; padding: 0 5px; color: #e85223; height: 25px; line-height: 24px; }
+
+.upgrades { padding: 10px; }
+.upgrades .upgrade { background-color: rgba(0, 0, 0, 0.3); border-radius: 4px; margin: 10px 0; overflow: hidden; -webkit-transition: .5s; transition: .5s; }
+.upgrades .upgrade .title { height: 31px; line-height: 32px; font-size: 12px; background-color: #1681c9; padding: 0 10px; -webkit-transition: .5s; transition: .5s; }
+.upgrades .upgrade .boon, .upgrades .upgrade .population .production, .population .upgrades .upgrade .production { float: right; margin-top: 3px; background: none; color: rgba(255, 255, 255, 0.7); }
+.upgrades .upgrade .details { padding: 10px; }
+.upgrades .upgrade button { text-align: left; min-width: 140px; }
+.upgrades .upgrade .cost { color: white; }
+.upgrades .upgrade.aquired { border-radius: 50px; margin: 3px 0; }
+.upgrades .upgrade.aquired .title { background-color: #00b798; }

@@ -61,8 +61,8 @@
 				stone: new Resource('Stone', 	{total:0, max:200}),
 
 				skins: new Resource('Skins',	{total:0,}),
-				herbs: new Resource('Herbs'),
-				ore: new Resource('Ore'),
+				herbs: new Resource('Herbs',	{total:0,}),
+				ore: new Resource('Ore',		{total:0,}),
 
 				leather: new Resource('Leather'),
 				medicine: new Resource('Medicine'),

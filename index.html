@@ -39,8 +39,8 @@
 		</div>
 		
 		<div class="resources animate-fade-in" ng-show="selectedScreen == screens.resources">
-			<button class="resource" ng-repeat="r in resources.basic" ng-disable="true" ng-click="collect(r, $event)">
-				<div class="resource-content">
+			<div class="resource" ng-repeat="r in resources.basic" ng-disable="true" ng-click="collect(r, $event)">
+				<button class="resource-content">
 					<div>Gather {{r.name}}</div>
 					<div ng-if="r.collectRate > 0">x{{r.collectRate}}</div>
 					<div class="gathered-resources">
@@ -51,18 +51,18 @@
 					<img class="resource-image" ng-src="{{r.image}}" alt="" />
 
 					<div class="special-resource">{{r.specialChance * 100}}% chance to produce <img class="special-resource-image"ng-src="{{r.specialResource.image}}" alt="{{r.specialResource.name}}"/></div>
-				</div>
-			</button>
+				</button>
+			</div>
 		</div>
 
 		<div class="buildings animate-fade-in" ng-show="selectedScreen == screens.buildings">
 			<div class="building" ng-repeat="b in buildingsList">
 				<div class="title">
-					<span>{{b.name}}: {{b.total}}</span>
+					<span>{{b.name}}: <strong>{{b.total}}</strong></span>
 					<span class="boon" ng-repeat="(name, boon) in b.boons">{{name}} <span ng-repeat="(a,b) in boon">{{a}} +{{b}}</span>{{!$last ? ', ' : ''}}</span>
 				</div>
 				
-				<div class="building-details">
+				<div class="details">
 					<button ng-disabled="!resources.enough(b.cost)" ng-click="buildBuilding(b)">Build {{b.name}}</button>
 					<span class="cost"><span class="cost-display" ng-bind-html="b.cost | displayCost" /></span>
 				</div>
@@ -91,9 +91,18 @@
 		</div>
 
 		<div class="upgrades" ng-show="selectedScreen == screens.upgrades">
-			<div class="upgrade" ng-repeat="u in upgrades.list">
-				<button ng-if="!u.total" ng-click="buyUpgrade(u)">{{u.name}}</button>
-				<span class="cost"><span class="cost-display" ng-bind-html="u.cost | displayCost" /></span>
+			<div class="upgrade" ng-repeat="u in upgrades.list" ng-class="{aquired: u.aquired}">
+
+				<div class="title">
+					<span>{{u.name}}</span>
+					<span class="boon" ng-repeat="benefit in u.benefits">{{benefit.description}}{{!$last ? ', ' : ''}}</span>
+				</div>
+				
+				<div class="details" ng-show="!u.aquired">
+					<button ng-click="buyUpgrade(u)">Purchase</button>
+					<span class="cost"><span class="cost-display" ng-bind-html="u.cost | displayCost" /></span>
+				</div>
+				
 			</div>
 		</div>
 
