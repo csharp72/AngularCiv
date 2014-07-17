@@ -99,7 +99,7 @@
 				</div>
 				
 				<div class="details" ng-show="!u.aquired">
-					<button ng-click="buyUpgrade(u)">Purchase</button>
+					<button ng-disabled="!resources.enough(u.cost)" ng-click="buyUpgrade(u)">Purchase</button>
 					<span class="cost"><span class="cost-display" ng-bind-html="u.cost | displayCost" /></span>
 				</div>
 				
