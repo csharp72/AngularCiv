@@ -37,7 +37,6 @@
 						this.total = Math.max( this.total + this.productionRate - this.consumptionRate, 0 );
 						rollForSpecial.call( this );
 					}else{
-						console.log( this.total, this.max, this.total < this.max )
 						if( this.total < this.max ){
 							rollForSpecial.call( this );
 						}
