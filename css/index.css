@@ -35,6 +35,16 @@
 
 .animate-fade-in.ng-hide { opacity: 0; }
 
+.animate-switch-container, .game-screens { position: relative; }
+
+.animate-switch.ng-animate.ng-enter, .game-screens .ng-animate.ng-enter.game-screen { -webkit-animation: .6s fadeIn ease-out 1; animation: .6s fadeIn ease-out 1; }
+
+@-webkit-keyframes fadeIn { 0% { opacity: 0; }
+  100% { opacity: 1; } }
+
+@keyframes fadeIn { 0% { opacity: 0; }
+  100% { opacity: 1; } }
+
 * { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; outline: none; }
 
 html { height: 100%; }
@@ -43,11 +53,10 @@ body, .app { height: 100%; }
 
 body { font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial; font-size: 11px; margin: 0; padding: 0; background-color: #014b7c; }
 
-.app { width: 100%; margin: 0 auto; background-color: #014b7c; color: white; position: relative; padding-top: 91px; padding-bottom: 45px; overflow-y: auto; overflow-x: hidden; }
+.app { width: 100%; margin: 0 auto; background-color: #014b7c; color: white; position: relative; }
 
-.bottom-bar { position: fixed; bottom: 0; width: 100%; z-index: 2; }
-.bottom-bar .nav-item { background-color: #ac3712; display: inline-block; color: #d9d9d9; cursor: pointer; width: 25%; text-align: center; line-height: 32px; border-right: 1px solid rgba(0, 0, 0, 0.3); border-top: 1px solid rgba(0, 0, 0, 0.3); text-transform: uppercase; font-weight: bold; vertical-align: bottom; box-shadow: 0 -3px 2px rgba(0, 0, 0, 0.1); -webkit-transition: all .3s, color .15s; -moz-transition: all .3s, color .15s; transition: all .3s, color .15s; }
-.bottom-bar .nav-item.selected { background-color: #e85223; color: white; line-height: 36px; border-radius: 4px 4px 0 0; }
+.game-screens { height: 100%; overflow-y: auto; overflow-x: hidden; }
+.game-screens .game-screen { min-height: 100%; padding: 10px 5px; padding-top: 101px; padding-bottom: 42px; }
 
 .cf:before, .cf:after { content: " "; /* 1 */ display: table; /* 2 */ }
 
@@ -73,47 +82,50 @@ body { font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial; font-size: 
 .production-rate.neg { color: #e85223; font-weight: bold; }
 .production-rate .time-frame { font-size: 8px; margin-left: 1px; }
 
-.saved-games { background-color: #9f3211; bottom: 0; left: 0; position: fixed; right: 0; top: 0; z-index: 1; padding: 91px 10px 32px; overflow: auto; }
+.bottom-bar { position: fixed; bottom: 0; width: 100%; z-index: 2; }
+.bottom-bar .nav-item { background-color: #ac3712; display: inline-block; color: #d9d9d9; cursor: pointer; width: 20%; text-align: center; line-height: 32px; border-right: 1px solid rgba(0, 0, 0, 0.3); border-top: 1px solid rgba(0, 0, 0, 0.3); text-transform: uppercase; font-weight: bold; vertical-align: bottom; box-shadow: 0 -3px 2px rgba(0, 0, 0, 0.1); -webkit-transition: all .3s, color .15s; -moz-transition: all .3s, color .15s; transition: all .3s, color .15s; }
+.bottom-bar .nav-item.selected { background-color: #e85223; color: white; line-height: 36px; border-radius: 4px 4px 0 0; }
+
+.saved-games { background-color: #9f3211; }
 .saved-games .saved-game { background-color: #e85223; border-radius: 10px; cursor: pointer; font-size: 14px; font-weight: bold; line-height: 35px; margin: 10px 0; padding: 0 10px; }
 .saved-games .saved-game:hover { background-color: #ec734d; }
 .saved-games .saved-game.selected { background-color: #1681c9; }
 .saved-games .saved-game .delete-game { float: right; }
 
 .resource-dash { background-color: #e5e5e5; color: #333; padding: 0; text-align: center; position: fixed; width: 100%; z-index: 3; top: 0; box-shadow: 0 3px 2px rgba(0, 0, 0, 0.1); }
-.resource-dash .resource { border: 1px solid rgba(0, 0, 0, 0.15); display: inline-block; padding: 2px 7px 1px; text-align: left; vertical-align: top; width: 33.3333%; }
+.resource-dash .resource { border: 1px solid rgba(0, 0, 0, 0.15); display: inline-block; padding: 2px 3px 1px 7px; text-align: left; vertical-align: top; width: 33.3333%; }
 .resource-dash .resource .total-display { float: left; }
-.resource-dash .resource .production-rate { float: right; }
+.resource-dash .resource .production-rate { clear: both; text-align: center; }
 .resource-dash .resource .total { font-weight: bold; font-size: 14px; vertical-align: middle; }
 .resource-dash .resource .resource-image, .resource-dash .resources .resource .gathered-resources .gathered-resource img, .resources .resource-dash .resource .gathered-resources .gathered-resource img { height: 17px; width: 17px; vertical-align: middle; margin-right: 3px; }
-.resource-dash .resource .limit { clear: both; }
+.resource-dash .resource .limit { float: right; }
 
-.resources { background-color: #014b7c; color: white; padding: 10px 5px; }
+.resources { color: white; }
 .resources .resource { display: inline-block; padding: 4px; width: 33.33333%; text-align: center; position: relative; vertical-align: top; margin: 0; background: none; }
-.resources .resource .resource-content { border-radius: 8px; min-height: 166px; padding: 10px; margin: 8px 0 4px; line-height: normal; }
-.resources .resource .resource-image, .resources .resource .gathered-resources .gathered-resource img { height: 60px; width: 60px; vertical-align: middle; margin: 20px 0; }
+.resources .resource .resource-content { border-radius: 8px; min-height: 166px; padding: 10px; margin: 0; line-height: normal; }
+.resources .resource .resource-image, .resources .resource .gathered-resources .gathered-resource img { height: 60px; width: 60px; vertical-align: middle; margin: 12px 0; }
 .resources .resource .special-resource { color: #86c7f2; }
 .resources .resource .special-resource .special-resource-image { height: 15px; width: 15px; margin-left: 2px; vertical-align: middle; }
 .resources .resource .gathered-resources { position: relative; }
 .resources .resource .gathered-resources .gathered-resource { left: 0; right: 0; position: absolute; }
 .resources .resource .gathered-resources .gathered-resource img { opacity: 0; position: relative; }
 
-.buildings { background-color: #0d4c76; padding: 10px; }
-.buildings .building { background-color: rgba(0, 0, 0, 0.3); border-radius: 4px; margin: 0 0 10px; }
+.buildings { background-color: #0d4c76; }
+.buildings .building { background-color: rgba(0, 0, 0, 0.3); border-radius: 4px; margin-bottom: 10px; }
 .buildings .building .title { height: 31px; line-height: 32px; font-size: 12px; background-color: #1681c9; padding: 0 10px; }
 .buildings .building .boon, .buildings .building .population .production, .population .buildings .building .production { float: right; margin-top: 3px; background: none; color: #b4dcf7; }
 .buildings .building .details { padding: 10px; }
 .buildings .building button { text-align: left; min-width: 140px; }
 .buildings .building .cost { color: white; }
 
-.population { background-color: #0d4c76; color: white; padding: 10px; }
+.population { background-color: #0d4c76; color: white; }
 .population button:enabled { background-color: #1681c9; }
 .population .make-worker { width: 172px; }
 .population .job .job-name { display: inline-block; width: 95px; text-align: center; }
 .population .job .job-assignment { width: 33px; }
 .population .drain { font-size: 12px; background-color: white; border-radius: 3px; display: inline-block; margin-left: 7px; padding: 0 5px; color: #e85223; height: 25px; line-height: 24px; }
 
-.upgrades { padding: 10px; }
-.upgrades .upgrade { background-color: rgba(0, 0, 0, 0.3); border-radius: 4px; margin: 10px 0; overflow: hidden; -webkit-transition: .5s; transition: .5s; }
+.upgrades .upgrade { background-color: rgba(0, 0, 0, 0.3); border-radius: 4px; margin-bottom: 10px; overflow: hidden; -webkit-transition: .5s; transition: .5s; }
 .upgrades .upgrade .title { height: 31px; line-height: 32px; font-size: 12px; background-color: #1681c9; padding: 0 10px; -webkit-transition: .5s; transition: .5s; }
 .upgrades .upgrade .boon, .upgrades .upgrade .population .production, .population .upgrades .upgrade .production { float: right; margin-top: 3px; background: none; color: rgba(255, 255, 255, 0.7); }
 .upgrades .upgrade .details { padding: 10px; }

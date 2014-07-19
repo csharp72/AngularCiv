@@ -1,5 +1,5 @@
 
-angular.module('app', ['ngTouch','ngCookies','ngAnimate','game','resources','population','buildings','upgrades','filters','alertPromptConfirm']);
+angular.module('app', ['ngTouch','ngCookies','ngAnimate','game','resources','population','jobs','buildings','upgrades','filters','alertPromptConfirm']);
 
 angular.module('app').controller('GameCtrl', 
 	
@@ -16,13 +16,15 @@ angular.module('app').controller('GameCtrl',
 		$scope.upgrades = upgrades;
 
 		$scope.screens = {
+			game: "Game",
 			resources: "Gather",
 			buildings: "Build",
 			population: "Recruit",
 			upgrades: "Upgrade",
 		}
-		$scope.selectedScreen = $scope.screens.resources;
+		$scope.selectedScreen = $scope.screens.game;
 		$scope.selectScreen = function( screen ){
+			$scope.lastScreen = $scope.selectedScreen;
 			$scope.selectedScreen = screen;
 		}
 

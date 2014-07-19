@@ -29,19 +29,27 @@
 				angular.extend(this, buildings);
 			}
 
-			var buildings = new Buildings({
-				tent: 			new Building("Tent", 			"housing",	{wood:2,skins:2}, 		{population:{max:1}}		),
-				hut:			new Building("Hut", 			"housing",	{wood:20,skins:1}, 		{population:{max:3}}		),
-				
-				foodStorage: 	new Building("Food Storage", 	"storage",	{wood: 100}, 			{food: {max:200}}			),
-				woodStorage: 	new Building("Wood Storage", 	"storage",	{wood: 100}, 			{wood: {max:200}}			),
-				stoneStorage: 	new Building("Stone Storage", 	"storage",	{wood: 100}, 			{stone: {max:200}}			),
-			});
-
 			Buildings.prototype.build = function( building, amount ){
 				var amount = amount || 1;
 				building.build(amount);
 			}
+
+			Buildings.prototype.reset = function(){
+				buildings = newBuildings();
+			}
+
+			function newBuildings(){
+				return new Buildings({
+					tent: 			new Building("Tent", 			"housing",	{wood:2,skins:2}, 		{population:{max:1}}		),
+					hut:			new Building("Hut", 			"housing",	{wood:20,skins:1}, 		{population:{max:3}}		),
+					
+					foodStorage: 	new Building("Food Storage", 	"storage",	{wood: 100}, 			{food: {max:200}}			),
+					woodStorage: 	new Building("Wood Storage", 	"storage",	{wood: 100}, 			{wood: {max:200}}			),
+					stoneStorage: 	new Building("Stone Storage", 	"storage",	{wood: 100}, 			{stone: {max:200}}			),
+				});
+			}
+
+			var buildings = newBuildings();
 
 			return buildings;
 		})

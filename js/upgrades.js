@@ -35,16 +35,23 @@
 
 			Upgrades.prototype.list = list;
 
-			var upgrades = new Upgrades({
-				skinning: 		new Upgrade("Skinning", 	{skins:10},					[["Gatherers can produce skins", 	{food:{produceSpecialChance:.1}}]]  		),
-				harvesting:		new Upgrade("Harvesting",	{herbs:10},					[["Wood Cutters can produce herbs", {wood:{produceSpecialChance:.1}}]] 			),
-				prospecting: 	new Upgrade("Prospecting", 	{ore:10},					[["Miners can produce ore", 		{stone:{produceSpecialChance:.1}}]]			),
+			Upgrades.prototype.reset = function(){
+				upgrades = newUpgrades();
+			}
+			
+			function newUpgrades(){
+				return new Upgrades({
+					skinning: 		new Upgrade("Skinning", 	{skins:10},					[["Gatherers can produce skins", 	{food:{produceSpecialChance:.1}}]]  		),
+					harvesting:		new Upgrade("Harvesting",	{herbs:10},					[["Wood Cutters can produce herbs", {wood:{produceSpecialChance:.1}}]] 			),
+					prospecting: 	new Upgrade("Prospecting", 	{ore:10},					[["Miners can produce ore", 		{stone:{produceSpecialChance:.1}}]]			),
 
-				masonry: 		new Upgrade("Masonry",		{wood:100, stone:100},		[["Unlock more buildings and upgrades"]]										),
+					masonry: 		new Upgrade("Masonry",		{wood:100, stone:100},		[["Unlock more buildings and upgrades"]]										),
 
-				//something: 		new Upgrade("Something",	{wood:100, stone:100},		[["Unlock more buildings and upgrades"]], ["masonry"]					),
-			});
+					//something: 		new Upgrade("Something",	{wood:100, stone:100},		[["Unlock more buildings and upgrades"]], ["masonry"]					),
+				});
+			}
 
+			var upgrades = newUpgrades();
 			return upgrades;
 		}])
 

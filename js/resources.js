@@ -17,69 +17,48 @@
 				this.grossRate = 0;
 				this.image = "./images/resources/"+name.toLowerCase()+".svg";
 
-				this.collect = function(){
-					var diceRoll = false;
-					if( this.max === false || this.total < this.max ){
-						this.total = this.max ? Math.min( this.total + this.collectRate, this.max ) : this.total + this.collectRate;
-						if( this.specialResource ){
-							diceRoll = Math.random() < this.collectSpecialChance;
-							if( diceRoll ){
-								this.specialResource.total += this.collectRate;
-							}
-						}
-						return [this, diceRoll];
-					}
-					return false;
-				}
-
-				this.produce = function(){
-					if( this.max === false ){
-						this.total = Math.max( this.total + this.productionRate - this.consumptionRate, 0 );
-						rollForSpecial.call( this );
-					}else{
-						if( this.total < this.max ){
-							rollForSpecial.call( this );
-						}
-						this.total = Math.max( Math.min( this.total + this.productionRate - this.consumptionRate, this.max ), 0 );
-					}
-
-					function rollForSpecial(){
-						if( this.specialResource && this.productionRate > 0 ){
-							if( Math.random() < this.produceSpecialChance ){
-								this.specialResource.total += Math.max( this.productionRate - this.consumptionRate, 0 );
-							}
-						}
-					}
-				}
-
 				angular.extend(this, opts);
 				this.baseMax = this.max;
+			}
+
+			Resource.prototype.collect = function(){
+				var diceRoll = false;
+				if( this.max === false || this.total < this.max ){
+					this.total = this.max ? Math.min( this.total + this.collectRate, this.max ) : this.total + this.collectRate;
+					if( this.specialResource ){
+						diceRoll = Math.random() < this.collectSpecialChance;
+						if( diceRoll ){
+							this.specialResource.total += this.collectRate;
+						}
+					}
+					return [this, diceRoll];
+				}
+				return false;
+			}
+
+			Resource.prototype.produce = function(){
+				if( this.max === false ){
+					this.total = Math.max( this.total + this.productionRate - this.consumptionRate, 0 );
+					rollForSpecial.call( this );
+				}else{
+					if( this.total < this.max ){
+						rollForSpecial.call( this );
+					}
+					this.total = Math.max( Math.min( this.total + this.productionRate - this.consumptionRate, this.max ), 0 );
+				}
+
+				function rollForSpecial(){
+					if( this.specialResource && this.productionRate > 0 ){
+						if( Math.random() < this.produceSpecialChance ){
+							this.specialResource.total += Math.max( this.productionRate - this.consumptionRate, 0 );
+						}
+					}
+				}
 			}
 
 			function Resources(res){
 				angular.extend(this, res);
 			}
-
-			var resources = new Resources({
-				food: new Resource('Food', 		{total:0, max:200}),
-				wood: new Resource('Wood', 		{total:0, max:200}),
-				stone: new Resource('Stone', 	{total:0, max:200}),
-
-				skins: new Resource('Skins',	{total:0,}),
-				herbs: new Resource('Herbs',	{total:0,}),
-				ore: new Resource('Ore',		{total:0,}),
-
-				leather: new Resource('Leather'),
-				medicine: new Resource('Medicine'),
-				metal: new Resource('Metal'),
-			});
-
-			resources.food.specialResource = resources.skins;
-			resources.wood.specialResource = resources.herbs;
-			resources.stone.specialResource = resources.ore;
-
-			Resources.prototype.basic = [resources.food, resources.wood, resources.stone];
-			Resources.prototype.special = [resources.skins, resources.herbs, resources.ore, resources.leather, resources.medicine, resources.metal];
 
 			Resources.prototype.enough = function( enoughResources, multiplier ){
 				var enough = true;
@@ -88,7 +67,7 @@
 					if( this[type].total < amount * multiplier ){
 						enough = false;
 					}
-				}.bind(resources))
+				}.bind(this))
 				return enough;
 			}
 
@@ -97,7 +76,7 @@
 				if( this.enough(useResources, multiplier) ){
 					angular.forEach(useResources, function(amount, type){
 						this[type].total -= amount * multiplier;
-					}.bind(resources))
+					}.bind(this))
 					return true;
 				}
 				return false;
@@ -111,15 +90,42 @@
 					}else{
 						this[type].total += amount;
 					}
-				}.bind(resources))
+				}.bind(this))
 			}
 
 			Resources.prototype.produce = function(){
-				angular.forEach(resources, function(resource){
+				angular.forEach(this, function(resource){
 					resource.produce();
 				})
 			}
 
+			Resources.prototype.reset = function(){
+				resources = newResources();
+			}
+
+			function newResources(){
+				var resources = new Resources({
+					food: new Resource('Food', 		{total:0, max:200}),
+					wood: new Resource('Wood', 		{total:0, max:200}),
+					stone: new Resource('Stone', 	{total:0, max:200}),
+
+					skins: new Resource('Skins',	{total:0,}),
+					herbs: new Resource('Herbs',	{total:0,}),
+					ore: new Resource('Ore',		{total:0,}),
+
+					leather: new Resource('Leather'),
+					medicine: new Resource('Medicine'),
+					metal: new Resource('Metal'),
+				});
+
+				resources.food.specialResource = resources.skins;
+				resources.wood.specialResource = resources.herbs;
+				resources.stone.specialResource = resources.ore;
+
+				return resources;
+			}
+
+			var resources = newResources();
 			return resources;
 		}])
 

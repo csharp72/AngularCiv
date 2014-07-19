@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html ng-app="app" ng-controller="GameCtrl">
+<html ng-app="app" ng-controller="GameCtrl" ng-cloak>
 <head>
-	<title>{{game.currentGame}}</title>
+	<title ng-bind-template="{{game.currentGame}}">Angular Civ</title>
 
 	<script type="text/javascript" src="./js/libs/angular.min.js"></script>
 	<script type="text/javascript" src="./js/libs/angular-touch.min.js"></script>
@@ -14,6 +14,7 @@
 	<script type="text/javascript" src="./js/buildings.js"></script>
 	<script type="text/javascript" src="./js/resources.js"></script>
 	<script type="text/javascript" src="./js/population.js"></script>
+	<script type="text/javascript" src="./js/jobs.js"></script>
 	<script type="text/javascript" src="./js/upgrades.js"></script>
 	<script type="text/javascript" src="./js/filters.js"></script>
 	<script type="text/javascript" src="./js/alert_prompt_confirm.js"></script>
@@ -31,93 +32,104 @@
 
 		<div class="resource-dash" ng-click="selectScreen( screens.resources )">
 			<div class="resource" ng-repeat="r in [resources.food, resources.wood, resources.stone, resources.skins, resources.herbs, resources.ore, resources.leather, resources.medicine, resources.metal]">
-				<div class="total-display"><img class="resource-image" ng-src="{{r.image}}" alt="" /><span class="total">{{r.total | number:0}}</span></div>
+				<div class="total-display"><img class="resource-image" ng-src="{{r.image}}" alt="" /><span class="total">{{r.total | shortNum:0}}</span></div>
+				<div class="limit" ng-if="r.max"><small>/{{r.max | shortNum}}</small></div>
 				<div class="production-rate" ng-if="r.grossRate !== 0" ng-class="{neg:r.grossRate < 0, pos:r.grossRate > 0}">
-					<span class="rate">{{r.grossRate | number:1}}</span><span class="time-frame">/sec</span>
+					<span class="rate">{{r.grossRate | shortNum}}</span><span class="time-frame">/sec</span>
 				</div>
-				<div class="limit" ng-if="r.max"><small>Limit</small> {{r.max}}</div>
 			</div>
-		</div>
+		</div>		
 
-		<div class="saved-games" ng-show="GameCtrl.chooseGame">
-			<h2>Saved Games</h2>
-			<div class="saved-game" ng-class="{selected: sg == game.currentGame}" ng-repeat="sg in game.savedGames" ng-click="GameCtrl.chooseGame = false; game.switch( sg )">{{sg}}<div class="delete-game" ng-click="game.deleteSave( sg )">X</div></div>
-			<div class="saved-game" ng-click="GameCtrl.chooseGame = false; game.switch()">+ New Game</div>
-		</div>
 		
-		<div class="resources animate-fade-in" ng-show="selectedScreen == screens.resources">
-			<h2>{{game.currentGame}} <button ng-disabled="false" ng-click="GameCtrl.chooseGame = true">Load Game</button></h2>
-			<div class="resource" ng-repeat="r in resources.basic" ng-disable="true" ng-click="collect(r, $event)">
-				<button class="resource-content" ng-disabled="false">
-					<div>Gather {{r.name}}</div>
-					<div ng-if="r.collectRate > 0">x{{r.collectRate}}</div>
-					<div class="gathered-resources">
-						<div class="gathered-resource">
-							<img  ng-src="{{r.image}}" alt="" />
+		
+		<div class="game-screens" ng-switch="selectedScreen">
+
+			<div class="game game-screen" ng-switch-when="Game">
+				<h2>Welcome to {{game.currentGame}}</h2>
+				<p>population: <strong>{{ population.total ? population.total + ' plus you' : 'you' | commaDelimited}}</strong></p>
+				<button ng-disabled="false" ng-click="selectScreen('SavedGames')">Select a Different Village</button>
+			</div>
+
+			<div class="saved-games game-screen" ng-switch-when="SavedGames">
+				<h2>Saved Villages</h2>
+				<div class="saved-game" ng-class="{selected: sg == game.currentGame}" ng-repeat="sg in game.savedGames" ng-click="selectScreen(lastScreen); game.switch( sg )">{{sg}}<div class="delete-game" ng-click="game.deleteSave( sg )">X</div></div>
+				<div class="saved-game" ng-click="selectScreen(lastScreen); game.switch()">+ New Game</div>
+			</div>
+		
+			<div class="resources game-screen" ng-switch-when="Gather">
+				<div class="resource" ng-repeat="r in [resources.food, resources.wood, resources.stone]" ng-disable="true" ng-click="collect(r, $event)">
+					<button class="resource-content" ng-disabled="false">
+						<div>Gather {{r.name}}</div>
+						<div ng-if="r.collectRate > 0">x{{r.collectRate}}</div>
+						<div class="gathered-resources">
+							<div class="gathered-resource">
+								<img  ng-src="{{r.image}}" alt="" />
+							</div>
 						</div>
+						<img class="resource-image" ng-src="{{r.image}}" alt="" />
+
+						<div class="special-resource">{{r.specialChance * 100}}% chance to produce <img class="special-resource-image"ng-src="{{r.specialResource.image}}" alt="{{r.specialResource.name}}"/></div>
+					</button>
+				</div>
+
+				
+			</div>
+
+			<div class="buildings game-screen" ng-switch-when="Build">
+				<div class="building" ng-repeat="b in buildingsList">
+					<div class="title">
+						<span>{{b.name}}: <strong>{{b.total}}</strong></span>
+						<span class="boon" ng-repeat="(name, boon) in b.boons">{{name}} <span ng-repeat="(a,b) in boon">{{a}} +{{b}}</span>{{!$last ? ', ' : ''}}</span>
 					</div>
-					<img class="resource-image" ng-src="{{r.image}}" alt="" />
-
-					<div class="special-resource">{{r.specialChance * 100}}% chance to produce <img class="special-resource-image"ng-src="{{r.specialResource.image}}" alt="{{r.specialResource.name}}"/></div>
-				</button>
+					
+					<div class="details">
+						<button ng-disabled="!resources.enough(b.cost)" ng-click="buildBuilding(b)">Build {{b.name}}</button>
+						<span class="cost"><span class="cost-display" ng-bind-html="b.cost | displayCost" /></span>
+					</div>
+				</div>
 			</div>
 
-			
-		</div>
-
-		<div class="buildings animate-fade-in" ng-show="selectedScreen == screens.buildings">
-			<div class="building" ng-repeat="b in buildingsList">
-				<div class="title">
-					<span>{{b.name}}: <strong>{{b.total}}</strong></span>
-					<span class="boon" ng-repeat="(name, boon) in b.boons">{{name}} <span ng-repeat="(a,b) in boon">{{a}} +{{b}}</span>{{!$last ? ', ' : ''}}</span>
-				</div>
+			<div class="population game-screen" ng-switch-when="Recruit">
+				<div>Current Population: {{ population.total }}</div>
+				<div>Maximum Population: {{ population.max }}</div>
 				
-				<div class="details">
-					<button ng-disabled="!resources.enough(b.cost)" ng-click="buildBuilding(b)">Build {{b.name}}</button>
-					<span class="cost"><span class="cost-display" ng-bind-html="b.cost | displayCost" /></span>
+				<button class="btn make-worker" ng-disabled="!canMakeWorker()" ng-click="jobs.makeWorker()">Recruit Villager</button>
+				<span class="cost">
+					<span class="cost-display" ng-bind-html="jobs.unemployed.cost | displayCost"></span>
+				</span>
+
+				<!-- <span class="drain">-1 <img class="resource-image" ng-src="{{resources.food.image}}" />/sec</span> -->
+
+				<div class="unemployed">Unemployed: {{ jobs.unemployed.total }}</div>
+				<div class="job" ng-repeat="job in workingJobs">
+					<button class="btn job-assignment relieve" ng-disabled="!job.total" ng-click="jobs.relieve(job)">-</button>
+					<span class="job-name">{{job.name}}: {{job.total}}</span>
+					<button class="btn job-assignment assign" ng-disabled="!canAssignWorker(job)" ng-click="jobs.assign(job)">+</button>
+					<span class="cost" ng-bind-html="job.cost | displayCost"></span>
+					<span class="production" ng-repeat="(name, prod) in job.production">+{{prod}} {{name}} / sec</span>
 				</div>
 			</div>
-		</div>
 
-		<div class="population animate-fade-in" ng-show="selectedScreen == screens.population">
-			<div>Current Population: {{ population.total }}</div>
-			<div>Maximum Population: {{ population.max }}</div>
-			
-			<button class="btn make-worker" ng-disabled="!canMakeWorker()" ng-click="jobs.makeWorker()">Recruit Villager</button>
-			<span class="cost">
-				<span class="cost-display" ng-bind-html="jobs.unemployed.cost | displayCost"></span>
-			</span>
+			<div class="upgrades game-screen" ng-switch-when="Upgrade">
+				<div class="upgrade" ng-repeat="u in upgrades.list" ng-class="{aquired: u.aquired}">
 
-			<!-- <span class="drain">-1 <img class="resource-image" ng-src="{{resources.food.image}}" />/sec</span> -->
-
-			<div class="unemployed">Unemployed: {{ jobs.unemployed.total }}</div>
-			<div class="job" ng-repeat="job in workingJobs">
-				<button class="btn job-assignment relieve" ng-disabled="!job.total" ng-click="jobs.relieve(job)">-</button>
-				<span class="job-name">{{job.name}}: {{job.total}}</span>
-				<button class="btn job-assignment assign" ng-disabled="!canAssignWorker(job)" ng-click="jobs.assign(job)">+</button>
-				<span class="cost" ng-bind-html="job.cost | displayCost"></span>
-				<span class="production" ng-repeat="(name, prod) in job.production">+{{prod}} {{name}} / sec</span>
-			</div>
-		</div>
-
-		<div class="upgrades" ng-show="selectedScreen == screens.upgrades">
-			<div class="upgrade" ng-repeat="u in upgrades.list" ng-class="{aquired: u.aquired}">
-
-				<div class="title">
-					<span>{{u.name}}</span>
-					<span class="boon" ng-repeat="benefit in u.benefits">{{benefit[0]}}{{!$last ? ', ' : ''}}</span>
+					<div class="title">
+						<span>{{u.name}}</span>
+						<span class="boon" ng-repeat="benefit in u.benefits">{{benefit[0]}}{{!$last ? ', ' : ''}}</span>
+					</div>
+					
+					<div class="details" ng-show="!u.aquired">
+						<button ng-disabled="!resources.enough(u.cost)" ng-click="buyUpgrade(u)">Purchase</button>
+						<span class="cost"><span class="cost-display" ng-bind-html="u.cost | displayCost" /></span>
+					</div>
+					
 				</div>
-				
-				<div class="details" ng-show="!u.aquired">
-					<button ng-disabled="!resources.enough(u.cost)" ng-click="buyUpgrade(u)">Purchase</button>
-					<span class="cost"><span class="cost-display" ng-bind-html="u.cost | displayCost" /></span>
-				</div>
-				
 			</div>
+
 		</div>
 
 		<div class="bottom-bar">
-			<div class="nav-item" ng-repeat="screen in [screens.resources, screens.buildings, screens.population, screens.upgrades]" ng-click="selectScreen(screen)" ng-class="{selected: selectedScreen == screen}">{{screen}}</div>
+			<div class="nav-item" ng-repeat="screen in [screens.game, screens.resources, screens.buildings, screens.population, screens.upgrades]" ng-click="selectScreen(screen)" ng-class="{selected: selectedScreen == screen}">{{screen}}</div>
 		</div>
 
 	</div>

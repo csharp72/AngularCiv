@@ -4,11 +4,25 @@ angular.module('filters', [])
 			return Math.floor(num);
 		}
 	})
-	.filter('float1', function(){
-		return function(num){
-			return num.toFixed(1);
+	.filter('shortNum', ['$filter', function($filter){
+		return function(num, decimalPlace){
+			var decimalPlace = typeof decimalPlace == "number" ? decimalPlace : 1;
+			
+			if( num >= 1e9 ){
+				return addFloat( num / 1e9, decimalPlace ) + "B";
+			}else if( num >= 1e6 ){
+				return addFloat( num / 1e6, decimalPlace ) + "M";
+			}else if( num >= 1e3 ){
+				return addFloat( num / 1e3, decimalPlace ) + "K";
+			}else{
+				return addFloat( num, decimalPlace );
+			}
+
+			function addFloat( val, decimalPlace ){
+				return val % 1 && typeof val == "number" ? val.toFixed( decimalPlace ) : val;
+			}
 		}
-	})
+	}])
 
 	.filter('displayCost', ['resources','$sce', function(resources, $sce){
 		return function(cost){
@@ -20,6 +34,12 @@ angular.module('filters', [])
 				})
 			}
 			return $sce.trustAsHtml(str);
+		}
+	}])
+
+	.filter('commaDelimited', [function(){
+		return function(num){
+			return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 		}
 	}])
 

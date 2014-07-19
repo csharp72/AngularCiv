@@ -27,6 +27,7 @@ $boonColor: $greenColor;
 $appW: 100%;
 
 $topBarH: 91px;
+$bottomBarH: 32px;
 
 
 
@@ -65,43 +66,20 @@ body{
 	background-color: $darkBlueColor;
 	color: white;
 	position: relative;
-	padding-top: $topBarH;
-	padding-bottom: 45px;
-	overflow-y: auto;
-	overflow-x: hidden;
 }
 
-.bottom-bar{
-	position: fixed;
-	bottom: 0;
-	width: $appW;
-	z-index: 2;
+.game-screens{
+	@extend .animate-switch-container;
+	height: 100%;
+	overflow-y: auto;
+	overflow-x: hidden;
 
-	.nav-item{
-		background-color: darken($orangeColor, 15%);
-		display: inline-block;
-		color: darken(#FFF, 15%);
-		cursor: pointer;
-		width: 25%;
-		text-align: center;
-		line-height: 32px;
-		border-right: 1px solid rgba(0,0,0,.3);
-		border-top: 1px solid rgba(0,0,0,.3);
-		text-transform: uppercase;
-		font-weight: bold;
-		vertical-align: bottom;
-		box-shadow: 0 -3px 2px rgba(0, 0, 0, 0.1);
-
-		-webkit-transition: all .3s, color .15s;
-		   -moz-transition: all .3s, color .15s;
-				transition: all .3s, color .15s;
-
-		&.selected{
-			background-color: $orangeColor;
-			color: white;
-			line-height: 36px;
-			border-radius: 4px 4px 0 0;
-		}
+	.game-screen{
+		min-height: 100%;
+		padding: 10px 5px;
+		padding-top: $topBarH + 10px;
+		padding-bottom: $bottomBarH + 10px;
+		@extend .animate-switch;
 	}
 }
 
@@ -222,16 +200,42 @@ body{
 	}
 }
 
+.bottom-bar{
+	position: fixed;
+	bottom: 0;
+	width: $appW;
+	z-index: 2;
+
+	.nav-item{
+		background-color: darken($orangeColor, 15%);
+		display: inline-block;
+		color: darken(#FFF, 15%);
+		cursor: pointer;
+		width: (100%) / 5;
+		text-align: center;
+		line-height: 32px;
+		border-right: 1px solid rgba(0,0,0,.3);
+		border-top: 1px solid rgba(0,0,0,.3);
+		text-transform: uppercase;
+		font-weight: bold;
+		vertical-align: bottom;
+		box-shadow: 0 -3px 2px rgba(0, 0, 0, 0.1);
+
+		-webkit-transition: all .3s, color .15s;
+		   -moz-transition: all .3s, color .15s;
+				transition: all .3s, color .15s;
+
+		&.selected{
+			background-color: $orangeColor;
+			color: white;
+			line-height: 36px;
+			border-radius: 4px 4px 0 0;
+		}
+	}
+}
+
 .saved-games {
     background-color: darken($orangeColor, 18%);
-    bottom: 0;
-    left: 0;
-    position: fixed;
-    right: 0;
-    top: 0;
-    z-index: 1;
-    padding: 91px 10px 32px;
-    overflow: auto;
 
     .saved-game{
     	background-color: $orangeColor;
@@ -279,7 +283,7 @@ body{
 		// border-radius: 4px;
 		//box-shadow: 0 1px rgba(255, 255, 255, 0.15) inset;
 		display: inline-block;
-		padding: 2px 7px 1px;
+		padding: 2px 3px 1px 7px;
 		text-align: left;
 		vertical-align: top;
 		width: 33.3333%;
@@ -289,7 +293,8 @@ body{
 		}
 
 		.production-rate{
-			float:right;
+			clear: both;
+			text-align: center;
 		}
 
 		.total{
@@ -306,17 +311,13 @@ body{
     	}
 
     	.limit{
-    		clear: both;
-    		// text-align: center;
-    		//font-size: 8px;
+    		float: right;
     	}
     }
 }
 
 .resources{
-	background-color: $darkBlueColor;
 	color: white;
-	padding: 10px 5px;
 
 	.resource{
 		display: inline-block;
@@ -332,7 +333,7 @@ body{
 			border-radius: 8px;
 			min-height: 166px;
 			padding: 10px;
-			margin: 8px 0 4px;
+			margin: 0;
 			line-height: normal;
 		}
 
@@ -340,7 +341,7 @@ body{
 			height: 60px;
 			width: 60px;
 			vertical-align: middle;
-			margin: 20px 0;
+			margin: 12px 0;
 		}
 
 		.special-resource{
@@ -372,14 +373,13 @@ body{
 
 .buildings{
 	background-color: darken($buildingColor, 18%);
-	padding: 10px;
 
 	$bPad: 10px;
 
 	.building{
 		background-color: rgba(0, 0, 0, 0.3);
 	    border-radius: 4px;
-	    margin: 0 0 10px;
+	    margin-bottom: 10px;
 
 	    .title{
 	    	height: 31px;
@@ -416,7 +416,6 @@ body{
 .population{
 	background-color: darken($populationColor, 18%);
 	color: white;
-	padding: 10px;
 
 	button:enabled{
 		background-color: $blueColor;
@@ -455,14 +454,12 @@ body{
 }
 
 .upgrades{
-	padding: 10px;
-
 	$pad: 10px;
 
 	.upgrade{
 		background-color: rgba(0, 0, 0, 0.3);
 	    border-radius: 4px;
-	    margin: 10px 0;
+	    margin-bottom: 10px;
 	    overflow: hidden;
 
 	    -webkit-transition: .5s;

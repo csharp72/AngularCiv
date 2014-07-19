@@ -104,3 +104,34 @@
 .animate-fade-in.ng-hide {
 	opacity: 0;
 }
+
+.animate-switch-container {
+	position:relative;
+}
+
+.animate-switch {
+
+	&.ng-animate {
+		
+		// &.ng-leave{
+		// 	display: none !important;
+		// }
+
+		&.ng-enter {
+			@include animation('.6s fadeIn ease-out 1');
+		}
+
+	}
+
+}
+
+@include keyframes(fadeIn) {
+	0%{
+		opacity: 0;
+	}
+	100%{
+		opacity: 1;
+	}
+}
+
+

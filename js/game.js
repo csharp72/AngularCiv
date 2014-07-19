@@ -60,7 +60,7 @@ angular.module('game', [])
 			if( gameName ){
 				switchGame( gameName );
 			}else{
-				prompt('What is the name of your village?').then(function(gameName){
+				prompt('Name your brand new village').then(function(gameName){
 					switchGame( gameName );
 				});
 			}
@@ -78,23 +78,15 @@ angular.module('game', [])
 		}
 
 		game.resetToZero = function(){
-			resetToZero(resources);
-			resetToZero(buildings);
-			resetToZero(jobs);
-			resetToZero(upgrades);
-
-			function resetToZero(collection){
-				angular.forEach(collection, function(colObj){
-					if( typeof colObj.total != 'undefined' ){
-						colObj.total = 0;
-					}
-				})
-			}
+			resources.reset();
+			buildings.reset();
+			jobs.reset();
+			upgrades.reset();
 		}
 		
 		if( !game.savedGames.length ){
 			$timeout(function(){
-				prompt('What is the name of your village?').then(function(villageName){
+				prompt('Name your brand new village.').then(function(villageName){
 					game.currentGame = villageName;
 					game.savedGames.unshift( game.currentGame );
 					game.save();
