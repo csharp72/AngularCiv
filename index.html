@@ -90,8 +90,14 @@
 					</div>
 					
 					<div class="details">
-						<button ng-disabled="!resources.enough(b.cost)" ng-click="buildBuilding(b)">Build {{b.name}}</button>
-						<span class="cost"><span class="cost-display" ng-bind-html="b.cost | displayCost" /></span>
+						<div>
+							<button ng-disabled="!resources.enough(b.cost)" ng-click="buildBuilding(b)">Build {{b.name}}</button>
+							<span class="cost"><span class="cost-display" ng-bind-html="b.cost | displayCost" /></span>
+						</div>
+						<div ng-show="b.total >= 10">
+							<button ng-disabled="!resources.enough(b.cost, 10)" ng-click="buildBuilding(b, 10)">Build 10 {{b.name}}s</button>
+							<span class="cost"><span class="cost-display" ng-bind-html="b.cost | displayCost:10" /></span>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -113,21 +119,21 @@
 						</span>
 					</div>
 
-					<div class="make-worker-container" ng-show="population.total >= 10">
+					<div class="make-worker-container" ng-show="population.total >= 10 && job.total >= 10">
 						<button class="btn make-worker" ng-disabled="!canMakeWorker(10)" ng-click="jobs.makeWorker(10)">Recruit 10 Villagers</button>
 						<span class="cost">
 							<span class="cost-display" ng-bind-html="jobs.unemployed.cost | displayCost:10"></span>
 						</span>
 					</div>
 
-					<div class="make-worker-container" ng-show="population.total >= 100">
+					<div class="make-worker-container" ng-show="population.total >= 100 && job.total >= 100">
 						<button class="btn make-worker" ng-disabled="!canMakeWorker(100)" ng-click="jobs.makeWorker(100)">Recruit 100 Villagers</button>
 						<span class="cost">
 							<span class="cost-display" ng-bind-html="jobs.unemployed.cost | displayCost:100"></span>
 						</span>
 					</div>
 
-					<div class="make-worker-container" ng-show="population.total >= 1000">
+					<div class="make-worker-container" ng-show="population.total >= 1000 && job.total >= 1000">
 						<button class="btn make-worker" ng-disabled="!canMakeWorker(1000)" ng-click="jobs.makeWorker(1000)">Recruit 1000 Villagers</button>
 						<span class="cost">
 							<span class="cost-display" ng-bind-html="jobs.unemployed.cost | displayCost:1000"></span>
