@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="app" ng-controller="GameCtrl" ng-cloak>
+<html ng-app="app" ng-controller="GameCtrl">
 <head>
 	<title ng-bind-template="{{game.currentGame}}">Angular Civ</title>
 
@@ -18,6 +18,8 @@
 	<script type="text/javascript" src="./js/upgrades.js"></script>
 	<script type="text/javascript" src="./js/filters.js"></script>
 	<script type="text/javascript" src="./js/alert_prompt_confirm.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="css/icon-fonts/font-awesome.css">
 	<link rel="stylesheet" type="text/css" href="css/index.css">
 
 	<meta name="viewport" content="width=device-width, user-scalable=no, maximum-scale=1, minimal-ui">
@@ -30,8 +32,8 @@
 	
 	<div class="app">
 
-		<div class="resource-dash" ng-click="selectScreen( screens.resources )">
-			<div class="resource" ng-repeat="r in [resources.food, resources.wood, resources.stone, resources.skins, resources.herbs, resources.ore, resources.leather, resources.medicine, resources.metal]">
+		<div class="resource-dash">
+			<div class="resource" ng-repeat="r in resources.list">
 				<div class="total-display"><img class="resource-image" ng-src="{{r.image}}" alt="" /><span class="total">{{r.total | shortNum:0}}</span></div>
 				<div class="limit" ng-if="r.max"><small>/{{r.max | shortNum}}</small></div>
 				<div class="production-rate" ng-if="r.grossRate !== 0" ng-class="{neg:r.grossRate < 0, pos:r.grossRate > 0}">
@@ -45,15 +47,15 @@
 		<div class="game-screens" ng-switch="selectedScreen">
 
 			<div class="game game-screen" ng-switch-when="Game">
-				<h2>Welcome to {{game.currentGame}}</h2>
-				<p>population: <strong>{{ population.total ? population.total + ' plus you' : 'you' | commaDelimited}}</strong></p>
+				<h2><i class="fa fa-bank"></i> Welcome to {{game.currentGame}}</h2>
+				<p>Population: <strong ng-show="population.total">{{population.total | commaDelimited}}</strong><span ng-show="population.total"> plus </span><strong>You</strong></p>
 				<button ng-disabled="false" ng-click="selectScreen('SavedGames')">Select a Different Village</button>
 			</div>
 
 			<div class="saved-games game-screen" ng-switch-when="SavedGames">
 				<h2>Saved Villages</h2>
 				<div class="saved-game" ng-class="{selected: sg == game.currentGame}" ng-repeat="sg in game.savedGames" ng-click="selectScreen(lastScreen); game.switch( sg )">{{sg}}<div class="delete-game" ng-click="game.deleteSave( sg )">X</div></div>
-				<div class="saved-game" ng-click="selectScreen(lastScreen); game.switch()">+ New Game</div>
+				<div class="new-game" ng-click="selectScreen(lastScreen); game.switch()">+ New Game</div>
 			</div>
 		
 			<div class="resources game-screen" ng-switch-when="Gather">
@@ -90,17 +92,24 @@
 			</div>
 
 			<div class="population game-screen" ng-switch-when="Recruit">
-				<div>Current Population: {{ population.total }}</div>
-				<div>Maximum Population: {{ population.max }}</div>
-				
-				<button class="btn make-worker" ng-disabled="!canMakeWorker()" ng-click="jobs.makeWorker()">Recruit Villager</button>
-				<span class="cost">
-					<span class="cost-display" ng-bind-html="jobs.unemployed.cost | displayCost"></span>
-				</span>
+
+				<div class="population-details">
+					<div>Current Population: {{ population.total }}</div>
+					<div>Maximum Population: {{ population.max }}</div>
+					
+					<div class="make-worker-container">
+						<button class="btn make-worker" ng-disabled="!canMakeWorker()" ng-click="jobs.makeWorker()">Recruit Villager</button>
+						<span class="cost">
+							<span class="cost-display" ng-bind-html="jobs.unemployed.cost | displayCost"></span>
+						</span>
+					</div>
+
+					<div class="unemployed">Unassigned Villagers: {{ jobs.unemployed.total }}</div>
+				</div>
 
 				<!-- <span class="drain">-1 <img class="resource-image" ng-src="{{resources.food.image}}" />/sec</span> -->
 
-				<div class="unemployed">Unemployed: {{ jobs.unemployed.total }}</div>
+				
 				<div class="job" ng-repeat="job in workingJobs">
 					<button class="btn job-assignment relieve" ng-disabled="!job.total" ng-click="jobs.relieve(job)">-</button>
 					<span class="job-name">{{job.name}}: {{job.total}}</span>

@@ -3,6 +3,13 @@
 	angular.module('resources', [])
 		.factory('resources', [function(){
 
+			var currId = 0;
+			function nextId(){
+				return currId++;
+			}
+
+			var list = [];
+
 			function Resource(name, opts){
 				this.name = name;
 				this.total = 0;
@@ -19,6 +26,8 @@
 
 				angular.extend(this, opts);
 				this.baseMax = this.max;
+
+				list.push( this );
 			}
 
 			Resource.prototype.collect = function(){
@@ -59,6 +68,8 @@
 			function Resources(res){
 				angular.extend(this, res);
 			}
+
+			Resources.prototype.list = list;
 
 			Resources.prototype.enough = function( enoughResources, multiplier ){
 				var enough = true;

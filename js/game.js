@@ -60,9 +60,17 @@ angular.module('game', [])
 			if( gameName ){
 				switchGame( gameName );
 			}else{
-				prompt('Name your brand new village').then(function(gameName){
-					switchGame( gameName );
-				});
+				var lastGame = game.currentGame;
+				game.currentGame = "";
+				game.resetToZero();
+				prompt('Name your brand new village').then(
+					function(gameName){
+						switchGame( gameName );
+					},
+					function(){
+						game.currentGame = lastGame;
+					}
+				);
 			}
 
 			function switchGame( gameName ){
@@ -78,10 +86,18 @@ angular.module('game', [])
 		}
 
 		game.resetToZero = function(){
-			resources.reset();
-			buildings.reset();
-			jobs.reset();
-			upgrades.reset();
+			resetToZero(resources);
+			resetToZero(buildings);
+			resetToZero(jobs);
+			resetToZero(upgrades);
+
+			function resetToZero(collection){
+				angular.forEach(collection, function(colObj){
+					if( typeof colObj.total != 'undefined' ){
+						colObj.total = 0;
+					}
+				})
+			}			
 		}
 		
 		if( !game.savedGames.length ){

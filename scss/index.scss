@@ -237,7 +237,7 @@ body{
 .saved-games {
     background-color: darken($orangeColor, 18%);
 
-    .saved-game{
+    .saved-game, .new-game{
     	background-color: $orangeColor;
 		border-radius: 10px;
 		cursor: pointer;
@@ -317,7 +317,6 @@ body{
 }
 
 .resources{
-	color: white;
 
 	.resource{
 		display: inline-block;
@@ -372,7 +371,6 @@ body{
 }
 
 .buildings{
-	background-color: darken($buildingColor, 18%);
 
 	$bPad: 10px;
 
@@ -414,15 +412,25 @@ body{
 }
 
 .population{
-	background-color: darken($populationColor, 18%);
-	color: white;
 
-	button:enabled{
-		background-color: $blueColor;
+	.population-details{
+		background-color: rgba(0, 0, 0, 0.3);
+		padding: 10px;
+		border-radius: 4px;
+	}
+	
+	.make-worker-container{
+		margin-top: 10px;
+    	text-align: center;
+		
+		.make-worker{
+			width: 172px;
+		}
 	}
 
-	.make-worker{
-		width: 172px;
+	.unemployed{
+		text-align: center;
+		margin: 10px;
 	}
 
 	.job{

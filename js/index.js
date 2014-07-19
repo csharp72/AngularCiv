@@ -45,7 +45,7 @@ angular.module('app').controller('GameCtrl',
 				// snd.play(0);
 
 				var $res = $($event.target).closest('.resource');
-				var $gr = $res.data('gatheredResource').clone();
+				var $gr = $res.find('.gathered-resource').first().clone();
 				$res.find('.gathered-resources').append( $gr );
 				$gr.find('img').addClass( 'flyUp' + flyUpAnim );
 				flyUpAnim = flyUpAnim == 1 ? 2 : 1;
@@ -79,6 +79,7 @@ angular.module('app').controller('GameCtrl',
 		var gameLoop = $interval(function(){
 			resources.produce();
 			game.save();
+
 		}, 1000);
 
 		$(document).ready(function(){
@@ -86,10 +87,6 @@ angular.module('app').controller('GameCtrl',
 			// 	var snd = new Audio("./sound/collect.mp3")
 			// 	snd.play(0);
 			// })
-
-			$('.resources .resource').each(function(){
-				$(this).data('gatheredResource', $(this).find('.gathered-resource').detach() );
-			})
 		})
 		
 	}

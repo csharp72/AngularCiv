@@ -87,10 +87,10 @@ body { font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial; font-size: 
 .bottom-bar .nav-item.selected { background-color: #e85223; color: white; line-height: 36px; border-radius: 4px 4px 0 0; }
 
 .saved-games { background-color: #9f3211; }
-.saved-games .saved-game { background-color: #e85223; border-radius: 10px; cursor: pointer; font-size: 14px; font-weight: bold; line-height: 35px; margin: 10px 0; padding: 0 10px; }
-.saved-games .saved-game:hover { background-color: #ec734d; }
-.saved-games .saved-game.selected { background-color: #1681c9; }
-.saved-games .saved-game .delete-game { float: right; }
+.saved-games .saved-game, .saved-games .new-game { background-color: #e85223; border-radius: 10px; cursor: pointer; font-size: 14px; font-weight: bold; line-height: 35px; margin: 10px 0; padding: 0 10px; }
+.saved-games .saved-game:hover, .saved-games .new-game:hover { background-color: #ec734d; }
+.saved-games .saved-game.selected, .saved-games .new-game.selected { background-color: #1681c9; }
+.saved-games .saved-game .delete-game, .saved-games .new-game .delete-game { float: right; }
 
 .resource-dash { background-color: #e5e5e5; color: #333; padding: 0; text-align: center; position: fixed; width: 100%; z-index: 3; top: 0; box-shadow: 0 3px 2px rgba(0, 0, 0, 0.1); }
 .resource-dash .resource { border: 1px solid rgba(0, 0, 0, 0.15); display: inline-block; padding: 2px 3px 1px 7px; text-align: left; vertical-align: top; width: 33.3333%; }
@@ -100,7 +100,6 @@ body { font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial; font-size: 
 .resource-dash .resource .resource-image, .resource-dash .resources .resource .gathered-resources .gathered-resource img, .resources .resource-dash .resource .gathered-resources .gathered-resource img { height: 17px; width: 17px; vertical-align: middle; margin-right: 3px; }
 .resource-dash .resource .limit { float: right; }
 
-.resources { color: white; }
 .resources .resource { display: inline-block; padding: 4px; width: 33.33333%; text-align: center; position: relative; vertical-align: top; margin: 0; background: none; }
 .resources .resource .resource-content { border-radius: 8px; min-height: 166px; padding: 10px; margin: 0; line-height: normal; }
 .resources .resource .resource-image, .resources .resource .gathered-resources .gathered-resource img { height: 60px; width: 60px; vertical-align: middle; margin: 12px 0; }
@@ -110,7 +109,6 @@ body { font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial; font-size: 
 .resources .resource .gathered-resources .gathered-resource { left: 0; right: 0; position: absolute; }
 .resources .resource .gathered-resources .gathered-resource img { opacity: 0; position: relative; }
 
-.buildings { background-color: #0d4c76; }
 .buildings .building { background-color: rgba(0, 0, 0, 0.3); border-radius: 4px; margin-bottom: 10px; }
 .buildings .building .title { height: 31px; line-height: 32px; font-size: 12px; background-color: #1681c9; padding: 0 10px; }
 .buildings .building .boon, .buildings .building .population .production, .population .buildings .building .production { float: right; margin-top: 3px; background: none; color: #b4dcf7; }
@@ -118,9 +116,10 @@ body { font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial; font-size: 
 .buildings .building button { text-align: left; min-width: 140px; }
 .buildings .building .cost { color: white; }
 
-.population { background-color: #0d4c76; color: white; }
-.population button:enabled { background-color: #1681c9; }
-.population .make-worker { width: 172px; }
+.population .population-details { background-color: rgba(0, 0, 0, 0.3); padding: 10px; border-radius: 4px; }
+.population .make-worker-container { margin-top: 10px; text-align: center; }
+.population .make-worker-container .make-worker { width: 172px; }
+.population .unemployed { text-align: center; margin: 10px; }
 .population .job .job-name { display: inline-block; width: 95px; text-align: center; }
 .population .job .job-assignment { width: 33px; }
 .population .drain { font-size: 12px; background-color: white; border-radius: 3px; display: inline-block; margin-left: 7px; padding: 0 5px; color: #e85223; height: 25px; line-height: 24px; }
