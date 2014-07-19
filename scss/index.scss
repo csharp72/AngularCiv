@@ -13,6 +13,7 @@ $yellowColor: #f1b718;
 $purpleColor: #523dd1;
 $darkPurpleColor: #3d37b6;
 $darkBlueColor: #014b7c;
+$darkDarkBlueColor: darken($darkBlueColor, 8%);
 
 $resourceColor: $blueColor;
 
@@ -63,9 +64,18 @@ body{
 .app{
 	width: $appW;
 	margin: 0 auto;
-	background-color: $darkBlueColor;
+	background-color: lighten($blueColor, 25%);
 	color: white;
 	position: relative;
+
+	background-image: -moz-radial-gradient(center, ellipse cover,  rgba(255,255,255,0.5) 0%, rgba(229,229,229,0) 100%); /* FF3.6+ */
+	background-image: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,rgba(255,255,255,0.5)), color-stop(100%,rgba(229,229,229,0))); /* Chrome,Safari4+ */
+	background-image: -webkit-radial-gradient(center, ellipse cover,  rgba(255,255,255,0.5) 0%,rgba(229,229,229,0) 100%); /* Chrome10+,Safari5.1+ */
+	background-image: -o-radial-gradient(center, ellipse cover,  rgba(255,255,255,0.5) 0%,rgba(229,229,229,0) 100%); /* Opera 12+ */
+	background-image: -ms-radial-gradient(center, ellipse cover,  rgba(255,255,255,0.5) 0%,rgba(229,229,229,0) 100%); /* IE10+ */
+	background-image: radial-gradient(ellipse at center,  rgba(255,255,255,0.5) 0%,rgba(229,229,229,0) 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#80ffffff', endColorstr='#00e5e5e5',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+
 }
 
 .game-screens{
@@ -80,6 +90,34 @@ body{
 		padding-top: $topBarH + 10px;
 		padding-bottom: $bottomBarH + 10px;
 		@extend .animate-switch;
+	}
+}
+
+.list-item{
+	background-color: $darkDarkBlueColor;
+	box-shadow: 0 2px 2px 1px rgba(0, 0, 0, 0.3);
+	border-radius: 4px;
+	margin-bottom: 10px;
+	overflow: hidden;
+
+	-webkit-transition: .5s;
+	    	transition: .5s;
+
+	.title{
+		height: 31px;
+		line-height: 32px;
+		font-size: 12px;
+		background-color: $blueColor;
+		padding: 0 10px;
+
+		-webkit-transition: .5s;
+				transition: .5s;
+	}
+
+	.details{
+		position: relative;
+		padding: 10px;
+		@extend .cf;
 	}
 }
 
@@ -174,16 +212,18 @@ body{
 	}
 }
 
+
 .boon{
 	height: 25px;
 	font-size: 12px;
-	background-color: $boonColor;
     border-radius: 3px;
     display: inline-block;
+    margin-top: 3px;
     margin-left: 7px;
     padding: 5px;
-    color: #000;
+    color: lighten($blueColor, 40%);
     line-height: normal;
+    float: right;
 }
 
 .production-rate{
@@ -235,10 +275,10 @@ body{
 }
 
 .saved-games {
-    background-color: darken($orangeColor, 18%);
+    //background-color: darken($orangeColor, 18%);
 
     .saved-game, .new-game{
-    	background-color: $orangeColor;
+    	background-color: $darkBlueColor;
 		border-radius: 10px;
 		cursor: pointer;
 		font-size: 14px;
@@ -248,7 +288,7 @@ body{
 		padding: 0 10px;
 
 		&:hover{
-			background-color: lighten($orangeColor, 9%);
+			background-color: $blueColor;
 		}
 
 		&.selected{
@@ -257,6 +297,10 @@ body{
 
 		.delete-game{
 			float: right;
+
+			&:hover{
+				color: $yellowColor;
+			}
 		}
     }
 }
@@ -280,6 +324,8 @@ body{
 
     .resource{
     	border: 1px solid rgba(0, 0, 0, 0.15);
+		border-bottom: none;
+		border-left: none;
 		// border-radius: 4px;
 		//box-shadow: 0 1px rgba(255, 255, 255, 0.15) inset;
 		display: inline-block;
@@ -314,6 +360,21 @@ body{
     		float: right;
     	}
     }
+}
+
+.game{
+	text-align: center;
+	color: $blueColor;
+
+	.welcome{
+		margin-top: 30px;
+		margin-bottom: 10px;
+	}
+
+	.population{
+		margin-bottom: 50px;
+		margin-top: 10px;
+	}
 }
 
 .resources{
@@ -371,50 +432,20 @@ body{
 }
 
 .buildings{
-
-	$bPad: 10px;
-
 	.building{
-		background-color: rgba(0, 0, 0, 0.3);
-	    border-radius: 4px;
-	    margin-bottom: 10px;
-
-	    .title{
-	    	height: 31px;
-	    	line-height: 32px;
-	    	font-size: 12px;
-	    	background-color: $blueColor;
-	    	padding: 0 $bPad;
-	    }
-
-	    .boon{
-	    	float: right;
-	    	margin-top: 3px;
-	    	background: none;
-	    	color: lighten($blueColor, 40%);
-	    }
-
-		.details{
-			padding: $bPad;
-		}
+		@extend .list-item;
 
 		button{
 			text-align: left;
 			min-width: 140px;
 		}
-
-		.cost{
-			// float:right;
-			color: white;
-		}
-		
 	}
 }
 
 .population{
 
 	.population-details{
-		background-color: rgba(0, 0, 0, 0.3);
+		background-color: $darkDarkBlueColor;
 		padding: 10px;
 		border-radius: 4px;
 	}
@@ -432,15 +463,34 @@ body{
 		text-align: center;
 		margin: 10px;
 	}
+	
+	.jobs{
+		.job{
+			@extend .list-item;
 
-	.job{
-		.job-name{
-			display: inline-block;
-			width: 95px;
-			text-align: center;
-		}
-		.job-assignment{
-			width: 33px;
+			.details{
+				.job-name{
+					display: inline-block;
+					width: 100%;
+					text-align: center;
+					position: absolute;
+					left: 0;
+					line-height: 40px;
+				}
+
+				.job-assignment{
+					width: 33px;
+					position: relative;
+					z-index: 1;
+
+					&.assign{
+						float: right;
+					}
+					&.relieve{
+						float: left;
+					}
+				}
+			}
 		}
 	}
 
@@ -448,61 +498,26 @@ body{
 		@extend .boon;
 	}
 
-	.drain{
-		font-size: 12px;
-		background-color: white;
-	    border-radius: 3px;
-	    display: inline-block;
-	    margin-left: 7px;
-	    padding: 0 5px;
-	    color: $orangeColor;
-	    height: 25px;
-	    line-height: 24px;
-	}
+	// .drain{
+	// 	font-size: 12px;
+	// 	background-color: white;
+	//     border-radius: 3px;
+	//     display: inline-block;
+	//     margin-left: 7px;
+	//     padding: 0 5px;
+	//     color: $orangeColor;
+	//     height: 25px;
+	//     line-height: 24px;
+	// }
 }
 
 .upgrades{
-	$pad: 10px;
-
 	.upgrade{
-		background-color: rgba(0, 0, 0, 0.3);
-	    border-radius: 4px;
-	    margin-bottom: 10px;
-	    overflow: hidden;
-
-	    -webkit-transition: .5s;
-	    	transition: .5s;
-
-	    .title{
-	    	height: 31px;
-	    	line-height: 32px;
-	    	font-size: 12px;
-	    	background-color: $blueColor;
-	    	padding: 0 $pad;
-
-	    	-webkit-transition: .5s;
-	    	transition: .5s;
-	    }
-
-	    .boon{
-	    	float: right;
-	    	margin-top: 3px;
-	    	background: none;
-	    	color: rgba(255,255,255,.7);
-	    }
-
-		.details{
-			padding: $pad;
-		}
+		@extend .list-item;
 
 		button{
 			text-align: left;
 			min-width: 140px;
-		}
-
-		.cost{
-			// float:right;
-			color: white;
 		}
 
 		&.aquired{

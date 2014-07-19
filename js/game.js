@@ -1,8 +1,8 @@
 angular.module('game', [])
 	
 	.factory('game', 
-	['$rootScope','$cookieStore','$timeout','buildings','resources','jobs','population','upgrades','prompt',
-	function($rootScope, $cookieStore, $timeout, buildings, resources,  jobs, population, upgrades, prompt){
+	['$rootScope','$cookieStore','$timeout','buildings','resources','jobs','population','upgrades','prompt', 'confirm',
+	function($rootScope, $cookieStore, $timeout, buildings, resources,  jobs, population, upgrades, prompt, confirm){
 
 		var game = {};
 		
@@ -45,14 +45,16 @@ angular.module('game', [])
 		}
 
 		game.deleteSave = function( saveName ){
-			if( game.savedGames.indexOf( saveName ) != -1 ){
-				game.savedGames.splice( game.savedGames.indexOf( saveName ), 1 );
-			}
+			confirm('Delete ' +  saveName + "?").then(function(){
+				if( game.savedGames.indexOf( saveName ) != -1 ){
+					game.savedGames.splice( game.savedGames.indexOf( saveName ), 1 );
+				}
 
-			$cookieStore.remove('ngCiv_resources' + saveName );
-			$cookieStore.remove('ngCiv_buildings' + saveName );
-			$cookieStore.remove('ngCiv_jobs' + saveName );
-			$cookieStore.remove('ngCiv_upgrades' + saveName );
+				$cookieStore.remove('ngCiv_resources' + saveName );
+				$cookieStore.remove('ngCiv_buildings' + saveName );
+				$cookieStore.remove('ngCiv_jobs' + saveName );
+				$cookieStore.remove('ngCiv_upgrades' + saveName );
+			});
 		}
 
 		game.switch = function( gameName ){

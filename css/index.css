@@ -53,14 +53,18 @@ body, .app { height: 100%; }
 
 body { font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial; font-size: 11px; margin: 0; padding: 0; background-color: #014b7c; }
 
-.app { width: 100%; margin: 0 auto; background-color: #014b7c; color: white; position: relative; }
+.app { width: 100%; margin: 0 auto; background-color: #6fbcef; color: white; position: relative; background-image: -moz-radial-gradient(center, ellipse cover, rgba(255, 255, 255, 0.5) 0%, rgba(229, 229, 229, 0) 100%); /* FF3.6+ */ background-image: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, rgba(255, 255, 255, 0.5)), color-stop(100%, rgba(229, 229, 229, 0))); /* Chrome,Safari4+ */ background-image: -webkit-radial-gradient(center, ellipse cover, rgba(255, 255, 255, 0.5) 0%, rgba(229, 229, 229, 0) 100%); /* Chrome10+,Safari5.1+ */ background-image: -o-radial-gradient(center, ellipse cover, rgba(255, 255, 255, 0.5) 0%, rgba(229, 229, 229, 0) 100%); /* Opera 12+ */ background-image: -ms-radial-gradient(center, ellipse cover, rgba(255, 255, 255, 0.5) 0%, rgba(229, 229, 229, 0) 100%); /* IE10+ */ background-image: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.5) 0%, rgba(229, 229, 229, 0) 100%); /* W3C */ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#80ffffff', endColorstr='#00e5e5e5',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */ }
 
 .game-screens { height: 100%; overflow-y: auto; overflow-x: hidden; }
 .game-screens .game-screen { min-height: 100%; padding: 10px 5px; padding-top: 101px; padding-bottom: 42px; }
 
-.cf:before, .cf:after { content: " "; /* 1 */ display: table; /* 2 */ }
+.list-item, .buildings .building, .population .jobs .job, .upgrades .upgrade { background-color: #013354; box-shadow: 0 2px 2px 1px rgba(0, 0, 0, 0.3); border-radius: 4px; margin-bottom: 10px; overflow: hidden; -webkit-transition: .5s; transition: .5s; }
+.list-item .title, .buildings .building .title, .population .jobs .job .title, .upgrades .upgrade .title { height: 31px; line-height: 32px; font-size: 12px; background-color: #1681c9; padding: 0 10px; -webkit-transition: .5s; transition: .5s; }
+.list-item .details, .buildings .building .details, .population .jobs .job .details, .upgrades .upgrade .details { position: relative; padding: 10px; }
 
-.cf:after { clear: both; }
+.cf:before, .list-item .details:before, .buildings .building .details:before, .population .jobs .job .details:before, .upgrades .upgrade .details:before, .cf:after, .list-item .details:after, .buildings .building .details:after, .population .jobs .job .details:after, .upgrades .upgrade .details:after { content: " "; /* 1 */ display: table; /* 2 */ }
+
+.cf:after, .list-item .details:after, .buildings .building .details:after, .population .jobs .job .details:after, .upgrades .upgrade .details:after { clear: both; }
 
 .btn, button { padding: 5px 9px; margin: 2px; border-radius: 3px; background-color: #1681c9; border: none; display: inline-block; color: white; line-height: 24px; text-shadow: 0 1px rgba(0, 0, 0, 0.2); vertical-align: middle; cursor: pointer; box-shadow: 0 2px 0 rgba(0, 0, 0, 0.3), 0 -1px rgba(255, 255, 255, 0.3) inset; }
 .btn:hover, button:hover { background-color: #1990e0; }
@@ -76,7 +80,7 @@ body { font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial; font-size: 
 .cost .cost-resource img { height: 20px; vertical-align: middle; }
 .cost .cost-resource .cost-amount { vertical-align: middle; margin-left: 3px; }
 
-.boon, .population .production { height: 25px; font-size: 12px; background-color: #00b798; border-radius: 3px; display: inline-block; margin-left: 7px; padding: 5px; color: #000; line-height: normal; }
+.boon, .population .production { height: 25px; font-size: 12px; border-radius: 3px; display: inline-block; margin-top: 3px; margin-left: 7px; padding: 5px; color: #b4dcf7; line-height: normal; float: right; }
 
 .production-rate.pos { color: #00b798; }
 .production-rate.neg { color: #e85223; font-weight: bold; }
@@ -86,19 +90,23 @@ body { font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial; font-size: 
 .bottom-bar .nav-item { background-color: #ac3712; display: inline-block; color: #d9d9d9; cursor: pointer; width: 20%; text-align: center; line-height: 32px; border-right: 1px solid rgba(0, 0, 0, 0.3); border-top: 1px solid rgba(0, 0, 0, 0.3); text-transform: uppercase; font-weight: bold; vertical-align: bottom; box-shadow: 0 -3px 2px rgba(0, 0, 0, 0.1); -webkit-transition: all .3s, color .15s; -moz-transition: all .3s, color .15s; transition: all .3s, color .15s; }
 .bottom-bar .nav-item.selected { background-color: #e85223; color: white; line-height: 36px; border-radius: 4px 4px 0 0; }
 
-.saved-games { background-color: #9f3211; }
-.saved-games .saved-game, .saved-games .new-game { background-color: #e85223; border-radius: 10px; cursor: pointer; font-size: 14px; font-weight: bold; line-height: 35px; margin: 10px 0; padding: 0 10px; }
-.saved-games .saved-game:hover, .saved-games .new-game:hover { background-color: #ec734d; }
+.saved-games .saved-game, .saved-games .new-game { background-color: #014b7c; border-radius: 10px; cursor: pointer; font-size: 14px; font-weight: bold; line-height: 35px; margin: 10px 0; padding: 0 10px; }
+.saved-games .saved-game:hover, .saved-games .new-game:hover { background-color: #1681c9; }
 .saved-games .saved-game.selected, .saved-games .new-game.selected { background-color: #1681c9; }
 .saved-games .saved-game .delete-game, .saved-games .new-game .delete-game { float: right; }
+.saved-games .saved-game .delete-game:hover, .saved-games .new-game .delete-game:hover { color: #f1b718; }
 
 .resource-dash { background-color: #e5e5e5; color: #333; padding: 0; text-align: center; position: fixed; width: 100%; z-index: 3; top: 0; box-shadow: 0 3px 2px rgba(0, 0, 0, 0.1); }
-.resource-dash .resource { border: 1px solid rgba(0, 0, 0, 0.15); display: inline-block; padding: 2px 3px 1px 7px; text-align: left; vertical-align: top; width: 33.3333%; }
+.resource-dash .resource { border: 1px solid rgba(0, 0, 0, 0.15); border-bottom: none; border-left: none; display: inline-block; padding: 2px 3px 1px 7px; text-align: left; vertical-align: top; width: 33.3333%; }
 .resource-dash .resource .total-display { float: left; }
 .resource-dash .resource .production-rate { clear: both; text-align: center; }
 .resource-dash .resource .total { font-weight: bold; font-size: 14px; vertical-align: middle; }
 .resource-dash .resource .resource-image, .resource-dash .resources .resource .gathered-resources .gathered-resource img, .resources .resource-dash .resource .gathered-resources .gathered-resource img { height: 17px; width: 17px; vertical-align: middle; margin-right: 3px; }
 .resource-dash .resource .limit { float: right; }
+
+.game { text-align: center; color: #1681c9; }
+.game .welcome { margin-top: 30px; margin-bottom: 10px; }
+.game .population { margin-bottom: 50px; margin-top: 10px; }
 
 .resources .resource { display: inline-block; padding: 4px; width: 33.33333%; text-align: center; position: relative; vertical-align: top; margin: 0; background: none; }
 .resources .resource .resource-content { border-radius: 8px; min-height: 166px; padding: 10px; margin: 0; line-height: normal; }
@@ -109,26 +117,17 @@ body { font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial; font-size: 
 .resources .resource .gathered-resources .gathered-resource { left: 0; right: 0; position: absolute; }
 .resources .resource .gathered-resources .gathered-resource img { opacity: 0; position: relative; }
 
-.buildings .building { background-color: rgba(0, 0, 0, 0.3); border-radius: 4px; margin-bottom: 10px; }
-.buildings .building .title { height: 31px; line-height: 32px; font-size: 12px; background-color: #1681c9; padding: 0 10px; }
-.buildings .building .boon, .buildings .building .population .production, .population .buildings .building .production { float: right; margin-top: 3px; background: none; color: #b4dcf7; }
-.buildings .building .details { padding: 10px; }
 .buildings .building button { text-align: left; min-width: 140px; }
-.buildings .building .cost { color: white; }
 
-.population .population-details { background-color: rgba(0, 0, 0, 0.3); padding: 10px; border-radius: 4px; }
+.population .population-details { background-color: #013354; padding: 10px; border-radius: 4px; }
 .population .make-worker-container { margin-top: 10px; text-align: center; }
 .population .make-worker-container .make-worker { width: 172px; }
 .population .unemployed { text-align: center; margin: 10px; }
-.population .job .job-name { display: inline-block; width: 95px; text-align: center; }
-.population .job .job-assignment { width: 33px; }
-.population .drain { font-size: 12px; background-color: white; border-radius: 3px; display: inline-block; margin-left: 7px; padding: 0 5px; color: #e85223; height: 25px; line-height: 24px; }
+.population .jobs .job .details .job-name { display: inline-block; width: 100%; text-align: center; position: absolute; left: 0; line-height: 40px; }
+.population .jobs .job .details .job-assignment { width: 33px; position: relative; z-index: 1; }
+.population .jobs .job .details .job-assignment.assign { float: right; }
+.population .jobs .job .details .job-assignment.relieve { float: left; }
 
-.upgrades .upgrade { background-color: rgba(0, 0, 0, 0.3); border-radius: 4px; margin-bottom: 10px; overflow: hidden; -webkit-transition: .5s; transition: .5s; }
-.upgrades .upgrade .title { height: 31px; line-height: 32px; font-size: 12px; background-color: #1681c9; padding: 0 10px; -webkit-transition: .5s; transition: .5s; }
-.upgrades .upgrade .boon, .upgrades .upgrade .population .production, .population .upgrades .upgrade .production { float: right; margin-top: 3px; background: none; color: rgba(255, 255, 255, 0.7); }
-.upgrades .upgrade .details { padding: 10px; }
 .upgrades .upgrade button { text-align: left; min-width: 140px; }
-.upgrades .upgrade .cost { color: white; }
 .upgrades .upgrade.aquired { border-radius: 50px; margin: 3px 0; }
 .upgrades .upgrade.aquired .title { background-color: #00b798; }
