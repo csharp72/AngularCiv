@@ -445,23 +445,22 @@ body{
 .population{
 
 	.population-details{
-		background-color: $darkDarkBlueColor;
+		@extend .list-item;
 		padding: 10px;
-		border-radius: 4px;
-	}
-	
-	.make-worker-container{
-		margin-top: 10px;
-    	text-align: center;
-		
-		.make-worker{
-			width: 172px;
-		}
-	}
 
-	.unemployed{
-		text-align: center;
-		margin: 10px;
+		.make-worker-container{
+			margin-top: 10px;
+	    	text-align: center;
+			
+			.make-worker{
+				width: 172px;
+			}
+		}
+
+		.unemployed{
+			text-align: center;
+			margin: 10px;
+		}
 	}
 	
 	.jobs{

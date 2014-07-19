@@ -18,7 +18,7 @@ angular.module('jobs', [])
 
 		Jobs.prototype.makeWorker = function(amount){
 			var amount = amount || 1;
-			if( population.total * amount <= population.max ){
+			if( population.total + amount <= population.max ){
 				if( resources.use( jobs.unemployed.cost ) ){
 					jobs.unemployed.total += amount;
 				}

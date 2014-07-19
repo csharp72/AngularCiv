@@ -59,7 +59,7 @@
 				function rollForSpecial(){
 					if( this.specialResource && this.productionRate > 0 ){
 						if( Math.random() < this.produceSpecialChance ){
-							this.specialResource.total += Math.max( this.productionRate - this.consumptionRate, 0 );
+							this.specialResource.total += Math.max( (this.productionRate - this.consumptionRate) / 5, 0 );
 						}
 					}
 				}
