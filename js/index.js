@@ -19,7 +19,7 @@ angular.module('app').controller('GameCtrl',
 			game: "Game",
 			resources: "Gather",
 			buildings: "Build",
-			population: "Recruit",
+			population: "Populate",
 			upgrades: "Upgrade",
 		}
 		$scope.selectedScreen = $scope.screens.game;
@@ -88,6 +88,10 @@ angular.module('app').controller('GameCtrl',
 			// 	snd.play(0);
 			// })
 		})
+
+		$scope.round = function(num){
+			return Math.round( num ) || 0;
+		}
 		
 	}
 ])

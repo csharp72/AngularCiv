@@ -78,8 +78,6 @@
 						<div class="special-resource">{{r.specialChance * 100}}% chance to produce <img class="special-resource-image"ng-src="{{r.specialResource.image}}" alt="{{r.specialResource.name}}"/></div>
 					</button>
 				</div>
-
-				
 			</div>
 
 			<div class="buildings game-screen" ng-switch-when="Build">
@@ -91,70 +89,37 @@
 					
 					<div class="details">
 
-						<div>
-							<button ng-disabled="!resources.enough(b.cost)" ng-click="buildBuilding(b)">Build {{b.name}}</button>
-							<span class="cost"><span class="cost-display" ng-bind-html="b.cost | displayCost" /></span>
-						</div>
-
-						<div ng-show="b.total >= 10">
-							<button ng-disabled="!resources.enough(b.cost, 10)" ng-click="buildBuilding(b, 10)">Build 10 {{b.name}}s</button>
-							<span class="cost"><span class="cost-display" ng-bind-html="b.cost | displayCost:10" /></span>
-						</div>
-
-						<div ng-show="b.total >= 100">
-							<button ng-disabled="!resources.enough(b.cost, 100)" ng-click="buildBuilding(b, 100)">Build 100 {{b.name}}s</button>
-							<span class="cost"><span class="cost-display" ng-bind-html="b.cost | displayCost:100" /></span>
-						</div>
-
-						<div ng-show="b.total >= 1000">
-							<button ng-disabled="!resources.enough(b.cost, 1000)" ng-click="buildBuilding(b, 1000)">Build 1000 {{b.name}}s</button>
-							<span class="cost"><span class="cost-display" ng-bind-html="b.cost | displayCost:1000" /></span>
+						<div ng-repeat="amount in (amounts = [1,10,100,1000])" ng-show="b.total < amounts[$index+2] && ( b.total >= amount || amount === 1 ) ">
+							<button ng-disabled="!resources.enough(b.cost, amount)" ng-click="buildBuilding(b, amount)">Build {{amount}} {{b.name}}</button>
+							<span class="cost"><span class="cost-display" ng-bind-html="b.cost | displayCost:amount" /></span>
 						</div>
 
 					</div>
 				</div>
 			</div>
 
-			<div class="population game-screen" ng-switch-when="Recruit">
+			<div class="population game-screen" ng-switch-when="Populate">
 
 				<div class="population-details">
-					<strong>Population</strong>
-					<div class="progress-bar">
-						<div class="bar"></div>
-					</div>
-					<span>Current: {{ population.total }}</span>
-					<span>Maximum: {{ population.max }}</span>
-					
-					<div class="make-worker-container">
-						<button class="btn make-worker" ng-disabled="!canMakeWorker()" ng-click="jobs.makeWorker()">Recruit Villager</button>
-						<span class="cost">
-							<span class="cost-display" ng-bind-html="jobs.unemployed.cost | displayCost"></span>
-						</span>
+					<h2>Population</h2>
+
+					<div class="population-display">
+						<div class="progress-bar">
+							<div class="bar width-{{ round((population.total/population.max) * 100) }}"></div>
+						</div>
+						<span class="current">Current: <strong>{{ population.total }}</strong></span>
+						<span class="maximum">Maximum: <strong>{{ population.max }}</strong></span>
 					</div>
 
-					<div class="make-worker-container" ng-show="population.total >= 10">
-						<button class="btn make-worker" ng-disabled="!canMakeWorker(10)" ng-click="jobs.makeWorker(10)">Recruit 10 Villagers</button>
+					<div class="make-worker-container" ng-repeat="amount in (amounts = [1,10,100,1000])" ng-show="population.total < amounts[$index+2] && ( population.total >= amount || amount === 1 )">
+						<button class="btn make-worker" ng-disabled="!canMakeWorker(amount)" ng-click="jobs.makeWorker(amount)">Make {{amount === 1 ? '' : amount}} Villager</button>
 						<span class="cost">
-							<span class="cost-display" ng-bind-html="jobs.unemployed.cost | displayCost:10"></span>
+							<span class="cost-display" ng-bind-html="jobs.unemployed.cost | displayCost:amount"></span>
 						</span>
 					</div>
-
-					<div class="make-worker-container" ng-show="population.total >= 100">
-						<button class="btn make-worker" ng-disabled="!canMakeWorker(100)" ng-click="jobs.makeWorker(100)">Recruit 100 Villagers</button>
-						<span class="cost">
-							<span class="cost-display" ng-bind-html="jobs.unemployed.cost | displayCost:100"></span>
-						</span>
-					</div>
-
-					<div class="make-worker-container" ng-show="population.total >= 1000">
-						<button class="btn make-worker" ng-disabled="!canMakeWorker(1000)" ng-click="jobs.makeWorker(1000)">Recruit 1000 Villagers</button>
-						<span class="cost">
-							<span class="cost-display" ng-bind-html="jobs.unemployed.cost | displayCost:1000"></span>
-						</span>
-					</div>
-
-					<div class="unemployed">Unassigned Villagers: {{ jobs.unemployed.total }}</div>
 				</div>
+
+				<h2 class="unemployed">Unassigned Villagers: {{ jobs.unemployed.total }}</h2>
 
 				<!-- <span class="drain">-1 <img class="resource-image" ng-src="{{resources.food.image}}" />/sec</span> -->
 
@@ -166,14 +131,14 @@
 						</div>
 						<div class="details">
 							<button class="btn job-assignment relieve" ng-disabled="!job.total" ng-click="jobs.relieve(job)">-</button>
-							<button class="btn job-assignment relieve" ng-show="job.total >= 10" ng-disabled="job.total < 10" ng-click="jobs.relieve(job, 10)">-10</button>
-							<button class="btn job-assignment relieve" ng-show="job.total >= 100" ng-disabled="job.total < 100" ng-click="jobs.relieve(job, 100)">-100</button>
-							<button class="btn job-assignment relieve" ng-show="job.total >= 1000" ng-disabled="job.total < 1000" ng-click="jobs.relieve(job, 1000)">-1000</button>
+							<button class="btn job-assignment relieve" ng-show="population.total >= 10" ng-disabled="job.total < 10" ng-click="jobs.relieve(job, 10)">-10</button>
+							<button class="btn job-assignment relieve" ng-show="population.total >= 100" ng-disabled="job.total < 100" ng-click="jobs.relieve(job, 100)">-100</button>
+							<button class="btn job-assignment relieve" ng-show="population.total >= 1000" ng-disabled="job.total < 1000" ng-click="jobs.relieve(job, 1000)">-1000</button>
 							<span class="job-name">{{job.total}}</span>
 							<button class="btn job-assignment assign" ng-disabled="!canAssignWorker(job)" ng-click="jobs.assign(job)">+</button>
-							<button class="btn job-assignment assign" ng-show="job.total >= 10" ng-disabled="!canAssignWorker(job, 10)" ng-click="jobs.assign(job, 10)">+10</button>
-							<button class="btn job-assignment assign" ng-show="job.total >= 100" ng-disabled="!canAssignWorker(job, 100)" ng-click="jobs.assign(job, 100)">+100</button>
-							<button class="btn job-assignment assign" ng-show="job.total >= 1000" ng-disabled="!canAssignWorker(job, 1000)" ng-click="jobs.assign(job, 1000)">+1000</button>
+							<button class="btn job-assignment assign" ng-show="population.total >= 10" ng-disabled="!canAssignWorker(job, 10)" ng-click="jobs.assign(job, 10)">+10</button>
+							<button class="btn job-assignment assign" ng-show="population.total >= 100" ng-disabled="!canAssignWorker(job, 100)" ng-click="jobs.assign(job, 100)">+100</button>
+							<button class="btn job-assignment assign" ng-show="population.total >= 1000" ng-disabled="!canAssignWorker(job, 1000)" ng-click="jobs.assign(job, 1000)">+1000</button>
 							<span class="cost" ng-bind-html="job.cost | displayCost"></span>
 							<!-- <span class="production" ng-repeat="(name, prod) in job.production">+{{prod}} {{name}} / sec</span> -->
 						</div>

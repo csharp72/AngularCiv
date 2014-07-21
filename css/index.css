@@ -53,18 +53,124 @@ body, .app { height: 100%; }
 
 body { font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial; font-size: 11px; margin: 0; padding: 0; background-color: #014b7c; }
 
-.app { width: 100%; margin: 0 auto; background-color: #6fbcef; color: white; position: relative; background-image: -moz-radial-gradient(center, ellipse cover, rgba(255, 255, 255, 0.5) 0%, rgba(229, 229, 229, 0) 100%); /* FF3.6+ */ background-image: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, rgba(255, 255, 255, 0.5)), color-stop(100%, rgba(229, 229, 229, 0))); /* Chrome,Safari4+ */ background-image: -webkit-radial-gradient(center, ellipse cover, rgba(255, 255, 255, 0.5) 0%, rgba(229, 229, 229, 0) 100%); /* Chrome10+,Safari5.1+ */ background-image: -o-radial-gradient(center, ellipse cover, rgba(255, 255, 255, 0.5) 0%, rgba(229, 229, 229, 0) 100%); /* Opera 12+ */ background-image: -ms-radial-gradient(center, ellipse cover, rgba(255, 255, 255, 0.5) 0%, rgba(229, 229, 229, 0) 100%); /* IE10+ */ background-image: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.5) 0%, rgba(229, 229, 229, 0) 100%); /* W3C */ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#80ffffff', endColorstr='#00e5e5e5',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */ }
+.whiteGlow, .app { background-image: -moz-radial-gradient(center, ellipse cover, rgba(255, 255, 255, 0.5) 0%, rgba(229, 229, 229, 0) 100%); /* FF3.6+ */ background-image: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, rgba(255, 255, 255, 0.5)), color-stop(100%, rgba(229, 229, 229, 0))); /* Chrome,Safari4+ */ background-image: -webkit-radial-gradient(center, ellipse cover, rgba(255, 255, 255, 0.5) 0%, rgba(229, 229, 229, 0) 100%); /* Chrome10+,Safari5.1+ */ background-image: -o-radial-gradient(center, ellipse cover, rgba(255, 255, 255, 0.5) 0%, rgba(229, 229, 229, 0) 100%); /* Opera 12+ */ background-image: -ms-radial-gradient(center, ellipse cover, rgba(255, 255, 255, 0.5) 0%, rgba(229, 229, 229, 0) 100%); /* IE10+ */ background-image: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.5) 0%, rgba(229, 229, 229, 0) 100%); /* W3C */ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#80ffffff', endColorstr='#00e5e5e5',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */ }
+
+.darkGlow, .list-item, .buildings .building, .population .jobs .job, .upgrades .upgrade { background: -moz-radial-gradient(center, ellipse cover, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.1) 100%); /* FF3.6+ */ background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, rgba(0, 0, 0, 0)), color-stop(100%, rgba(0, 0, 0, 0.1))); /* Chrome,Safari4+ */ background: -webkit-radial-gradient(center, ellipse cover, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.1) 100%); /* Chrome10+,Safari5.1+ */ background: -o-radial-gradient(center, ellipse cover, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.1) 100%); /* Opera 12+ */ background: -ms-radial-gradient(center, ellipse cover, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.1) 100%); /* IE10+ */ background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.1) 100%); /* W3C */ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00000000', endColorstr='#1a000000',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */ }
+
+.app { width: 100%; margin: 0 auto; background-color: #6fbcef; color: #1681c9; position: relative; }
 
 .game-screens { height: 100%; overflow-y: auto; overflow-x: hidden; }
 .game-screens .game-screen { min-height: 100%; padding: 10px 5px; padding-top: 101px; padding-bottom: 42px; }
 
-.list-item, .buildings .building, .population .population-details, .population .jobs .job, .upgrades .upgrade { background-color: #013354; box-shadow: 0 2px 2px 1px rgba(0, 0, 0, 0.3); border-radius: 4px; margin-bottom: 10px; overflow: hidden; -webkit-transition: .5s; transition: .5s; }
-.list-item .title, .buildings .building .title, .population .population-details .title, .population .jobs .job .title, .upgrades .upgrade .title { height: 31px; line-height: 32px; font-size: 12px; background-color: #1681c9; padding: 0 10px; -webkit-transition: .5s; transition: .5s; }
-.list-item .details, .buildings .building .details, .population .population-details .details, .population .jobs .job .details, .upgrades .upgrade .details { position: relative; padding: 10px; }
+.list-item, .buildings .building, .population .jobs .job, .upgrades .upgrade { background-color: #013354; box-shadow: 0 2px 2px 1px rgba(0, 0, 0, 0.3); border-radius: 4px; margin-bottom: 10px; overflow: hidden; -webkit-transition: .5s; transition: .5s; }
+.list-item .title, .buildings .building .title, .population .jobs .job .title, .upgrades .upgrade .title { height: 31px; line-height: 32px; font-size: 12px; background-color: #1681c9; color: white; padding: 0 10px; -webkit-transition: .5s; transition: .5s; }
+.list-item .details, .buildings .building .details, .population .jobs .job .details, .upgrades .upgrade .details { position: relative; padding: 10px; }
 
-.cf:before, .list-item .details:before, .buildings .building .details:before, .population .population-details .details:before, .population .jobs .job .details:before, .upgrades .upgrade .details:before, .cf:after, .list-item .details:after, .buildings .building .details:after, .population .population-details .details:after, .population .jobs .job .details:after, .upgrades .upgrade .details:after { content: " "; /* 1 */ display: table; /* 2 */ }
+.cf:before, .list-item .details:before, .buildings .building .details:before, .population .jobs .job .details:before, .upgrades .upgrade .details:before, .cf:after, .list-item .details:after, .buildings .building .details:after, .population .jobs .job .details:after, .upgrades .upgrade .details:after { content: " "; /* 1 */ display: table; /* 2 */ }
 
-.cf:after, .list-item .details:after, .buildings .building .details:after, .population .population-details .details:after, .population .jobs .job .details:after, .upgrades .upgrade .details:after { clear: both; }
+.cf:after, .list-item .details:after, .buildings .building .details:after, .population .jobs .job .details:after, .upgrades .upgrade .details:after { clear: both; }
+
+.variable-width.width-0, .progress-bar .width-0.bar { width: 0%; }
+.variable-width.width-1, .progress-bar .width-1.bar { width: 1%; }
+.variable-width.width-2, .progress-bar .width-2.bar { width: 2%; }
+.variable-width.width-3, .progress-bar .width-3.bar { width: 3%; }
+.variable-width.width-4, .progress-bar .width-4.bar { width: 4%; }
+.variable-width.width-5, .progress-bar .width-5.bar { width: 5%; }
+.variable-width.width-6, .progress-bar .width-6.bar { width: 6%; }
+.variable-width.width-7, .progress-bar .width-7.bar { width: 7%; }
+.variable-width.width-8, .progress-bar .width-8.bar { width: 8%; }
+.variable-width.width-9, .progress-bar .width-9.bar { width: 9%; }
+.variable-width.width-10, .progress-bar .width-10.bar { width: 10%; }
+.variable-width.width-11, .progress-bar .width-11.bar { width: 11%; }
+.variable-width.width-12, .progress-bar .width-12.bar { width: 12%; }
+.variable-width.width-13, .progress-bar .width-13.bar { width: 13%; }
+.variable-width.width-14, .progress-bar .width-14.bar { width: 14%; }
+.variable-width.width-15, .progress-bar .width-15.bar { width: 15%; }
+.variable-width.width-16, .progress-bar .width-16.bar { width: 16%; }
+.variable-width.width-17, .progress-bar .width-17.bar { width: 17%; }
+.variable-width.width-18, .progress-bar .width-18.bar { width: 18%; }
+.variable-width.width-19, .progress-bar .width-19.bar { width: 19%; }
+.variable-width.width-20, .progress-bar .width-20.bar { width: 20%; }
+.variable-width.width-21, .progress-bar .width-21.bar { width: 21%; }
+.variable-width.width-22, .progress-bar .width-22.bar { width: 22%; }
+.variable-width.width-23, .progress-bar .width-23.bar { width: 23%; }
+.variable-width.width-24, .progress-bar .width-24.bar { width: 24%; }
+.variable-width.width-25, .progress-bar .width-25.bar { width: 25%; }
+.variable-width.width-26, .progress-bar .width-26.bar { width: 26%; }
+.variable-width.width-27, .progress-bar .width-27.bar { width: 27%; }
+.variable-width.width-28, .progress-bar .width-28.bar { width: 28%; }
+.variable-width.width-29, .progress-bar .width-29.bar { width: 29%; }
+.variable-width.width-30, .progress-bar .width-30.bar { width: 30%; }
+.variable-width.width-31, .progress-bar .width-31.bar { width: 31%; }
+.variable-width.width-32, .progress-bar .width-32.bar { width: 32%; }
+.variable-width.width-33, .progress-bar .width-33.bar { width: 33%; }
+.variable-width.width-34, .progress-bar .width-34.bar { width: 34%; }
+.variable-width.width-35, .progress-bar .width-35.bar { width: 35%; }
+.variable-width.width-36, .progress-bar .width-36.bar { width: 36%; }
+.variable-width.width-37, .progress-bar .width-37.bar { width: 37%; }
+.variable-width.width-38, .progress-bar .width-38.bar { width: 38%; }
+.variable-width.width-39, .progress-bar .width-39.bar { width: 39%; }
+.variable-width.width-40, .progress-bar .width-40.bar { width: 40%; }
+.variable-width.width-41, .progress-bar .width-41.bar { width: 41%; }
+.variable-width.width-42, .progress-bar .width-42.bar { width: 42%; }
+.variable-width.width-43, .progress-bar .width-43.bar { width: 43%; }
+.variable-width.width-44, .progress-bar .width-44.bar { width: 44%; }
+.variable-width.width-45, .progress-bar .width-45.bar { width: 45%; }
+.variable-width.width-46, .progress-bar .width-46.bar { width: 46%; }
+.variable-width.width-47, .progress-bar .width-47.bar { width: 47%; }
+.variable-width.width-48, .progress-bar .width-48.bar { width: 48%; }
+.variable-width.width-49, .progress-bar .width-49.bar { width: 49%; }
+.variable-width.width-50, .progress-bar .width-50.bar { width: 50%; }
+.variable-width.width-51, .progress-bar .width-51.bar { width: 51%; }
+.variable-width.width-52, .progress-bar .width-52.bar { width: 52%; }
+.variable-width.width-53, .progress-bar .width-53.bar { width: 53%; }
+.variable-width.width-54, .progress-bar .width-54.bar { width: 54%; }
+.variable-width.width-55, .progress-bar .width-55.bar { width: 55%; }
+.variable-width.width-56, .progress-bar .width-56.bar { width: 56%; }
+.variable-width.width-57, .progress-bar .width-57.bar { width: 57%; }
+.variable-width.width-58, .progress-bar .width-58.bar { width: 58%; }
+.variable-width.width-59, .progress-bar .width-59.bar { width: 59%; }
+.variable-width.width-60, .progress-bar .width-60.bar { width: 60%; }
+.variable-width.width-61, .progress-bar .width-61.bar { width: 61%; }
+.variable-width.width-62, .progress-bar .width-62.bar { width: 62%; }
+.variable-width.width-63, .progress-bar .width-63.bar { width: 63%; }
+.variable-width.width-64, .progress-bar .width-64.bar { width: 64%; }
+.variable-width.width-65, .progress-bar .width-65.bar { width: 65%; }
+.variable-width.width-66, .progress-bar .width-66.bar { width: 66%; }
+.variable-width.width-67, .progress-bar .width-67.bar { width: 67%; }
+.variable-width.width-68, .progress-bar .width-68.bar { width: 68%; }
+.variable-width.width-69, .progress-bar .width-69.bar { width: 69%; }
+.variable-width.width-70, .progress-bar .width-70.bar { width: 70%; }
+.variable-width.width-71, .progress-bar .width-71.bar { width: 71%; }
+.variable-width.width-72, .progress-bar .width-72.bar { width: 72%; }
+.variable-width.width-73, .progress-bar .width-73.bar { width: 73%; }
+.variable-width.width-74, .progress-bar .width-74.bar { width: 74%; }
+.variable-width.width-75, .progress-bar .width-75.bar { width: 75%; }
+.variable-width.width-76, .progress-bar .width-76.bar { width: 76%; }
+.variable-width.width-77, .progress-bar .width-77.bar { width: 77%; }
+.variable-width.width-78, .progress-bar .width-78.bar { width: 78%; }
+.variable-width.width-79, .progress-bar .width-79.bar { width: 79%; }
+.variable-width.width-80, .progress-bar .width-80.bar { width: 80%; }
+.variable-width.width-81, .progress-bar .width-81.bar { width: 81%; }
+.variable-width.width-82, .progress-bar .width-82.bar { width: 82%; }
+.variable-width.width-83, .progress-bar .width-83.bar { width: 83%; }
+.variable-width.width-84, .progress-bar .width-84.bar { width: 84%; }
+.variable-width.width-85, .progress-bar .width-85.bar { width: 85%; }
+.variable-width.width-86, .progress-bar .width-86.bar { width: 86%; }
+.variable-width.width-87, .progress-bar .width-87.bar { width: 87%; }
+.variable-width.width-88, .progress-bar .width-88.bar { width: 88%; }
+.variable-width.width-89, .progress-bar .width-89.bar { width: 89%; }
+.variable-width.width-90, .progress-bar .width-90.bar { width: 90%; }
+.variable-width.width-91, .progress-bar .width-91.bar { width: 91%; }
+.variable-width.width-92, .progress-bar .width-92.bar { width: 92%; }
+.variable-width.width-93, .progress-bar .width-93.bar { width: 93%; }
+.variable-width.width-94, .progress-bar .width-94.bar { width: 94%; }
+.variable-width.width-95, .progress-bar .width-95.bar { width: 95%; }
+.variable-width.width-96, .progress-bar .width-96.bar { width: 96%; }
+.variable-width.width-97, .progress-bar .width-97.bar { width: 97%; }
+.variable-width.width-98, .progress-bar .width-98.bar { width: 98%; }
+.variable-width.width-99, .progress-bar .width-99.bar { width: 99%; }
+.variable-width.width-100, .progress-bar .width-100.bar { width: 100%; }
 
 .btn, button { padding: 5px 9px; margin: 2px; border-radius: 3px; background-color: #1681c9; border: none; display: inline-block; color: white; line-height: 24px; text-shadow: 0 1px rgba(0, 0, 0, 0.2); vertical-align: middle; cursor: pointer; box-shadow: 0 2px 0 rgba(0, 0, 0, 0.3), 0 -1px rgba(255, 255, 255, 0.3) inset; }
 .btn:hover, button:hover { background-color: #1990e0; }
@@ -86,13 +192,15 @@ body { font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial; font-size: 
 .production-rate.neg { color: #e85223; font-weight: bold; }
 .production-rate .time-frame { font-size: 8px; margin-left: 1px; }
 
+.progress-bar { background-color: #013354; height: 10px; width: 100%; border-radius: 6px; overflow: hidden; }
+.progress-bar .bar { background-color: #1681c9; height: 100%; border-radius: 0 6px 6px 0; }
+
 .bottom-bar { position: fixed; bottom: 0; width: 100%; z-index: 2; }
 .bottom-bar .nav-item { background-color: #ac3712; display: inline-block; color: #d9d9d9; cursor: pointer; width: 20%; text-align: center; line-height: 32px; border-right: 1px solid rgba(0, 0, 0, 0.3); border-top: 1px solid rgba(0, 0, 0, 0.3); text-transform: uppercase; font-weight: bold; vertical-align: bottom; box-shadow: 0 -3px 2px rgba(0, 0, 0, 0.1); -webkit-transition: all .3s, color .15s; -moz-transition: all .3s, color .15s; transition: all .3s, color .15s; }
 .bottom-bar .nav-item.selected { background-color: #e85223; color: white; line-height: 36px; border-radius: 4px 4px 0 0; }
 
 .saved-games .saved-game, .saved-games .new-game { background-color: #014b7c; border-radius: 10px; cursor: pointer; font-size: 14px; font-weight: bold; line-height: 35px; margin: 10px 0; padding: 0 10px; }
-.saved-games .saved-game:hover, .saved-games .new-game:hover { background-color: #1681c9; }
-.saved-games .saved-game.selected, .saved-games .new-game.selected { background-color: #1681c9; }
+.saved-games .saved-game:hover, .saved-games .saved-game.selected, .saved-games .new-game:hover, .saved-games .new-game.selected { background-color: #1681c9; color: white; }
 .saved-games .saved-game .delete-game, .saved-games .new-game .delete-game { float: right; }
 .saved-games .saved-game .delete-game:hover, .saved-games .new-game .delete-game:hover { color: #f1b718; }
 
@@ -104,7 +212,7 @@ body { font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial; font-size: 
 .resource-dash .resource .resource-image, .resource-dash .resources .resource .gathered-resources .gathered-resource img, .resources .resource-dash .resource .gathered-resources .gathered-resource img { height: 17px; width: 17px; vertical-align: middle; margin-right: 3px; }
 .resource-dash .resource .limit { float: right; }
 
-.game { text-align: center; color: #1681c9; }
+.game { text-align: center; }
 .game .welcome { margin-top: 30px; margin-bottom: 10px; }
 .game .population { margin-bottom: 50px; margin-top: 10px; }
 
@@ -119,7 +227,9 @@ body { font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial; font-size: 
 
 .buildings .building button { text-align: left; min-width: 140px; }
 
-.population .population-details { padding: 10px; }
+.population .population-details { padding: 0 10px; margin-bottom: 28px; }
+.population .population-details .population-display .maximum { float: right; }
+.population .population-details .population-display .progress-bar .bar.width-100 { background-color: #e85223; }
 .population .population-details .make-worker-container { margin-top: 10px; text-align: center; }
 .population .population-details .make-worker-container .make-worker { width: 172px; }
 .population .population-details .unemployed { text-align: center; margin: 10px; }
