@@ -4,11 +4,15 @@ angular.module('filters', [])
 			return Math.floor(num);
 		}
 	})
-	.filter('shortNum', ['$filter', function($filter){
+	.filter('shortNum', [function(){
 		return function(num, decimalPlace){
-			var decimalPlace = typeof decimalPlace == "number" ? decimalPlace : 1;
+			var decimalPlace = decimalPlace || 1;
 			
-			if( num >= 1e9 ){
+			if( num >= 1e15 ){
+				return addFloat( num / 1e15, decimalPlace ) + "Q";
+			}else if( num >= 1e12 ){
+				return addFloat( num / 1e12, decimalPlace ) + "T";
+			}else if( num >= 1e9 ){
 				return addFloat( num / 1e9, decimalPlace ) + "B";
 			}else if( num >= 1e6 ){
 				return addFloat( num / 1e6, decimalPlace ) + "M";
@@ -19,7 +23,12 @@ angular.module('filters', [])
 			}
 
 			function addFloat( val, decimalPlace ){
-				return val % 1 && typeof val == "number" ? val.toFixed( decimalPlace ) : val;
+				var val = parseFloat( val.toFixed(decimalPlace) );
+				if( val % 1 ){
+					return val;
+				}else{
+					return val.toFixed( 0 );
+				}
 			}
 		}
 	}])

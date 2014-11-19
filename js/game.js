@@ -200,6 +200,15 @@ angular.module('game', [])
 
 		function calcUpgrades(){
 			angular.forEach(upgrades, function(upgrade){
+				//are requirements met?
+				var reqMet = true;
+				angular.forEach( upgrade.requirements, function(req){
+					if( upgrades[req].total == 0 ){
+						reqMet = false;
+					}
+				});
+				upgrade.requirementsMet = reqMet;
+
 				angular.forEach( upgrade.benefits, function(benefit, benefitName){
 					var benefitEffect = benefit[1]
 					angular.forEach( benefitEffect, function(ben, key){

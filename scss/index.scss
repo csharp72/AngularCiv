@@ -362,7 +362,7 @@ body{
 		// border-radius: 4px;
 		//box-shadow: 0 1px rgba(255, 255, 255, 0.15) inset;
 		display: inline-block;
-		padding: 2px 3px 1px 7px;
+		padding: 2px 3px 1px 3px;
 		text-align: left;
 		vertical-align: top;
 		width: 33.3333%;
@@ -378,7 +378,7 @@ body{
 
 		.total{
 			font-weight: bold;
-			font-size: 14px;
+			font-size: 12px;
 			vertical-align: middle;
 		}
 
@@ -386,7 +386,7 @@ body{
     		height: 17px;
     		width: 17px;
     		vertical-align: middle;
-			margin-right: 3px;
+			margin-right: 2px;
     	}
 
     	.limit{
@@ -495,7 +495,7 @@ body{
 
 		.make-worker-container{
 			margin-top: 10px;
-	    	text-align: center;
+	    	margin-left: 17px;
 			
 			.make-worker{
 				width: 172px;
@@ -523,9 +523,10 @@ body{
 				}
 
 				.job-assignment{
-					width: 33px;
+					width: 32px;
 					position: relative;
 					z-index: 1;
+					font-size: 8px;
 
 					&.assign{
 						float: right;

@@ -22,11 +22,18 @@ angular.module('app').controller('GameCtrl',
 			population: "Populate",
 			upgrades: "Upgrade",
 		}
-		$scope.selectedScreen = $scope.screens.game;
+		$scope.selectedScreen = $scope.screens.resources;
 		$scope.selectScreen = function( screen ){
 			$scope.lastScreen = $scope.selectedScreen;
 			$scope.selectedScreen = screen;
 		}
+		$scope.screensList = [
+			$scope.screens.game,
+			$scope.screens.resources,
+			$scope.screens.buildings,
+			$scope.screens.population,
+			$scope.screens.upgrades,
+		]
 
 		$scope.chooseGame = false;
 
@@ -93,5 +100,29 @@ angular.module('app').controller('GameCtrl',
 			return Math.round( num ) || 0;
 		}
 		
+		$scope.isEmptyObject = function( obj ){
+			return jQuery.isEmptyObject( obj );
+		}
+
+		$scope.selectScreen = function( screen ){
+			$scope.lastScreen = $scope.selectedScreen;
+			$scope.selectedScreen = screen;
+		}
+
+		$scope.previousScreen = function(){
+			
+			var i = $scope.screensList.indexOf( $scope.selectedScreen ) - 1;
+			var previousScreen = i < 0 ? $scope.screensList[$scope.screensList.length -1] : $scope.screensList[i];
+			
+			$scope.selectScreen( previousScreen );
+		}
+
+		$scope.nextScreen = function(){
+
+			var i = $scope.screensList.indexOf( $scope.selectedScreen ) + 1;
+			var nextScreen = i >= $scope.screensList.length ? $scope.screensList[0] : $scope.screensList[i];
+			
+			$scope.selectScreen( nextScreen );
+		}
 	}
 ])

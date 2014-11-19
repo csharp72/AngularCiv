@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html ng-app="app" ng-controller="GameCtrl">
+<html ng-app="app" ng-controller="GameCtrl" ng-cloak>
 <head>
-	<title ng-bind-template="{{game.currentGame}}">Angular Civ</title>
+	<title ng-bind-template="Angular Civ - {{game.currentGame}}">Angular Civ</title>
 
 	<script type="text/javascript" src="./js/libs/angular.min.js"></script>
 	<script type="text/javascript" src="./js/libs/angular-touch.min.js"></script>
@@ -30,11 +30,11 @@
 </head>
 <body>
 	
-	<div class="app">
+	<div class="app" ng-swipe-left="nextScreen()" ng-swipe-right="previousScreen()">
 
 		<div class="resource-dash">
 			<div class="resource" ng-repeat="r in resources.list">
-				<div class="total-display"><img class="resource-image" ng-src="{{r.image}}" alt="" /><span class="total">{{r.total | shortNum:0}}</span></div>
+				<div class="total-display"><img class="resource-image" ng-src="{{r.image}}" alt="" /><span class="total">{{r.total | shortNum}}</span></div>
 				<div class="limit" ng-if="r.max"><small>/{{r.max | shortNum}}</small></div>
 				<div class="production-rate" ng-if="r.grossRate !== 0" ng-class="{neg:r.grossRate < 0, pos:r.grossRate > 0}">
 					<span class="rate">{{r.grossRate | shortNum}}</span><span class="time-frame">/sec</span>
@@ -65,7 +65,7 @@
 		
 			<div class="resources game-screen" ng-switch-when="Gather">
 				<div class="resource" ng-repeat="r in [resources.food, resources.wood, resources.stone]" ng-disable="true" ng-click="collect(r, $event)">
-					<button class="resource-content" ng-disabled="false">
+					<button class="resource-content" ng-disabled="r.total >= r.max">
 						<div>Gather {{r.name}}</div>
 						<div ng-if="r.collectRate > 0">x{{r.collectRate}}</div>
 						<div class="gathered-resources">
@@ -81,7 +81,7 @@
 			</div>
 
 			<div class="buildings game-screen" ng-switch-when="Build">
-				<div class="building" ng-repeat="b in buildingsList">
+				<div class="building" ng-repeat="b in buildings.list">
 					<div class="title">
 						<span>{{b.name}}: <strong>{{b.total}}</strong></span>
 						<span class="boon" ng-repeat="(name, boon) in b.boons">{{name}} <span ng-repeat="(a,b) in boon">{{a}} +{{b}}</span>{{!$last ? ', ' : ''}}</span>
@@ -89,7 +89,7 @@
 					
 					<div class="details">
 
-						<div ng-repeat="amount in (amounts = [1,10,100,1000])" ng-show="b.total < amounts[$index+2] && ( b.total >= amount || amount === 1 ) ">
+						<div ng-repeat="amount in (amounts = [1,10,100,1000])" ng-show="b.total >= amount || amount === 1">
 							<button ng-disabled="!resources.enough(b.cost, amount)" ng-click="buildBuilding(b, amount)">Build {{amount}} {{b.name}}</button>
 							<span class="cost"><span class="cost-display" ng-bind-html="b.cost | displayCost:amount" /></span>
 						</div>
@@ -111,7 +111,7 @@
 						<span class="maximum">Maximum: <strong>{{ population.max }}</strong></span>
 					</div>
 
-					<div class="make-worker-container" ng-repeat="amount in (amounts = [1,10,100,1000])" ng-show="population.total < amounts[$index+2] && ( population.total >= amount || amount === 1 )">
+					<div class="make-worker-container" ng-repeat="amount in (amounts = [1,10,100,1000])" ng-show="population.total >= amount || amount === 1">
 						<button class="btn make-worker" ng-disabled="!canMakeWorker(amount)" ng-click="jobs.makeWorker(amount)">Make {{amount === 1 ? '' : amount}} Villager</button>
 						<span class="cost">
 							<span class="cost-display" ng-bind-html="jobs.unemployed.cost | displayCost:amount"></span>
@@ -130,16 +130,30 @@
 							<span class="production" ng-repeat="(name, prod) in job.production">+{{prod}} {{name}} / sec</span>
 						</div>
 						<div class="details">
-							<button class="btn job-assignment relieve" ng-disabled="!job.total" ng-click="jobs.relieve(job)">-</button>
-							<button class="btn job-assignment relieve" ng-show="population.total >= 10" ng-disabled="job.total < 10" ng-click="jobs.relieve(job, 10)">-10</button>
-							<button class="btn job-assignment relieve" ng-show="population.total >= 100" ng-disabled="job.total < 100" ng-click="jobs.relieve(job, 100)">-100</button>
-							<button class="btn job-assignment relieve" ng-show="population.total >= 1000" ng-disabled="job.total < 1000" ng-click="jobs.relieve(job, 1000)">-1000</button>
-							<span class="job-name">{{job.total}}</span>
-							<button class="btn job-assignment assign" ng-disabled="!canAssignWorker(job)" ng-click="jobs.assign(job)">+</button>
-							<button class="btn job-assignment assign" ng-show="population.total >= 10" ng-disabled="!canAssignWorker(job, 10)" ng-click="jobs.assign(job, 10)">+10</button>
-							<button class="btn job-assignment assign" ng-show="population.total >= 100" ng-disabled="!canAssignWorker(job, 100)" ng-click="jobs.assign(job, 100)">+100</button>
-							<button class="btn job-assignment assign" ng-show="population.total >= 1000" ng-disabled="!canAssignWorker(job, 1000)" ng-click="jobs.assign(job, 1000)">+1000</button>
-							<span class="cost" ng-bind-html="job.cost | displayCost"></span>
+							<div class="relieve-btns">
+
+								<button class="btn job-assignment relieve x{{amount}}" 
+									ng-repeat="amount in (amounts = [1000,100,10,1])" 
+									ng-show="amount === 1 || population.total >= amount" 
+									ng-disabled="job.total < amount" 
+									ng-click="jobs.relieve(job, amount)">
+										-{{amount > 1 ? amount : ''}}
+								</button>
+
+							</div>
+							<!-- <span class="job-name">{{job.total}}</span> -->
+							<div class="assign-btns">
+
+								<button class="btn job-assignment assign x{{amount}}" 
+									ng-repeat="amount in (amounts = [1000,100,10,1])" 
+									ng-show="amount === 1 || population.total >= amount" 
+									ng-disabled="!canAssignWorker(job, amount)" 
+									ng-click="jobs.assign(job, amount)">
+										+{{amount > 1 ? amount : ''}}
+								</button>
+
+							</div>
+							<span ng-show="!isEmptyObject(job.cost)" class="cost" ng-bind-html="job.cost | displayCost"></span>
 							<!-- <span class="production" ng-repeat="(name, prod) in job.production">+{{prod}} {{name}} / sec</span> -->
 						</div>
 					</div>
@@ -147,14 +161,14 @@
 			</div>
 
 			<div class="upgrades game-screen" ng-switch-when="Upgrade">
-				<div class="upgrade" ng-repeat="u in upgrades.list" ng-class="{aquired: u.aquired}">
+				<div class="upgrade" ng-repeat="u in upgrades.list" ng-class="{aquired: u.total}" ng-show="u.requirementsMet">
 
 					<div class="title">
 						<span>{{u.name}}</span>
 						<span class="boon" ng-repeat="benefit in u.benefits">{{benefit[0]}}{{!$last ? ', ' : ''}}</span>
 					</div>
 					
-					<div class="details" ng-show="!u.aquired">
+					<div class="details" ng-show="!u.total">
 						<button ng-disabled="!resources.enough(u.cost)" ng-click="buyUpgrade(u)">Purchase</button>
 						<span class="cost"><span class="cost-display" ng-bind-html="u.cost | displayCost" /></span>
 					</div>

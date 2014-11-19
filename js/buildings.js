@@ -9,6 +9,8 @@
 				return currId++;
 			}
 
+			var list = [];
+
 			function Building(name, type, cost, boons, requirements){
 				this.id = nextId();
 				this.name = name;
@@ -18,6 +20,8 @@
 				this.requirements = requirements || {};
 				this.total = 0;
 				this.devotion = 0;
+
+				list.push(this);
 			}
 
 			Building.prototype.build = function(amount){
@@ -28,6 +32,8 @@
 			function Buildings(buildings){
 				angular.extend(this, buildings);
 			}
+
+			Buildings.prototype.list = list;
 
 			Buildings.prototype.build = function( building, amount ){
 				var amount = amount || 1;
