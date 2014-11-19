@@ -1,21 +1,35 @@
 angular.module('game', [])
 	
 	.factory('game', 
-	['$rootScope','$cookieStore','$timeout','buildings','resources','jobs','population','upgrades','prompt', 'confirm',
-	function($rootScope, $cookieStore, $timeout, buildings, resources,  jobs, population, upgrades, prompt, confirm){
-
+	['$rootScope','$cookieStore','$firebase','$timeout','buildings','resources','jobs','population','upgrades','prompt', 'confirm',
+	function($rootScope, $cookieStore, $firebase, $timeout, buildings, resources,  jobs, population, upgrades, prompt, confirm){
 		var game = {};
-		
-		game.savedGames = $cookieStore.get('ngCiv_savedGames') || [];
-		game.currentGame = "";
+
+		game.savedGames = $firebase(new Firebase("https://angularciv.firebaseio.com/savedGames")).$asArray();
+		game.savedGames.$loaded(function(){
+			console.log( game.savedGames, game.savedGames.$$getKey(game.savedGames[0]) )
+			if( !game.savedGames.length ){
+				$timeout(function(){
+					prompt('Name your brand new village.').then(function(villageName){
+						var newGame = {name: villageName};
+						var ref = game.savedGames.$add( newGame );
+						game.currentGame = game.savedGames[ game.savedGames.length - 1 ];
+					});
+				}, 100);
+			}else{
+				game.currentGame = game.savedGames[0];
+				game.load();
+			}
+		})
+
+
+		// game.savedGames.$add({Foo: "Bar"});
 
 		game.save = function(){
-			$cookieStore.put('ngCiv_savedGames', game.savedGames);
-
-			$cookieStore.put('ngCiv_resources' + game.currentGame, 	justTotals(resources) 	);
-			$cookieStore.put('ngCiv_buildings' + game.currentGame, 	justTotals(buildings) 	);
-			$cookieStore.put('ngCiv_jobs' + game.currentGame, 		justTotals(jobs) 		);
-			$cookieStore.put('ngCiv_upgrades' + game.currentGame, 	justTotals(upgrades) 	);
+			// $cookieStore.put('ngCiv_resources' + game.currentGame, 	justTotals(resources) 	);
+			// $cookieStore.put('ngCiv_buildings' + game.currentGame, 	justTotals(buildings) 	);
+			// $cookieStore.put('ngCiv_jobs' + game.currentGame, 		justTotals(jobs) 		);
+			// $cookieStore.put('ngCiv_upgrades' + game.currentGame, 	justTotals(upgrades) 	);
 
 			function justTotals( collection ){
 				var newObj = {};
@@ -30,10 +44,10 @@ angular.module('game', [])
 
 		game.load = function(){
 
-			loadTotals( resources, 	$cookieStore.get('ngCiv_resources' + game.currentGame) 		);
-			loadTotals( buildings, 	$cookieStore.get('ngCiv_buildings' + game.currentGame) 		);
-			loadTotals( jobs, 		$cookieStore.get('ngCiv_jobs' + game.currentGame) 			);
-			loadTotals( upgrades, 	$cookieStore.get('ngCiv_upgrades' + game.currentGame) 		);
+			// loadTotals( resources, 	$cookieStore.get('ngCiv_resources' + game.currentGame) 		);
+			// loadTotals( buildings, 	$cookieStore.get('ngCiv_buildings' + game.currentGame) 		);
+			// loadTotals( jobs, 		$cookieStore.get('ngCiv_jobs' + game.currentGame) 			);
+			// loadTotals( upgrades, 	$cookieStore.get('ngCiv_upgrades' + game.currentGame) 		);
 
 			function loadTotals( collection, loadData ){
 				angular.forEach( loadData, function(loadItem, key){
@@ -44,23 +58,16 @@ angular.module('game', [])
 			}
 		}
 
-		game.deleteSave = function( saveName ){
-			confirm('Delete ' +  saveName + "?").then(function(){
-				if( game.savedGames.indexOf( saveName ) != -1 ){
-					game.savedGames.splice( game.savedGames.indexOf( saveName ), 1 );
-				}
-
-				$cookieStore.remove('ngCiv_resources' + saveName );
-				$cookieStore.remove('ngCiv_buildings' + saveName );
-				$cookieStore.remove('ngCiv_jobs' + saveName );
-				$cookieStore.remove('ngCiv_upgrades' + saveName );
+		game.deleteSave = function( savedGame ){
+			confirm('Delete ' +  savedGame.name + "?").then(function(){
+				game.savedGames.$remove(savedGame)
 			});
 		}
 
-		game.switch = function( gameName ){
+		game.switch = function( savedGame ){
 
-			if( gameName ){
-				switchGame( gameName );
+			if( savedGame ){
+				switchGame( savedGame );
 			}else{
 				var lastGame = game.currentGame;
 				game.currentGame = "";
@@ -75,12 +82,8 @@ angular.module('game', [])
 				);
 			}
 
-			function switchGame( gameName ){
-				game.currentGame = gameName;
-				if( game.savedGames.indexOf( game.currentGame ) != -1 ){
-					game.savedGames.splice( game.savedGames.indexOf( game.currentGame ), 1 );
-				}
-				game.savedGames.unshift( game.currentGame );
+			function switchGame( savedGame ){
+				game.currentGame = savedGame;
 				game.resetToZero();
 				game.load();
 			}
@@ -100,19 +103,6 @@ angular.module('game', [])
 					}
 				})
 			}			
-		}
-		
-		if( !game.savedGames.length ){
-			$timeout(function(){
-				prompt('Name your brand new village.').then(function(villageName){
-					game.currentGame = villageName;
-					game.savedGames.unshift( game.currentGame );
-					game.save();
-				});
-			}, 100);
-		}else{
-			game.currentGame = game.savedGames[0];
-			game.load();
 		}
 
 
