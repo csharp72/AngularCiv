@@ -8,6 +8,7 @@
 			window.scope = window.$scope = $scope;
 
 			// $scope.game = game;
+			$scope.game = {};
 			$scope.resources = resources;
 			$scope.buildings = buildings;
 			$scope.jobs = jobs;
@@ -53,22 +54,6 @@
 								});
 							});
 						}
-
-						loadTotals(resources, $scope.game.resources);
-						loadTotals(buildings, $scope.game.buildings);
-						loadTotals(jobs, $scope.game.jobs);
-						loadTotals(population, $scope.game.population);
-						loadTotals(upgrades, $scope.game.upgrades);
-
-						function loadTotals( collection, loadData ){
-							if( loadData ){
-								angular.forEach( loadData, function(loadItem, key){
-									if( typeof loadItem.total != 'undefined' ){
-										collection[key].total = loadItem.total;
-									}
-								})
-							}
-						}
 					})
 					
 				} else {
@@ -79,6 +64,16 @@
 					$scope.currentUser = '';
 				}
 			});
+
+			$scope.$watch('game', function(val){
+				console.log("data changed!", val );
+
+				loadTotals(resources, $scope.game.resources);
+				loadTotals(buildings, $scope.game.buildings);
+				loadTotals(jobs, $scope.game.jobs);
+				loadTotals(population, $scope.game.population);
+				loadTotals(upgrades, $scope.game.upgrades);
+			})
 
 			$scope.$watch('resources', function(val){
 				$scope.game.resources = justTotals(val);
@@ -99,6 +94,16 @@
 			$scope.$watch('upgrades', function(val){
 				$scope.game.upgrades = justTotals(val);
 			},true);
+
+			function loadTotals( collection, loadData ){
+				if( loadData ){
+					angular.forEach( loadData, function(loadItem, key){
+						if( typeof loadItem.total != 'undefined' ){
+							collection[key].total = loadItem.total;
+						}
+					})
+				}
+			}
 
 			function justTotals( collection ){
 				var newObj = {};
