@@ -1,13 +1,13 @@
 (function(){
 	var app = angular.module('app', ['ngTouch','ngCookies','ngAnimate','firebase','game','resources','population','jobs','buildings','upgrades','filters','alertPromptConfirm','foos','gameElements']);
-	app.controller('GameCtrl', 
-		
-		['foos', '$scope','$interval','$timeout','$firebase','$firebaseAuth','game','buildings','resources','jobs','population','upgrades',
-		function(foos, $scope, $interval, $timeout, $firebase, $firebaseAuth, game, buildings, resources,  jobs, population, upgrades){
+	
+	app.controller('GameCtrl',
+		['foos', '$scope','$interval','$timeout','$cookies','$firebase','$firebaseAuth','SavedGame','game','buildings','resources','jobs','population','upgrades','prompt',
+		function(foos, $scope, $interval, $timeout, $cookies, $firebase, $firebaseAuth, SavedGame, game, buildings, resources,  jobs, population, upgrades, prompt){
 
 			window.scope = window.$scope = $scope;
 
-			$scope.game = game;
+			// $scope.game = game;
 			$scope.resources = resources;
 			$scope.buildings = buildings;
 			$scope.jobs = jobs;
@@ -16,30 +16,113 @@
 			$scope.foos = foos;
 
 			$scope.auth = $firebaseAuth(new Firebase("https://angularciv.firebaseio.com/"));
-			console.log( $scope.auth )
 
-			$scope.login = function(){
-				$scope.auth.$authWithPassword({
-					email: $scope.login.email, 
-					password: $scope.login.password
-				}).then(function(authData){
-					console.log("Logged in as:", authData);
-					$scope.currentUser = authData.uid;
+			// $scope.login = function(){
+			// 	$scope.auth.$authWithPassword({
+			// 		email: $scope.login.email, 
+			// 		password: $scope.login.password
+			// 	}).catch(authFail);
+			// }
 
-					$firebase(new Firebase("https://angularciv.firebaseio.com/user_savedGames/"+authData.uid)).$asArray().$loaded(function(savedGameRefs){
-						console.log( savedGameRefs )
+			function authFail(error){
+				$scope.loginShown = true;
+				console.error("Authentication failed:", error);
+			}
 
-						angular.forEach( savedGameRefs, function(ref){
-							$firebase(new Firebase("https://angularciv.firebaseio.com/savedGames/"+ref.$value)).$asObject().$loaded(function(savedGame){
-								console.log( savedGame )
+			$scope.logout = function(){
+				$scope.auth.$unauth();
+				$scope.loginShown = true;
+			}
+
+			$scope.skipLogin = function(){
+				$scope.auth.$authAnonymously().catch(authFail);
+			}
+
+			$scope.auth.$onAuth(function(authData){
+				if (authData) {
+					console.log('logged in', authData)
+					$scope.currentUser = authData;
+
+					//retrieve saved games
+					$scope.savedGame = SavedGame(authData.uid)
+					$scope.savedGame.$bindTo($scope, "game").then(function(){
+						if( $scope.savedGame.$value === null ){
+							$timeout(function(){
+								prompt('Name your brand new village.').then(function(villageName){
+									$scope.game = {name:villageName};
+								});
 							});
-						})
+						}
+
+						loadTotals(resources, $scope.game.resources);
+						loadTotals(buildings, $scope.game.buildings);
+						loadTotals(jobs, $scope.game.jobs);
+						loadTotals(population, $scope.game.population);
+						loadTotals(upgrades, $scope.game.upgrades);
+
+						function loadTotals( collection, loadData ){
+							if( loadData ){
+								angular.forEach( loadData, function(loadItem, key){
+									if( typeof loadItem.total != 'undefined' ){
+										collection[key].total = loadItem.total;
+									}
+								})
+							}
+						}
 					})
 					
-				}).catch(function(error){
-					console.error("Authentication failed:", error);
+				} else {
+					//logged out
+					$scope.savedGame && $scope.savedGame.$destroy();
+					$scope.game = {};
+					game.resetToZero();
+					$scope.currentUser = '';
+				}
+			});
+
+			$scope.$watch('resources', function(val){
+				$scope.game.resources = justTotals(val);
+			},true);
+
+			$scope.$watch('buildings', function(val){
+				$scope.game.buildings = justTotals(val);
+			},true);
+
+			$scope.$watch('jobs', function(val){
+				$scope.game.jobs = justTotals(val);
+			},true);
+
+			$scope.$watch('population', function(val){
+				$scope.game.population = justTotals(val);
+			},true);
+
+			$scope.$watch('upgrades', function(val){
+				$scope.game.upgrades = justTotals(val);
+			},true);
+
+			function justTotals( collection ){
+				var newObj = {};
+				angular.forEach( collection, function(colObj, key){
+					if( typeof colObj.total != 'undefined' ){
+						newObj[key] = {total: colObj.total}
+					}
 				})
+				return newObj;
 			}
+
+			// $scope.signup = function(){
+			// 	console.log('signup', $scope.signup.email, $scope.signup.password)
+			// 	$scope.auth.$createUser({
+			// 		email: $scope.signup.email,
+			// 		password: $scope.signup.password
+			// 	}).then(function(data) {
+			// 		console.log("User created successfully!", data);
+			// 		return $scope.auth.$authWithPassword({
+			// 			email: $scope.signup.email,
+			// 			password: $scope.signup.password
+			// 		});
+			// 	}).catch(authFail);
+			// }
 
 			$scope.screens = {
 				game: "Game",
@@ -152,4 +235,17 @@
 			}
 		}
 	])
+
+	app.factory("SavedGames", ["$firebase", function($firebase){
+		return function(user){
+			return $firebase(new Firebase("https://angularciv.firebaseio.com/savedGames/").child(user)).$asArray();
+		}
+	}]);
+
+	app.factory("SavedGame", ["$firebase", function($firebase){
+		return function(user){
+			return $firebase(new Firebase("https://angularciv.firebaseio.com/savedGames/").child(user)).$asObject();
+		}
+	}]);
 }())
+

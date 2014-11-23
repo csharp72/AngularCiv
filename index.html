@@ -5,11 +5,11 @@
 
 	<script type="text/javascript" src="./bower_components/angular/angular.min.js"></script>
 	<script type="text/javascript" src="./bower_components/angular-touch/angular-touch.min.js"></script>
-	<script type="text/javascript" src="./js/libs/angular-cookies.min.js"></script>
+	<script type="text/javascript" src="./bower_components/angular-cookies/angular-cookies.min.js"></script>
 	<script type="text/javascript" src="./bower_components/angular-animate/angular-animate.min.js"></script>
 	<script type="text/javascript" src="./bower_components/firebase/firebase.js"></script>
 	<script type="text/javascript" src="./bower_components/angularfire/dist/angularfire.min.js"></script>
-	<script type="text/javascript" src="./js/libs/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="./bower_components/jquery/dist/jquery.min.js"></script>
 
 	<script type="text/javascript" src="./js/index.js"></script>
 	<script type="text/javascript" src="./js/game.js"></script>
@@ -34,19 +34,50 @@
 </head>
 <body>
 	
-	<div class="login" ng-hide="currentUser">
-		<form name="loginForm" ng-submit="login()">
-			<p><input type="email" ng-model="login.email" /></p>
-			<p><input type="password" ng-model="login.password" /></p>
-			<button>Login</button>
-		</form>
+	<div class="login" ng-show="!currentUser">
+		<h1 class="title">Angular Civ</h1>
+		<!-- <form name="loginForm" ng-submit="login()">
+			<p><input type="email" ng-model="login.email" placeholder="Email Address" /></p>
+			<p><input type="password" ng-model="login.password" placeholder="Password" /></p>
+			<p class="main-actions">
+				<button class="login-btn wide">Login</button>
+				<br />
+				<a class="a-btn slim" ng-click="skipLogin()">Skip login for now</a>
+			</p>
+			<p class="alternate-actions">
+				<a class="btn muted wide" ng-click="signupShown = true">Sign up</a>
+				<br />
+				<a class="a-btn slim" ng-click="forgotPassword()">Forgot password</a>
+			</p>
+		</form> -->
+	
+		<p class="login-options">
+			<a class="a-btn slim" ng-click="skipLogin()">Skip login for now</a> 
+			<button ng-click="auth.$authWithOAuthPopup('facebook')"><i class="fa fa-facebook-square"></i> Sign in with Facebook</button>
+		</p>
+	
+		
 	</div>
 
-	<div class="app" ng-show="currentUser" ng-swipe-left="nextScreen()" ng-swipe-right="previousScreen()">
+	<!-- <div class="signup app" ng-show="signupShown">
+		<h1>Signup</h1>
+		<form name="signupForm" ng-submit="signup()">
+			<p><input type="email" ng-model="signup.email" placeholder="Email Address" /></p>
+			<p><input name="signupPass" type="password" ng-model="signup.password" placeholder="Password" autocomplete="off" /></p>
+			<p class="main-actions">
+				<button class="signup-btn wide">Signup</button>
+			</p>
+			<p class="alternate-actions">
+				<a class="btn muted wide" ng-click="signupShown = false">Cancel</a>
+			</p>
+		</form>
+	</div> -->
+
+	<div class="app" ng-show="currentUser">
 
 		<div class="resource-dash">
 			<div class="resource" ng-repeat="r in resources.list">
-				<div class="total-display"><img class="resource-image" ng-src="{{r.image}}" alt="" /><span class="total">{{r.total | shortNum}}</span></div>
+				<div class="total-display"><img class="resource-image" ng-src="{{r.image}}" alt="" /><span class="total">{{r.total | shortNum:1:false }}</span></div>
 				<div class="limit" ng-if="r.max"><small>/{{r.max | shortNum}}</small></div>
 				<div class="production-rate" ng-if="r.grossRate !== 0" ng-class="{neg:r.grossRate < 0, pos:r.grossRate > 0}">
 					<span class="rate">{{r.grossRate | shortNum}}</span><span class="time-frame">/sec</span>
@@ -55,15 +86,16 @@
 		</div>
 		
 		
-		<div class="game-screens" ng-switch="selectedScreen">
+		<div class="game-screens" ng-switch="selectedScreen" ng-swipe-left="nextScreen()" ng-swipe-right="previousScreen()">
 
 			<div class="game game-screen" ng-switch-when="Game">
-				<h2 class="welcome"><i class="fa fa-bank"></i> Welcome to {{game.currentGame.name}}</h2>
-				<p class="population">Population: <strong ng-show="population.total">{{population.total | commaDelimited}}</strong><span ng-show="population.total"> plus </span><strong>You</strong></p>
-				<button ng-disabled="false" ng-click="selectScreen('SavedGames')">Select a Different Village</button>
+				<h2 class="welcome"><i class="fa fa-bank"></i> Welcome to {{game.name}}</h2>
+				<p class="population">Population: <strong ng-show="population.total">{{population.total | commaDelimited}}</strong><span ng-show="population.total"> plus </span><strong>{{currentUser.facebook.cachedUserProfile.first_name || 'You'}}</strong></p>
+				<!-- <button ng-disabled="false" ng-click="selectScreen('SavedGames')">Select a Different Village</button> -->
+				<button ng-click="logout()">Logout</button>
 			</div>
 
-			<div class="saved-games game-screen" ng-switch-when="SavedGames">
+			<!-- <div class="saved-games game-screen" ng-switch-when="SavedGames">
 				<h2>Saved Villages</h2>
 				<div class="saved-game" ng-class="{selected: sg == game.currentGame}" ng-repeat="sg in game.savedGames" ng-click="selectScreen(lastScreen); game.switch( sg )">
 					<span>{{sg.name}}</span>
@@ -72,7 +104,7 @@
 					</div>
 				</div>
 				<div class="new-game" ng-click="selectScreen(lastScreen); game.switch()">+ New Game</div>
-			</div>
+			</div> -->
 		
 			<div class="resources game-screen" ng-switch-when="Gather">
 				<div class="resource" ng-repeat="r in [resources.food, resources.wood, resources.stone]" ng-disable="true" ng-click="collect(r, $event)">

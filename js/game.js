@@ -5,22 +5,22 @@ angular.module('game', [])
 	function($rootScope, $cookieStore, $firebase, $timeout, buildings, resources,  jobs, population, upgrades, prompt, confirm){
 		var game = {};
 
-		game.savedGames = $firebase(new Firebase("https://angularciv.firebaseio.com/savedGames")).$asArray();
-		game.savedGames.$loaded(function(){
-			console.log( game.savedGames, game.savedGames.$$getKey(game.savedGames[0]) )
-			if( !game.savedGames.length ){
-				$timeout(function(){
-					prompt('Name your brand new village.').then(function(villageName){
-						var newGame = {name: villageName};
-						var ref = game.savedGames.$add( newGame );
-						game.currentGame = game.savedGames[ game.savedGames.length - 1 ];
-					});
-				}, 100);
-			}else{
-				game.currentGame = game.savedGames[0];
-				game.load();
-			}
-		})
+		// game.savedGames = $firebase(new Firebase("https://angularciv.firebaseio.com/savedGames")).$asArray();
+		// game.savedGames.$loaded(function(){
+		// 	console.log( game.savedGames, game.savedGames.$$getKey(game.savedGames[0]) )
+		// 	if( !game.savedGames.length ){
+		// 		$timeout(function(){
+		// 			prompt('Name your brand new village.').then(function(villageName){
+		// 				var newGame = {name: villageName};
+		// 				var ref = game.savedGames.$add( newGame );
+		// 				game.currentGame = game.savedGames[ game.savedGames.length - 1 ];
+		// 			});
+		// 		}, 100);
+		// 	}else{
+		// 		game.currentGame = game.savedGames[0];
+		// 		game.load();
+		// 	}
+		// })
 
 
 		// game.savedGames.$add({Foo: "Bar"});

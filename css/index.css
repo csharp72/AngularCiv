@@ -51,24 +51,34 @@ html { height: 100%; }
 
 body, .app { height: 100%; }
 
-body { font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial; font-size: 11px; margin: 0; padding: 0; background-color: #014b7c; }
+body { font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial; font-size: 11px; margin: 0; padding: 0; background-color: #87c7f2; color: #1990e0; }
 
-.whiteGlow, .app { background-image: -moz-radial-gradient(center, ellipse cover, rgba(255, 255, 255, 0.5) 0%, rgba(229, 229, 229, 0) 100%); /* FF3.6+ */ background-image: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, rgba(255, 255, 255, 0.5)), color-stop(100%, rgba(229, 229, 229, 0))); /* Chrome,Safari4+ */ background-image: -webkit-radial-gradient(center, ellipse cover, rgba(255, 255, 255, 0.5) 0%, rgba(229, 229, 229, 0) 100%); /* Chrome10+,Safari5.1+ */ background-image: -o-radial-gradient(center, ellipse cover, rgba(255, 255, 255, 0.5) 0%, rgba(229, 229, 229, 0) 100%); /* Opera 12+ */ background-image: -ms-radial-gradient(center, ellipse cover, rgba(255, 255, 255, 0.5) 0%, rgba(229, 229, 229, 0) 100%); /* IE10+ */ background-image: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.5) 0%, rgba(229, 229, 229, 0) 100%); /* W3C */ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#80ffffff', endColorstr='#00e5e5e5',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */ }
+.whiteGlow, body, .app { background-image: -moz-radial-gradient(center, ellipse cover, rgba(255, 255, 255, 0.5) 0%, rgba(229, 229, 229, 0) 100%); /* FF3.6+ */ background-image: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, rgba(255, 255, 255, 0.5)), color-stop(100%, rgba(229, 229, 229, 0))); /* Chrome,Safari4+ */ background-image: -webkit-radial-gradient(center, ellipse cover, rgba(255, 255, 255, 0.5) 0%, rgba(229, 229, 229, 0) 100%); /* Chrome10+,Safari5.1+ */ background-image: -o-radial-gradient(center, ellipse cover, rgba(255, 255, 255, 0.5) 0%, rgba(229, 229, 229, 0) 100%); /* Opera 12+ */ background-image: -ms-radial-gradient(center, ellipse cover, rgba(255, 255, 255, 0.5) 0%, rgba(229, 229, 229, 0) 100%); /* IE10+ */ background-image: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.5) 0%, rgba(229, 229, 229, 0) 100%); /* W3C */ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#80ffffff', endColorstr='#00e5e5e5',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */ }
 
 .darkGlow, .list-item, .buildings .building, .population .jobs .job, .upgrades .upgrade { background: -moz-radial-gradient(center, ellipse cover, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.1) 100%); /* FF3.6+ */ background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, rgba(0, 0, 0, 0)), color-stop(100%, rgba(0, 0, 0, 0.1))); /* Chrome,Safari4+ */ background: -webkit-radial-gradient(center, ellipse cover, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.1) 100%); /* Chrome10+,Safari5.1+ */ background: -o-radial-gradient(center, ellipse cover, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.1) 100%); /* Opera 12+ */ background: -ms-radial-gradient(center, ellipse cover, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.1) 100%); /* IE10+ */ background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.1) 100%); /* W3C */ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00000000', endColorstr='#1a000000',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */ }
 
-.app { width: 100%; margin: 0 auto; background-color: #6fbcef; color: #1681c9; position: relative; }
+.app { width: 100%; margin: 0 auto; background-color: #87c7f2; color: #1990e0; position: relative; }
+
+.login, .signup { position: relative; top: 30%; transform: translateY(-30%); }
+.login h1, .signup h1 { margin: 0; text-align: center; font-size: 42px; letter-spacing: -0.06em; text-shadow: 0 1px rgba(255, 255, 255, 0.4); }
+.login form, .signup form { max-width: 320px; padding: 23px; margin: 0 auto; text-align: center; }
+.login form input, .signup form input { width: 100%; height: 30px; padding: 0 10px; border-radius: 4px; border: none; -webkit-user-select: text; -moz-user-select: text; -ms-user-select: text; user-select: text; }
+.login .login-options, .signup .login-options { text-align: center; }
+.login .main-actions, .signup .main-actions { float: right; text-align: right; }
+.login .alternate-actions, .signup .alternate-actions { float: left; text-align: left; }
+
+.signup { position: absolute; top: 0; }
 
 .game-screens { height: 100%; overflow-y: auto; overflow-x: hidden; }
 .game-screens .game-screen { min-height: 100%; padding: 10px 5px; padding-top: 101px; padding-bottom: 42px; }
 
 .list-item, .buildings .building, .population .jobs .job, .upgrades .upgrade { background-color: #013354; box-shadow: 0 2px 2px 1px rgba(0, 0, 0, 0.3); border-radius: 4px; margin-bottom: 10px; overflow: hidden; -webkit-transition: .5s; transition: .5s; }
-.list-item .title, .buildings .building .title, .population .jobs .job .title, .upgrades .upgrade .title { height: 31px; line-height: 32px; font-size: 12px; background-color: #1681c9; color: white; padding: 0 10px; -webkit-transition: .5s; transition: .5s; }
+.list-item .title, .buildings .building .title, .population .jobs .job .title, .upgrades .upgrade .title { height: 31px; line-height: 32px; font-size: 12px; background-color: #1990e0; color: white; padding: 0 10px; -webkit-transition: .5s; transition: .5s; }
 .list-item .details, .buildings .building .details, .population .jobs .job .details, .upgrades .upgrade .details { position: relative; padding: 10px; }
 
-.cf:before, .list-item .details:before, .buildings .building .details:before, .population .jobs .job .details:before, .upgrades .upgrade .details:before, .cf:after, .list-item .details:after, .buildings .building .details:after, .population .jobs .job .details:after, .upgrades .upgrade .details:after { content: " "; /* 1 */ display: table; /* 2 */ }
+.cf:before, .login form:before, .signup form:before, .list-item .details:before, .buildings .building .details:before, .population .jobs .job .details:before, .upgrades .upgrade .details:before, .cf:after, .login form:after, .signup form:after, .list-item .details:after, .buildings .building .details:after, .population .jobs .job .details:after, .upgrades .upgrade .details:after { content: " "; /* 1 */ display: table; /* 2 */ }
 
-.cf:after, .list-item .details:after, .buildings .building .details:after, .population .jobs .job .details:after, .upgrades .upgrade .details:after { clear: both; }
+.cf:after, .login form:after, .signup form:after, .list-item .details:after, .buildings .building .details:after, .population .jobs .job .details:after, .upgrades .upgrade .details:after { clear: both; }
 
 .variable-width.width-0, .progress-bar .width-0.bar { width: 0%; }
 .variable-width.width-1, .progress-bar .width-1.bar { width: 1%; }
@@ -172,10 +182,17 @@ body { font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial; font-size: 
 .variable-width.width-99, .progress-bar .width-99.bar { width: 99%; }
 .variable-width.width-100, .progress-bar .width-100.bar { width: 100%; }
 
-.btn, button { padding: 5px 9px; margin: 2px; border-radius: 3px; background-color: #1681c9; border: none; display: inline-block; color: white; line-height: 24px; text-shadow: 0 1px rgba(0, 0, 0, 0.2); vertical-align: middle; cursor: pointer; box-shadow: 0 2px 0 rgba(0, 0, 0, 0.3), 0 -1px rgba(255, 255, 255, 0.3) inset; }
-.btn:hover, button:hover { background-color: #1990e0; }
-.btn:active, button:active { box-shadow: 0 170px 110px -110px rgba(0, 0, 0, 0.1) inset, 0 2px 1px rgba(0, 0, 0, 0.5) inset; }
+.btn, button { padding: 5px 9px; margin: 2px; border-radius: 3px; background-color: #1990e0; border: none; display: inline-block; color: white; line-height: 24px; text-shadow: 0 1px rgba(0, 0, 0, 0.2); vertical-align: middle; cursor: pointer; box-sizing: content-box; height: 26px; }
+.btn.wide, button.wide { padding-left: 30px; padding-right: 30px; }
+.btn:hover, button:hover { background-color: #2b9ce7; }
+.btn:active, button:active { box-shadow: 0 170px 110px -110px rgba(0, 0, 0, 0.1) inset, 0 1px 1px 1px rgba(0, 0, 0, 0.3) inset; }
 .btn:disabled, button:disabled { background-color: #014b7c; color: #999; text-shadow: none; cursor: initial; box-shadow: none; }
+.btn.muted, button.muted { background-color: #f9f9f9; color: #555; text-shadow: none; }
+.btn.muted:hover, button.muted:hover { background-color: #fff; }
+
+.a-btn { padding: 5px 9px; margin: 2px; display: inline-block; line-height: 24px; vertical-align: middle; cursor: pointer; }
+.a-btn:hover { text-decoration: underline; }
+.a-btn.slim { padding-left: 0; padding-right: 0; }
 
 .resource-image, .resources .resource .gathered-resources .gathered-resource img { height: 20px; width: 20px; vertical-align: middle; }
 
@@ -186,7 +203,7 @@ body { font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial; font-size: 
 .cost .cost-resource img { height: 20px; vertical-align: middle; }
 .cost .cost-resource .cost-amount { vertical-align: middle; margin-left: 3px; }
 
-.boon, .population .production { height: 25px; font-size: 12px; border-radius: 3px; display: inline-block; margin-top: 3px; margin-left: 7px; padding: 5px; color: #b4dcf7; line-height: normal; float: right; }
+.boon, .population .production { height: 25px; font-size: 12px; border-radius: 3px; display: inline-block; margin-top: 3px; margin-left: 7px; padding: 5px; color: #cce7f9; line-height: normal; float: right; }
 
 .production-rate.pos { color: #00b798; }
 .production-rate.neg { color: #e85223; font-weight: bold; }
@@ -200,7 +217,7 @@ body { font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial; font-size: 
 .bottom-bar .nav-item.selected { background-color: #e85223; color: white; line-height: 36px; border-radius: 4px 4px 0 0; }
 
 .saved-games .saved-game, .saved-games .new-game { background-color: #014b7c; border-radius: 10px; cursor: pointer; font-size: 14px; font-weight: bold; line-height: 35px; margin: 10px 0; padding: 0 10px; }
-.saved-games .saved-game:hover, .saved-games .saved-game.selected, .saved-games .new-game:hover, .saved-games .new-game.selected { background-color: #1681c9; color: white; }
+.saved-games .saved-game:hover, .saved-games .saved-game.selected, .saved-games .new-game:hover, .saved-games .new-game.selected { background-color: #1990e0; color: white; }
 .saved-games .saved-game .delete-game, .saved-games .new-game .delete-game { float: right; }
 .saved-games .saved-game .delete-game:hover, .saved-games .new-game .delete-game:hover { color: #f1b718; }
 
@@ -219,7 +236,7 @@ body { font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial; font-size: 
 .resources .resource { display: inline-block; padding: 4px; width: 33.33333%; text-align: center; position: relative; vertical-align: top; margin: 0; background: none; }
 .resources .resource .resource-content { border-radius: 8px; min-height: 166px; padding: 10px; margin: 0; line-height: normal; }
 .resources .resource .resource-image, .resources .resource .gathered-resources .gathered-resource img { height: 60px; width: 60px; vertical-align: middle; margin: 12px 0; }
-.resources .resource .special-resource { color: #86c7f2; }
+.resources .resource .special-resource { color: #9ed1f4; }
 .resources .resource .special-resource .special-resource-image { height: 15px; width: 15px; margin-left: 2px; vertical-align: middle; }
 .resources .resource .gathered-resources { position: relative; }
 .resources .resource .gathered-resources .gathered-resource { left: 0; right: 0; position: absolute; }

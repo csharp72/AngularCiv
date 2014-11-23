@@ -5,8 +5,9 @@ angular.module('filters', [])
 		}
 	})
 	.filter('shortNum', [function(){
-		return function(num, decimalPlace){
-			var decimalPlace = decimalPlace || 1;
+		return function(num, decimalPlace, useOnSmallNums){
+			var decimalPlace = typeof decimalPlace != 'undefined' ? decimalPlace : 1;
+			var useOnSmallNums = typeof useOnSmallNums != 'undefined' ? useOnSmallNums : true;
 			
 			if( num >= 1e15 ){
 				return addFloat( num / 1e15, decimalPlace ) + "Q";
@@ -19,7 +20,7 @@ angular.module('filters', [])
 			}else if( num >= 1e3 ){
 				return addFloat( num / 1e3, decimalPlace ) + "K";
 			}else{
-				return addFloat( num, decimalPlace );
+				return addFloat( num, useOnSmallNums && decimalPlace );
 			}
 
 			function addFloat( val, decimalPlace ){
