@@ -26,6 +26,7 @@ $costColor: $yellowColor;
 $boonColor: $greenColor;
 
 $appW: 100%;
+$maxAppWidth: 500px;
 
 $topBarH: 91px;
 $bottomBarH: 32px;
@@ -60,9 +61,9 @@ body{
 	padding: 0;
 	// background-color: $darkBlueColor;
 
-	background-color: lighten($blueColor, 25%);
-	color: $blueColor;
-	@extend .whiteGlow;
+	// background-color: lighten($blueColor, 25%);
+	// color: $blueColor;
+	// @extend .whiteGlow;
 }
 
 .whiteGlow{
@@ -87,6 +88,7 @@ body{
 
 .app{
 	width: $appW;
+	max-width: $maxAppWidth;
 	margin: 0 auto;
 	background-color: lighten($blueColor, 25%);
 	color: $blueColor;
@@ -95,15 +97,15 @@ body{
 	@extend .whiteGlow;
 }
 
-.login, .signup{
+.login, .email-login, .signup{
 
 	position: relative;
 	top: 30%;
 	transform: translateY(-30%);
+	text-align: center;
 
 	h1{
 		margin: 0;
-		text-align: center;
 		// padding-top: 45px;
 		font-size: 42px;
 		letter-spacing: -0.06em;
@@ -113,7 +115,6 @@ body{
 		max-width: 320px;
 		padding: 23px;
 		margin: 0 auto;
-		text-align: center;
 		@extend .cf;
 
 		input{
@@ -130,8 +131,17 @@ body{
 		}
 	}
 
+	button{
+		width: 320px;
+	}
+
+	.email-login-btn{
+		width: 160px;
+	}
+
 	.login-options{
 		text-align: center;
+		margin-top: 33px;
 	}
 
 	.main-actions{
@@ -227,8 +237,7 @@ body{
 	vertical-align: middle;
 	cursor: pointer;
 
-	box-sizing: content-box;
-	height: 26px;
+	height: 36px;
 
 	// box-shadow: 0 2px 0 rgba(0, 0, 0, 0.3), 0 -1px rgba(255, 255, 255, 0.3) inset;
 
@@ -381,7 +390,7 @@ body{
 }
 
 .bottom-bar{
-	position: fixed;
+	position: absolute;
 	bottom: 0;
 	width: $appW;
 	z-index: 2;
@@ -447,7 +456,7 @@ body{
     color: #333;
     padding: 0;
     text-align: center;
-    position: fixed;
+    position: absolute;
 	width: $appW;
 	z-index: 3;
 	top: 0;
@@ -493,7 +502,7 @@ body{
     }
 }
 
-.game{
+.game-details{
 	text-align: center;
 
 	.welcome{

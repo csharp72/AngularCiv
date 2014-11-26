@@ -18,12 +18,12 @@
 
 			$scope.auth = $firebaseAuth(new Firebase("https://angularciv.firebaseio.com/"));
 
-			// $scope.login = function(){
-			// 	$scope.auth.$authWithPassword({
-			// 		email: $scope.login.email, 
-			// 		password: $scope.login.password
-			// 	}).catch(authFail);
-			// }
+			$scope.login = function(login){
+				$scope.auth.$authWithPassword({
+					email: login.email, 
+					password: login.password
+				}).catch(authFail);
+			}
 
 			function authFail(error){
 				$scope.loginShown = true;
