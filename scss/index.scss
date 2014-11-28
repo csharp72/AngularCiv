@@ -26,7 +26,7 @@ $costColor: $yellowColor;
 $boonColor: $greenColor;
 
 $appW: 100%;
-$maxAppWidth: 500px;
+$maxAppWidth: auto;
 
 $topBarH: 91px;
 $bottomBarH: 32px;
@@ -102,6 +102,9 @@ body{
 	position: relative;
 	top: 30%;
 	transform: translateY(-30%);
+	-webkit-transform: translateY(-30%);
+	-ms-transform: translateY(-30%);
+
 	text-align: center;
 
 	h1{
@@ -132,7 +135,7 @@ body{
 	}
 
 	button{
-		width: 320px;
+		width: 200px;
 	}
 
 	.email-login-btn{
@@ -161,18 +164,23 @@ body{
 	top: 0;
 }
 
-.game-screens{
-	@extend .animate-switch-container;
+.game{
 	height: 100%;
-	overflow-y: auto;
-	overflow-x: hidden;
+	position: relative;
 
-	.game-screen{
-		min-height: 100%;
-		padding: 10px 5px;
-		padding-top: $topBarH + 10px;
-		padding-bottom: $bottomBarH + 10px;
-		@extend .animate-switch;
+	.game-screens{
+		@extend .animate-switch-container;
+		height: 100%;
+		overflow-y: auto;
+		overflow-x: hidden;
+
+		.game-screen{
+			min-height: 100%;
+			padding: 0 5px;
+			padding-top: $topBarH + 10px;
+			padding-bottom: $bottomBarH + 10px;
+			@extend .animate-switch;
+		}
 	}
 }
 
