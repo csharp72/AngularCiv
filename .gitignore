@@ -2,8 +2,5 @@
 
 .sass-cache
 node_modules
-node_modules/*
-node_modules/**
-node_modules/**/*
 src/bower_components
-*.log
+npm-debug.log
