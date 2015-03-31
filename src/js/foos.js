@@ -1,6 +1,8 @@
+//Test attempt at building a game element through inheritance
+
 (function(){
 
-	angular.module('foos', ['gameElements'])
+	angular.module('gameElements')
 		.factory('foos', ['gameElements', 'gameElement', function(gameElements, gameElement){
 
 			function Foo(name, opts){

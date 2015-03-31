@@ -4,18 +4,23 @@ module.exports = function(grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
 
+        concurrent: {
+            default: ['compass','uglify','htmlmin','copy'],
+            serve: ['connect::keepalive'],
+            test: ['karma']
+        },
 
 		watch: {
 			compass: {
 				files: ['src/scss/**/*.{scss,sass}'],
-				tasks: ['compass:dev', 'notify:compass']
+				tasks: ['compass', 'notify:compass']
 			},
 			js: {
 				files: ['src/js/**/*.js'],
 				tasks: ['uglify']
 			},
             copy: {
-                files: ['src/**/*.html', 'src/images/**', 'src/sound/**/*.mp3'],
+                files: ['src/images/**', 'src/sound/**/*.mp3'],
                 tasks: ['copy']
             },
             grunt: {
@@ -32,30 +37,23 @@ module.exports = function(grunt) {
 			}
 		},
 
-        compass: {                  // Task
-            dist: {                   // Target
-            	options: {              // Target options
+        compass:{
+            default: {
+            	options: {
                 	sassDir: 'src/scss',
                 	cssDir: 'app/css',
                 	environment: 'production',
                 	outputStyle: 'compressed',
             	}
-            },
-            dev: {                    // Another target
-            	options: {
-                	sassDir: 'src/scss',
-                	cssDir: 'app/css',
-                	environment: 'development',
-            	}
             }
-         },
+        },
 
         uglify: {
             options: {
                 banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n',
-                mangle: false,
-                compress: false,
-                beautify: true,
+                // mangle: false,
+                // compress: false,
+                // beautify: true,
                 screwIE8: true,
             },
             my_target: {
@@ -64,6 +62,7 @@ module.exports = function(grunt) {
                         'src/bower_components/angular/angular.min.js', 
                         'src/bower_components/**/*.min.js', 
                         'src/bower_components/firebase/firebase.js',
+                        'src/js/index.js',
                         'src/js/*.js'
                     ]
                 }
@@ -74,13 +73,25 @@ module.exports = function(grunt) {
             main: {
                 files: [
                     // flattens results to a single level 
-                    {expand: true, cwd: 'src/html/', src: ['**/*.html'], dest: 'app', filter: 'isFile'},
+                    // {expand: true, cwd: 'src/html/', src: ['**/*.html'], dest: 'app', filter: 'isFile'},
                     {expand: true, cwd: 'src/images/', src: ['**'], dest: 'app/images', filter: 'isFile'},
                     {expand: true, cwd: 'src/sound/', src: ['**/*.mp3'], dest: 'app/sound', filter: 'isFile'},
                     {expand: true, cwd: 'src/bower_components/fontawesome/fonts/', src: ['**'], dest: 'app/fonts', filter: 'isFile'},
                     // {expand: true, cwd: 'src/bower_components', src: ['**/*.js','**/*.css','!**/src/**','!**/demo/**'], dest: 'app/components/' },
                 ],
             },
+        },
+
+        htmlmin: {
+            default: {
+                options: {
+                    removeComments: true,
+                    collapseWhitespace: true
+                },
+                files: {
+                    'app/index.html': 'src/html/index.html',
+                }
+            }
         },
 
         clean: ["app/*"],
@@ -93,6 +104,12 @@ module.exports = function(grunt) {
 				}
             }
         },
+
+        karma: {
+            unit: {
+                configFile: 'karma.conf.js'
+            }
+        }
     });
 
     grunt.loadNpmTasks('grunt-contrib-watch');
@@ -102,8 +119,12 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-notify');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-clean');
+    grunt.loadNpmTasks('grunt-contrib-htmlmin');
+    grunt.loadNpmTasks('grunt-karma');
+    grunt.loadNpmTasks('grunt-concurrent');
 
-	grunt.registerTask('default', ['clean', 'compass:dev','uglify','copy','watch']);
+	grunt.registerTask('default', ['clean', 'concurrent:default', 'watch']);
 	grunt.registerTask('serve', ['connect::keepalive'] );
+    grunt.registerTask('test', ['karma'] );
 
 };

@@ -1,5 +1,4 @@
-angular.module('population', [])
-
+angular.module('gameElements')
 	.factory('population', [function(){
 		function Population(){
 			this.total = 0;

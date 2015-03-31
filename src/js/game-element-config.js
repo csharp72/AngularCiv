@@ -1,4 +1,5 @@
 //Configuration file for game elements
+//new concept for bootstrapping all game elements which have overlapping dependencies
 
 angular.module('geConfig', [])
 	

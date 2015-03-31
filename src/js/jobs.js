@@ -1,5 +1,4 @@
-angular.module('jobs', [])
-
+angular.module('gameElements')
 	.factory('jobs', ['resources','population', function(resources, population){
 		function Job( name, opts ){
 			this.name = name;

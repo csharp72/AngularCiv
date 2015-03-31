@@ -31,7 +31,7 @@
 
 
 
-	angular.module('gameElements', [])
+	angular.module('gameElements')
 
 			.factory('gameElement', function(){
 				return GameElement;
