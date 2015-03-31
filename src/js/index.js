@@ -1,5 +1,5 @@
 (function(){
-	var app = angular.module('app', ['ngTouch','ngCookies','ngAnimate','firebase','game','resources','population','jobs','buildings','upgrades','filters','alertPromptConfirm','foos','gameElements']);
+	var app = angular.module('app', ['ngTouch','ngCookies','ngAnimate','firebase','filters','alertPromptConfirm','game','gameElements']);
 	
 	app.controller('GameCtrl',
 		['foos', '$scope','$interval','$timeout','$cookies','$firebase','$firebaseAuth','SavedGame','game','buildings','resources','jobs','population','upgrades','prompt',
@@ -252,5 +252,8 @@
 			return $firebase(new Firebase("https://angularciv.firebaseio.com/savedGames/").child(user)).$asObject();
 		}
 	}]);
+
+	angular.module('gameElements', []);
+	
 }())
 
